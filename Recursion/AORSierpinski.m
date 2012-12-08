@@ -31,7 +31,7 @@
 -(void)startAnimation
 {
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 5.0;
+    pathAnimation.duration = 3.0;
     pathAnimation.fromValue = @0.0;
     pathAnimation.toValue = @1.0;
     [pathAnimation setDelegate:self];
@@ -49,13 +49,11 @@
 
 - (void)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth
 {
-    
     CGPathMoveToPoint(self.linePath, NULL, p1.x, p1.y);
     CGPathAddLineToPoint(self.linePath, NULL, p2.x, p2.y);
     CGPathAddLineToPoint(self.linePath, NULL, p3.x, p3.y);
     CGPathAddLineToPoint(self.linePath, NULL, p1.x, p1.y);
     CGPathCloseSubpath(self.linePath);
-    
     [self startAnimation];
     
     if (depth > 1) {

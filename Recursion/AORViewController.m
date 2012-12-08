@@ -42,6 +42,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+# pragma mark Touch Handling
+
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
@@ -57,6 +59,8 @@
     [self.shapeLayer setNeedsDisplay];
 }
 
+# pragma mark Utils
+
 -(void)setUpLinePathAndShapeLayer
 {
     // Set up the line path.
@@ -66,9 +70,11 @@
     [self.shapeLayer removeFromSuperlayer];
     self.shapeLayer = [CAShapeLayer layer];
     self.shapeLayer.path = self.linePath;
-	UIColor *strokeColor = [UIColor colorWithHue:0.557 saturation:0.55 brightness:0.96 alpha:1.0];
+	UIColor *strokeColor = [UIColor blackColor];
 	self.shapeLayer.strokeColor = strokeColor.CGColor;
-	self.shapeLayer.lineWidth = 3.0;
+	self.shapeLayer.lineWidth = 2.0;
+    UIColor *fillColor = [UIColor darkGrayColor];
+    self.shapeLayer.fillColor = fillColor.CGColor;
 	self.shapeLayer.fillRule = kCAFillRuleNonZero;
 	[self.rootLayer addSublayer:self.shapeLayer];
 }
