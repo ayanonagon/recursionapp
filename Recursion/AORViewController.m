@@ -7,9 +7,14 @@
 //
 
 #import "AORViewController.h"
+#import "AORSierpinski.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface AORViewController ()
-
+@property (strong, nonatomic) CALayer *rootLayer;
+@property (strong, nonatomic) CAShapeLayer *shapeLayer;
+@property CGMutablePathRef linePath;
+@property (strong, nonatomic) AORSierpinski *sierpinski;
 @end
 
 @implementation AORViewController
@@ -17,7 +22,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    // Set up the root layer.
+    self.rootLayer	= [CALayer layer];
+	self.rootLayer.frame = self.view.bounds;
+	[self.view.layer addSublayer:self.rootLayer];
+    
+    // Set up line path and shape layer.
+    [self setUpLinePathAndShapeLayer];
+    
+    // Set up drawing classes.
+    self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
+    [self.sierpinski drawWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
 }
 
 - (void)didReceiveMemoryWarning
@@ -26,4 +42,34 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [touches anyObject];
+    CGPoint point = [touch locationInView:self.view];
+    
+    // Set up line path and shape layer.
+    [self setUpLinePathAndShapeLayer];
+    
+    // Set up drawing classes.
+    self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
+    
+    [self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+    [self.shapeLayer setNeedsDisplay];
+}
+
+-(void)setUpLinePathAndShapeLayer
+{
+    // Set up the line path.
+    self.linePath = CGPathCreateMutable();
+    
+    // Set up shape layer.
+    [self.shapeLayer removeFromSuperlayer];
+    self.shapeLayer = [CAShapeLayer layer];
+    self.shapeLayer.path = self.linePath;
+	UIColor *strokeColor = [UIColor colorWithHue:0.557 saturation:0.55 brightness:0.96 alpha:1.0];
+	self.shapeLayer.strokeColor = strokeColor.CGColor;
+	self.shapeLayer.lineWidth = 3.0;
+	self.shapeLayer.fillRule = kCAFillRuleNonZero;
+	[self.rootLayer addSublayer:self.shapeLayer];
+}
 @end

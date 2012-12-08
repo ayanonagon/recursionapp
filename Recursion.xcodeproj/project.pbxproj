@@ -19,6 +19,8 @@
 		E06F92FE16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E06F92FC16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard */; };
 		E06F930116722A7000BED8B7 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E06F92FF16722A7000BED8B7 /* MainStoryboard_iPad.storyboard */; };
 		E06F930416722A7000BED8B7 /* AORViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F930316722A7000BED8B7 /* AORViewController.m */; };
+		E06F930F16722AE700BED8B7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F930E16722AE700BED8B7 /* QuartzCore.framework */; };
+		E06F931516722FF000BED8B7 /* AORSierpinski.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F931416722FF000BED8B7 /* AORSierpinski.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,9 @@
 		E06F930016722A7000BED8B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		E06F930216722A7000BED8B7 /* AORViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AORViewController.h; sourceTree = "<group>"; };
 		E06F930316722A7000BED8B7 /* AORViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AORViewController.m; sourceTree = "<group>"; };
+		E06F930E16722AE700BED8B7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E06F931316722FF000BED8B7 /* AORSierpinski.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORSierpinski.h; sourceTree = "<group>"; };
+		E06F931416722FF000BED8B7 /* AORSierpinski.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORSierpinski.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E06F930F16722AE700BED8B7 /* QuartzCore.framework in Frameworks */,
 				E06F92E516722A7000BED8B7 /* UIKit.framework in Frameworks */,
 				E06F92E716722A7000BED8B7 /* Foundation.framework in Frameworks */,
 				E06F92E916722A7000BED8B7 /* CoreGraphics.framework in Frameworks */,
@@ -75,6 +81,7 @@
 		E06F92E316722A7000BED8B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E06F930E16722AE700BED8B7 /* QuartzCore.framework */,
 				E06F92E416722A7000BED8B7 /* UIKit.framework */,
 				E06F92E616722A7000BED8B7 /* Foundation.framework */,
 				E06F92E816722A7000BED8B7 /* CoreGraphics.framework */,
@@ -91,6 +98,8 @@
 				E06F92FF16722A7000BED8B7 /* MainStoryboard_iPad.storyboard */,
 				E06F930216722A7000BED8B7 /* AORViewController.h */,
 				E06F930316722A7000BED8B7 /* AORViewController.m */,
+				E06F931316722FF000BED8B7 /* AORSierpinski.h */,
+				E06F931416722FF000BED8B7 /* AORSierpinski.m */,
 				E06F92EB16722A7000BED8B7 /* Supporting Files */,
 			);
 			path = Recursion;
@@ -181,6 +190,7 @@
 				E06F92F116722A7000BED8B7 /* main.m in Sources */,
 				E06F92F516722A7000BED8B7 /* AORAppDelegate.m in Sources */,
 				E06F930416722A7000BED8B7 /* AORViewController.m in Sources */,
+				E06F931516722FF000BED8B7 /* AORSierpinski.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
