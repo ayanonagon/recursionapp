@@ -26,6 +26,7 @@
 @property CGPoint p1, p2, p3;
 @property NSArray *children;
 @property int depth;
+@property (atomic) BOOL animationStopped;
 @end
 
 @implementation AORSierpinski
@@ -38,10 +39,9 @@
         self.p2 = p2;
         self.p3 = p3;
         self.depth = 5;
+        self.animationStopped = NO;
         [self defineShapePath];
         [self defineShapeLayer];
-        
-        [self defineChildren];
     }
     return self;
 }
@@ -54,14 +54,23 @@
         self.p2 = p2;
         self.p3 = p3;
         self.depth = depth;
+        self.animationStopped = NO;
         [self defineShapePath];
         [self defineShapeLayer];
-        
-        if (self.depth) {
-            [self defineChildren];
-        }
     }
     return self;
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    if (self.animationStopped) {
+        return;
+    }
+    self.animationStopped = YES;
+    if (self.depth) {
+        [self defineChildren];
+    }
+
 }
 
 #pragma mark - The Magic
@@ -106,10 +115,11 @@
 -(void)setAnimationForLineLayer:(CAShapeLayer*) lineLayer
 {
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 5.0;
+    pathAnimation.duration = 0.5;
     pathAnimation.fromValue = @0.0;
     pathAnimation.toValue = @1.0;
     [pathAnimation setDelegate:self];
+    pathAnimation.autoreverses = NO;
     [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
@@ -121,15 +131,15 @@
     
     CGPathMoveToPoint(line1, NULL, self.p1.x, self.p1.y);
     CGPathAddLineToPoint(line1, NULL, self.p2.x, self.p2.y);
-    CGPathCloseSubpath(line1);
+    //CGPathCloseSubpath(line1);
     
     CGPathMoveToPoint(line2, NULL, self.p2.x, self.p2.y);
     CGPathAddLineToPoint(line2, NULL, self.p3.x, self.p3.y);
-    CGPathCloseSubpath(line2);
+    //CGPathCloseSubpath(line2);
     
     CGPathMoveToPoint(line3, NULL, self.p3.x, self.p3.y);
     CGPathAddLineToPoint(line3, NULL, self.p1.x, self.p1.y);
-    CGPathCloseSubpath(line3);
+    //CGPathCloseSubpath(line3);
     
     self.lines = [NSArray arrayWithObjects:
                   [NSValue valueWithPointer:line1],
