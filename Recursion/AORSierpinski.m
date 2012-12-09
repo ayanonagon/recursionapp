@@ -21,12 +21,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORSierpinski ()
-@property NSArray *lines;
-@property CAAnimationGroup *lineAnimations;
 @property CGPoint p1, p2, p3;
-@property NSArray *children;
-@property int depth;
-@property (atomic) BOOL animationStopped;
 @end
 
 @implementation AORSierpinski
@@ -35,7 +30,6 @@
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3
 {
-    self = [super init];
     return [self initWithP1:p1 p2:p2 p3:p3 depth:MAX_DEPTH];
 }
 
@@ -47,26 +41,10 @@
         self.p2 = p2;
         self.p3 = p3;
         self.depth = depth;
-        self.animationStopped = NO;
-        [self defineShapePath];
-        [self defineShapeLayer];
+        [self configureShape];
     }
     return self;
 }
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
-{
-    if (self.animationStopped) {
-        return;
-    }
-    self.animationStopped = YES;
-    if (self.depth) {
-        [self defineChildren];
-    }
-
-}
-
-#pragma mark - The Magic
 
 -(void)defineChildren
 {
@@ -82,40 +60,6 @@
     }
 }
 
--(void)defineShapeLayer
-{
-    self.layer = [CALayer layer];
-    
-    for (NSValue *lineWrapped in self.lines) {
-        CGMutablePathRef line = [lineWrapped pointerValue];
-        CAShapeLayer *lineLayer = [CAShapeLayer layer];
-        lineLayer.path = line;
-        UIColor *strokeColor = [UIColor blackColor];
-        lineLayer.strokeColor = strokeColor.CGColor;
-        lineLayer.lineWidth = 2.0;
-        UIColor *fillColor = [UIColor darkGrayColor];
-        lineLayer.fillColor = fillColor.CGColor;
-        lineLayer.fillRule = kCAFillRuleNonZero;
-        
-        [self setAnimationForLineLayer:lineLayer];
-        
-        [self.layer addSublayer:lineLayer];
-    }
-    
-	
-}
-
--(void)setAnimationForLineLayer:(CAShapeLayer*) lineLayer
-{
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 0.5;
-    pathAnimation.fromValue = @0.0;
-    pathAnimation.toValue = @1.0;
-    [pathAnimation setDelegate:self];
-    pathAnimation.autoreverses = NO;
-    [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
-}
-
 - (void)defineShapePath
 {
     CGMutablePathRef line1 = CGPathCreateMutable();
@@ -124,28 +68,17 @@
     
     CGPathMoveToPoint(line1, NULL, self.p1.x, self.p1.y);
     CGPathAddLineToPoint(line1, NULL, self.p2.x, self.p2.y);
-    //CGPathCloseSubpath(line1);
     
     CGPathMoveToPoint(line2, NULL, self.p2.x, self.p2.y);
     CGPathAddLineToPoint(line2, NULL, self.p3.x, self.p3.y);
-    //CGPathCloseSubpath(line2);
-    
+
     CGPathMoveToPoint(line3, NULL, self.p3.x, self.p3.y);
     CGPathAddLineToPoint(line3, NULL, self.p1.x, self.p1.y);
-    //CGPathCloseSubpath(line3);
     
-    self.lines = [NSArray arrayWithObjects:
+    self.paths = [NSArray arrayWithObjects:
                   [NSValue valueWithPointer:line1],
                   [NSValue valueWithPointer:line2],
                   [NSValue valueWithPointer:line3], nil];
-}
-
--(void)startDrawing {
-
-}
-
--(void)stopDrawing {
-    
 }
 
 @end

@@ -9,19 +9,25 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
-@protocol AORObject <NSObject>
+@interface AORObject : NSObject
 
+@property (strong, nonatomic) CALayer *layer;
+/* Call this method after initializing your shape's points. */
+-(id)configureShape;
+/* Stores all paths for this shape. */
+@property NSArray *paths;
+/* The animations of each path */
+@property CAAnimationGroup *pathAnimations;
+/* The recursively created drawings */
+@property NSArray *children;
+/* The depth of this drawing */
+@property int depth;
+@property (atomic) BOOL animationStopped;
+@end
 
-/* Defines children and their behavior for recursive animation/drawing */
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag;
-
+@protocol AORObjectProtocol <NSObject>
 /* How to draw the shape */
 - (void)defineShapePath;
-
+/* How to draw the children */
 - (void)defineChildren;
-
-- (void)defineShapeLayer;
-
-- (void)setAnimationForLineLayer:(CAShapeLayer *) lineLayer;
-
 @end

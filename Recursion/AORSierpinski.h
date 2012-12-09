@@ -11,13 +11,11 @@
 
 @class CAShapeLayer;
 
-@interface AORSierpinski : NSObject <AORObject>
+@interface AORSierpinski : AORObject <AORObjectProtocol>
 
 @property (strong, nonatomic) CALayer *layer;
 
 -(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3;
--(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth;
--(void)startDrawing;
--(void)stopDrawing;
+
 @end
 
