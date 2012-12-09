@@ -16,10 +16,10 @@
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;
-@property (strong, nonatomic) AORSierpinski *sierpinski;
-@property (strong, nonatomic) AORStar *star;
-@property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORLevy *levy;
+@property (strong, nonatomic) AORSierpinski *sierpinski;
+@property (strong, nonatomic) AORCarpet *carpet;
+@property (strong, nonatomic) AORStar *star;
 @end
 
 @implementation AORViewController
@@ -156,10 +156,16 @@
 }
 
 
+
 #pragma mark - Utils
 
 -(void)clearCanvas
 {
+    self.levy = nil;
+    self.sierpinski = nil;
+    self.carpet = nil;
+    self.star = nil;
+
     for (CALayer *layer in self.rootLayer.sublayers) {
         [layer removeFromSuperlayer];
     }
