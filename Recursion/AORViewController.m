@@ -59,9 +59,9 @@
     //for testing carpet
     self.carpet = [[AORCarpet alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     CGPoint p1 = CGPointMake(200.0, 200.0);
-    CGPoint p2 = CGPointMake(600.0, 200.0);
-    CGPoint p3 = CGPointMake(600.0, 600.0);
-    CGPoint p4 = CGPointMake(200.0, 600.0);
+    CGPoint p2 = CGPointMake(600.0, 100.0);
+    CGPoint p3 = CGPointMake(700.0, 600.0);
+    CGPoint p4 = CGPointMake(400.0, 700.0);
     [self.carpet drawWithP1:p1 p2:p2 p3:p3 p4:p4 depth:5];
 
 }
