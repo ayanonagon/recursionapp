@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AORObject.h"
 
 @class CAShapeLayer;
 
-@interface AORSierpinski : NSObject
+@interface AORSierpinski : NSObject <AORObject>
+
 @property (strong, nonatomic) CALayer *layer;
 
 -(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3;
