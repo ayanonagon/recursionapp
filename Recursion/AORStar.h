@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AORObject.h"
 
-@class CAShapeLayer;
+#define STAR_MAX_DEPTH 4
 
-@interface AORStar : NSObject
--(id)initWithShapeLayer:(CAShapeLayer *)layer linePath:(CGMutablePathRef)path;
-- (void)drawWithPoints:(NSArray*)points depth:(int)depth;
+@interface AORStar : AORObject <AORObjectProtocol>
+- (id)initWithPoints:(NSArray *)points;
 @end

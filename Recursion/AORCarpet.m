@@ -17,7 +17,7 @@
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 p4:(CGPoint)p4
 {
-    return [self initWithP1:p1 p2:p2 p3:p3 p4:p4 depth:MAX_DEPTH];
+    return [self initWithP1:p1 p2:p2 p3:p3 p4:p4 depth:CARPET_MAX_DEPTH];
 }
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 p4:(CGPoint)p4 depth:(int)depth

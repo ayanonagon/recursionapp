@@ -29,6 +29,16 @@
     if (self.depth) {
         [self defineChildren];
     }
+    [self destroyPaths];
+}
+
+- (void)destroyPaths
+{
+    for (NSValue *lineWrapped in self.paths) {
+        CGMutablePathRef path = [lineWrapped pointerValue];
+        CGPathRelease(path);
+    }
+    self.paths = nil;
 }
 
 - (void)defineShapeLayer

@@ -17,7 +17,7 @@
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2
 {
-    return [self initWithP1:p1 p2:p2 depth:MAX_DEPTH];
+    return [self initWithP1:p1 p2:p2 depth:LEVY_MAX_DEPTH];
 }
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 depth:(int)depth

@@ -35,25 +35,7 @@
 
     //for testing star
     // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-    /*CGPoint p0 = CGPointMake(500, 500);
-    CGPoint p1 = CGPointMake(600, 500);
-    CGPoint p2 = CGPointMake(625, 575);
-    CGPoint p3 = CGPointMake(550, 625);
-    CGPoint p4 = CGPointMake(475, 575);
-    CGPoint p0 = CGPointMake(400, 600);
-    CGPoint p1 = CGPointMake(410, 600);
-    CGPoint p2 = CGPointMake(412, 607.2);
-    CGPoint p3 = CGPointMake(405, 612);
-    CGPoint p4 = CGPointMake(398, 607.2);
-    NSArray *points = [NSArray arrayWithObjects:
-                       [NSValue valueWithCGPoint:p0],
-                       [NSValue valueWithCGPoint:p1],
-                       [NSValue valueWithCGPoint:p2],
-                       [NSValue valueWithCGPoint:p3],
-                       [NSValue valueWithCGPoint:p4],
-                       nil];
-
-    [self.star drawWithPoints:points depth:6];
+    /*
     [self.star drawWithPoints:points depth:6];*/
     
     //for testing carpet
@@ -69,8 +51,9 @@
 //    CGPoint p1 = CGPointMake(200.0, 200.0);
 //    CGPoint p2 = CGPointMake(500.0, 200.0);
 //    [self.levy drawWithP1:p1 p2:p2 depth:15];
-// [self.rootLayer addSublayer:[AORExamples drawSierpinski]];
+//[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
 //[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
+//[self.rootLayer addSublayer:[AORExamples drawStar]];
 }
 
 - (void)didReceiveMemoryWarning

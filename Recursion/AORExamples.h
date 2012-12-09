@@ -13,4 +13,5 @@
 + (CALayer *)drawSierpinski;
 + (CALayer *)drawCarpet;
 + (CALayer *)drawLevy;
++ (CALayer *)drawStar;
 @end

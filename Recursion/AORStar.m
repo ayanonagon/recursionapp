@@ -10,77 +10,76 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORStar ()
-@property (weak, nonatomic) CAShapeLayer *shapeLayer;
-@property CGMutablePathRef linePath;
+@property NSArray *points;
 @end
 
 @implementation AORStar
 
--(id)initWithShapeLayer:(CAShapeLayer *)layer linePath:(CGMutablePathRef)path
+- (id)initWithPoints:(NSArray *)points
+{
+    return [self initWithPoints:points depth:STAR_MAX_DEPTH];
+}
+
+- (id)initWithPoints:(NSArray *)points depth:(int)depth
 {
     self = [super init];
     if (self) {
-        self.shapeLayer = layer;
-        self.linePath = path;
+        self.points = points;
+        self.depth = depth;
+        [self configureShape];
     }
     return self;
 }
 
--(void)startAnimation
-{
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 10.0;
-    pathAnimation.fromValue = @0.0;
-    pathAnimation.toValue = @1.0;
-    [pathAnimation setDelegate:self];
-    [self.shapeLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
-}
+// TODO: Don't know if she's relying on the call to closesubpath here
+//
+//-(void)setupPathWithPoint:(CGPoint)start endPoint:(CGPoint)end
+//{
+//    CGPathMoveToPoint(self.linePath, NULL, start.x, start.y);
+//    CGPathAddLineToPoint(self.linePath, NULL, end.x, end.y);
+//    
+//    CGPathCloseSubpath(self.linePath);
+//    [self startAnimation];
+//}
 
--(void)setupPathWithPoint:(CGPoint)start endPoint:(CGPoint)end
-{
-    CGPathMoveToPoint(self.linePath, NULL, start.x, start.y);
-    CGPathAddLineToPoint(self.linePath, NULL, end.x, end.y);
-    
-    CGPathCloseSubpath(self.linePath);
-    [self startAnimation];
-}
-
-- (void)drawWithPoints:(NSArray *)points depth:(int)depth
+- (void)defineShapePath
 {
     NSMutableArray *newPoints = [NSMutableArray array];
-    NSValue *val = [points objectAtIndex:0];
+    NSValue *val = [self.points objectAtIndex:0];
     CGPoint start = [val CGPointValue];
-    CGPathMoveToPoint(self.linePath, NULL, start.x, start.y);
+    // CGPathMoveToPoint(self.linePath, NULL, start.x, start.y);
+    CGMutablePathRef firstPath = nil;
+    NSMutableArray *mutablePaths = [NSMutableArray array];
     for(int i = 0; i < 5; i++){
         NSValue *val;
         CGPoint p1, p1co, p2, p2co;
         
-        val = points[i];
+        val = self.points[i];
         p1 = [val CGPointValue];
         if (i == 0){
-            val = points[4];
+            val = self.points[4];
             p1co = [val CGPointValue];
         }
         else {
-            val = points[i-1];
+            val = self.points[i-1];
             p1co = [val CGPointValue];
         }
         if (i==4){
-            val = points[0];
+            val = self.points[0];
             p2 = [val CGPointValue];
-            val = points[1];
+            val = self.points[1];
             p2co = [val CGPointValue];
         }
         else {
-            val = points[i+1];
+            val = self.points[i+1];
             p2 = [val CGPointValue];
         }
         if (i==3) {
-            val = points[0];
+            val = self.points[0];
             p2co = [val CGPointValue];
         }
         else if (i!=4){
-            val = points[i+2];
+            val = self.points[i+2];
             p2co = [val CGPointValue];
         }
         
@@ -95,19 +94,41 @@
         NSValue *v = [NSValue valueWithCGPoint:intersect];
         [newPoints insertObject:v atIndex:i];
         
-        CGPathAddLineToPoint(self.linePath, NULL, intersect.x, intersect.y);
-        CGPathAddLineToPoint(self.linePath, NULL, p2.x, p2.y);
-        
+        if (!firstPath) {
+            firstPath = CGPathCreateMutable();
+            CGPathMoveToPoint(firstPath, NULL, start.x, start.y);
+            CGPathAddLineToPoint(firstPath, NULL, intersect.x, intersect.y);
+            CGPathAddLineToPoint(firstPath, NULL, p2.x, p2.y);
+            [mutablePaths addObject:[NSValue valueWithPointer:firstPath]];
+        }
+        else {
+            CGMutablePathRef newPath = CGPathCreateMutable();
+            CGPathAddLineToPoint(newPath, NULL, intersect.x, intersect.y);
+            CGPathAddLineToPoint(newPath, NULL, p2.x, p2.y);
+            [mutablePaths addObject:[NSValue valueWithPointer:newPath]];
+        }
     }
     
-    CGPathCloseSubpath(self.linePath);
-    [self startAnimation];
+    self.paths = [NSArray arrayWithArray:mutablePaths];
+    self.points = [NSArray arrayWithArray:newPoints];
     
-    if (depth > 1){
-        [self drawWithPoints:newPoints depth:depth-1];
+    // CGPathCloseSubpath(self.linePath);
+    // [self startAnimation];
+//    
+//    if (depth > 1){
+//        [self drawWithPoints:newPoints depth:depth-1];
+//    
+//    }
     
+}
+
+- (void)defineChildren
+{
+    self.children = [NSArray arrayWithObjects:
+                     [[AORStar alloc] initWithPoints:self.points depth:self.depth-1], nil];
+    for (AORStar *child in self.children) {
+        [self.layer addSublayer:child.layer];
     }
-    
 }
 
 
