@@ -40,10 +40,6 @@
 {
     CGPoint A = CGPointMake(self.p1.x+((self.p2.x-self.p1.x)/3), self.p1.y+((self.p2.y-self.p1.y)/3));
     CGPoint B = CGPointMake(self.p1.x+((self.p2.x-self.p1.x)*2/3), self.p1.y+((self.p2.y-self.p1.y)*2/3));
-//    CGPoint C = CGPointMake(self.p1.x+((self.p4.x-self.p1.x)/3), self.p1.y+((self.p4.y-self.p1.y)/3));
-//    CGPoint G = CGPointMake(self.p1.x+((self.p4.x-self.p1.x)*2/3), self.p1.y+((self.p4.y-self.p1.y)*2/3));
-//    CGPoint F = CGPointMake(self.p2.x+((self.p3.x-self.p2.x)/3), self.p2.y+((self.p3.y-self.p2.y)/3));
-//    CGPoint J = CGPointMake(self.p2.x+((self.p3.x-self.p2.x)*2/3), self.p2.y+((self.p3.y-self.p2.y)*2/3));
     CGPoint K = CGPointMake(self.p4.x+((self.p3.x-self.p4.x)/3), self.p4.y+((self.p3.y-self.p4.y)/3));
     CGPoint L = CGPointMake(self.p4.x+((self.p3.x-self.p4.x)*2/3), self.p4.y+((self.p3.y-self.p4.y)*2/3));
     // Points D and H interpolate between A and K
@@ -59,24 +55,6 @@
                   [NSValue valueWithPointer:createPathFromPoints(E, I)],
                   [NSValue valueWithPointer:createPathFromPoints(I, H)],
                   [NSValue valueWithPointer:createPathFromPoints(H, D)], nil];
-    
-//    CGPathMoveToPoint(self.linePath, NULL, D.x, D.y);
-//    CGPathAddLineToPoint(self.linePath, NULL, E.x, E.y);
-//    CGPathAddLineToPoint(self.linePath, NULL, I.x, I.y);
-//    CGPathAddLineToPoint(self.linePath, NULL, H.x, H.y);
-//    CGPathAddLineToPoint(self.linePath, NULL, D.x, D.y);
-    //CGPathCloseSubpath(self.linePath);
-    
-//    if (depth > 1){
-//        [self drawWithP1:self.p1 p2:A p3:D p4:C depth:depth-1];
-//        [self drawWithP1:A p2:B p3:E p4:D depth:depth-1];
-//        [self drawWithP1:B p2:p2 p3:F p4:E depth:depth-1];
-//        [self drawWithP1:C p2:D p3:H p4:G depth:depth-1];
-//        [self drawWithP1:E p2:F p3:J p4:I depth:depth-1];
-//        [self drawWithP1:G p2:H p3:K p4:self.p4 depth:depth-1];
-//        [self drawWithP1:H p2:I p3:L p4:K depth:depth-1];
-//        [self drawWithP1:I p2:J p3:self.p3 p4:L depth:depth-1];
-//    }
 }
 
 - (void)defineChildren
