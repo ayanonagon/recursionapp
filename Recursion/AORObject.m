@@ -39,7 +39,7 @@
         pathLayer.path = line;
         UIColor *strokeColor = [UIColor blackColor];
         pathLayer.strokeColor = strokeColor.CGColor;
-        pathLayer.lineWidth = 2.0;
+        pathLayer.lineWidth = 1.0;
         UIColor *fillColor = [UIColor darkGrayColor];
         pathLayer.fillColor = fillColor.CGColor;
         pathLayer.fillRule = kCAFillRuleNonZero;

@@ -9,6 +9,7 @@
 #import "AORExamples.h"
 #import "AORSierpinski.h"
 #import "AORCarpet.h"
+#import "AORLevy.h"
 
 #include <QuartzCore/QuartzCore.h>
 
@@ -52,6 +53,11 @@
     CGPoint C = CGPointMake(500.0, 500.0);
     CGPoint D = CGPointMake(500.0, 100.0);
     return [[[AORCarpet alloc] initWithP1:A p2:B p3:C p4:D] layer];
+}
+
++ (CALayer*)drawLevy
+{
+    return [[[AORLevy alloc] initWithP1:CGPointMake(300.0, 200.0) p2:CGPointMake(300.0, 500.0)] layer];
 }
 
 @end

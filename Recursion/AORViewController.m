@@ -70,7 +70,8 @@
 //    CGPoint p2 = CGPointMake(500.0, 200.0);
 //    [self.levy drawWithP1:p1 p2:p2 depth:15];
 // [self.rootLayer addSublayer:[AORExamples drawSierpinski]];
-    [self.rootLayer addSublayer:[AORExamples drawCarpet]];
+//[self.rootLayer addSublayer:[AORExamples drawCarpet]];
+    [self.rootLayer addSublayer:[AORExamples drawLevy]];
 }
 
 - (void)didReceiveMemoryWarning

@@ -7,10 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AORObject.h"
 
-@class CAShapeLayer;
-
-@interface AORLevy : NSObject
--(id)initWithShapeLayer:(CAShapeLayer *)layer linePath:(CGMutablePathRef)path;
-- (void)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 depth:(int)depth;
+@interface AORLevy : AORObject <AORObjectProtocol>
+- (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2;
 @end

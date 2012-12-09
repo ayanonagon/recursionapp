@@ -10,59 +10,72 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORLevy ()
-@property (weak, nonatomic) CAShapeLayer *shapeLayer;
-@property CGMutablePathRef linePath;
+@property CGPoint p1, p2;
 @end
+
+#define MAX_DEPTH 13
 
 @implementation AORLevy
 
--(id)initWithShapeLayer:(CAShapeLayer *)layer linePath:(CGMutablePathRef)path
+- (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2
+{
+    return [self initWithP1:p1 p2:p2 depth:MAX_DEPTH];
+}
+
+- (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 depth:(int)depth
 {
     self = [super init];
     if (self) {
-        self.shapeLayer = layer;
-        self.linePath = path;
+        self.p1 = p1;
+        self.p2 = p2;
+        self.depth = depth;
+        [self configureShape];
     }
     return self;
 }
 
-#pragma mark - The Magic
-
--(void)startAnimation
+- (void)defineShapePath
 {
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 3.0;
-    pathAnimation.fromValue = @0.0;
-    pathAnimation.toValue = @1.0;
-    [pathAnimation setDelegate:self];
-    [self.shapeLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
-}
-
-- (void)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 depth:(int)depth
-{
-    CGFloat dist = sqrt(powf((p1.x+p2.x),2) + powf((p1.y+p2.y), 2));
-    CGFloat xdir = p2.x-p1.x;
-    CGFloat ydir = p2.y-p1.y;
+    CGFloat dist = sqrt(powf((self.p1.x+self.p2.x),2) + powf((self.p1.y+self.p2.y), 2));
+    CGFloat xdir = self.p2.x-self.p1.x;
+    CGFloat ydir = self.p2.y-self.p1.y;
     CGFloat perpx = -ydir/2;
     CGFloat perpy = xdir/2;
-    CGPoint mid = CGPointMake((p1.x+p2.x)/2, (p1.y+p2.y)/2);
+    CGPoint mid = CGPointMake((self.p1.x+self.p2.x)/2, (self.p1.y+self.p2.y)/2);
     CGPoint newPoint = CGPointMake(mid.x+perpx, mid.y+perpy);
     
-    if (depth == 1){
-    CGPathMoveToPoint(self.linePath, NULL, p1.x, p1.y);
-    CGPathAddLineToPoint(self.linePath, NULL, newPoint.x, newPoint.y);
-    CGPathAddLineToPoint(self.linePath, NULL, p2.x, p2.y);
+//    CGPathMoveToPoint(self.linePath, NULL, self.p1.x, self.p1.y);
+//    CGPathAddLineToPoint(self.linePath, NULL, newPoint.x, newPoint.y);
+//    CGPathAddLineToPoint(self.linePath, NULL, self.p2.x, self.p2.y);
     //CGPathCloseSubpath(self.linePath);
-    [self startAnimation];
-    }
-    
-    else {
-        [self drawWithP1:p1 p2:newPoint depth:depth-1];
-        [self drawWithP1:newPoint p2:p2 depth:depth-1];
-    }
-    
-    
+
+    self.paths = [NSArray arrayWithObjects:
+                  [NSValue valueWithPointer:createPathFromPoints(self.p1, newPoint)],
+                  [NSValue valueWithPointer:createPathFromPoints(newPoint, self.p2)], nil];
+
+//    else {
+//        [self drawWithP1:self.p1 p2:newPoint depth:depth-1];
+//        [self drawWithP1:newPoint p2:self.p2 depth:depth-1];
+//    }
 }
 
+
+- (void)defineChildren
+{
+    CGFloat dist = sqrt(powf((self.p1.x+self.p2.x),2) + powf((self.p1.y+self.p2.y), 2));
+    CGFloat xdir = self.p2.x-self.p1.x;
+    CGFloat ydir = self.p2.y-self.p1.y;
+    CGFloat perpx = -ydir/2;
+    CGFloat perpy = xdir/2;
+    CGPoint mid = CGPointMake((self.p1.x+self.p2.x)/2, (self.p1.y+self.p2.y)/2);
+    CGPoint newPoint = CGPointMake(mid.x+perpx, mid.y+perpy);
+    
+    self.children = [NSArray arrayWithObjects:
+                     [[AORLevy alloc] initWithP1:self.p1 p2:newPoint depth:self.depth-1],
+                     [[AORLevy alloc] initWithP1:newPoint p2:self.p2 depth:self.depth-1], nil];
+    for (AORLevy *child in self.children) {
+        [self.layer addSublayer:child.layer];
+    }
+}
 
 @end
