@@ -34,15 +34,12 @@
 	self.rootLayer.frame = self.view.bounds;
 	[self.view.layer addSublayer:self.rootLayer];
     
-    // Set up line path and shape layer.
-    [self setUpLinePathAndShapeLayer];
-    
     // Set up drawing classes.
     /*self.sierpinski = [[AORSierpinski alloc] initWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
     [self.rootLayer addSublayer:self.sierpinski.layer];*/
 
     //for testing star
-    self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
+    // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     /*CGPoint p0 = CGPointMake(500, 500);
     CGPoint p1 = CGPointMake(600, 500);
     CGPoint p2 = CGPointMake(625, 575);
@@ -73,11 +70,10 @@
     [self.carpet drawWithP1:p1 p2:p2 p3:p3 p4:p4 depth:5];*/
     
     //for testing levy
-    self.levy = [[AORLevy alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-    CGPoint p1 = CGPointMake(200.0, 200.0);
-    CGPoint p2 = CGPointMake(500.0, 200.0);
-    [self.levy drawWithP1:p1 p2:p2 depth:15];
-
+//    self.levy = [[AORLevy alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
+//    CGPoint p1 = CGPointMake(200.0, 200.0);
+//    CGPoint p2 = CGPointMake(500.0, 200.0);
+//    [self.levy drawWithP1:p1 p2:p2 depth:15];
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,51 +86,87 @@
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    UITouch *touch = [touches anyObject];
-    CGPoint point = [touch locationInView:self.view];
+    [self clearCanvas];
+    NSArray *allTouches = [[event allTouches] allObjects];
     
-    // Set up line path and shape layer.
-    [self setUpLinePathAndShapeLayer];
-
     switch ([[event allTouches] count]) {
         case 1:
-            // This should be not a Sierpinski.
-            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+            [self handleOnePoint:allTouches];
             break;
         case 2:
-            // This should also be not a Sierpinski.
-            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+            [self handleTwoPoints:allTouches];
+            break;
         case 3:
-            // Draw Sierpinski
-            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+            [self handleThreePoints:allTouches];
+            break;
         case 4:
-            // This should also be not a Sierpinski.
-            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+            [self handleFourPoints:allTouches];
+            break;
         case 5:
-            // This should be the star.
-            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+            [self handleFivePoints:allTouches];
+            break;
         default:
             break;
     }
 }
 
+#pragma mark - Drawing
+
+-(void)handleOnePoint:(NSArray *)allTouches
+{
+    CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+    [self.rootLayer addSublayer:self.sierpinski.layer];
+}
+
+-(void)handleTwoPoints:(NSArray *)allTouches
+{
+    CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
+    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:CGPointMake(300.0, 150.0)];
+    [self.rootLayer addSublayer:self.sierpinski.layer];
+}
+
+-(void)handleThreePoints:(NSArray *)allTouches
+{
+    CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
+    CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
+    // Draw Sierpinski
+    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
+    [self.rootLayer addSublayer:self.sierpinski.layer];
+}
+
+-(void)handleFourPoints:(NSArray *)allTouches
+{
+    CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
+    CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
+    CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
+    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
+    [self.rootLayer addSublayer:self.sierpinski.layer];
+}
+
+-(void)handleFivePoints:(NSArray *)allTouches
+{
+    CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
+    CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
+    CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
+    CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
+    // This should be the star.
+    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
+    [self.rootLayer addSublayer:self.sierpinski.layer];
+}
+
+
 #pragma mark - Utils
 
--(void)setUpLinePathAndShapeLayer
+-(void)clearCanvas
 {
-    // Set up the line path.
-    self.linePath = CGPathCreateMutable();
-    
-    // Set up shape layer.
-    [self.shapeLayer removeFromSuperlayer];
-    self.shapeLayer = [CAShapeLayer layer];
-    self.shapeLayer.path = self.linePath;
-	UIColor *strokeColor = [UIColor colorWithRed:0.2 green:.6313 blue:.7882 alpha:1.0];
-	self.shapeLayer.strokeColor = strokeColor.CGColor;
-	self.shapeLayer.lineWidth = 1.5;
-    UIColor *fillColor = [UIColor darkGrayColor];
-    self.shapeLayer.fillColor = fillColor.CGColor;
-	self.shapeLayer.fillRule = kCAFillRuleNonZero;
-	[self.rootLayer addSublayer:self.shapeLayer];
+    for (CALayer *layer in self.rootLayer.sublayers) {
+        [layer removeFromSuperlayer];
+    }
 }
+
 @end
