@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3381038D1673ED24006781FF /* AORStar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3381038C1673ED24006781FF /* AORStar.m */; };
-<<<<<<< HEAD
 		DC2EAC7B1674484600D3391F /* AORExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2EAC7A1674484600D3391F /* AORExamples.m */; };
-=======
 		33810391167434C0006781FF /* AORCarpet.m in Sources */ = {isa = PBXBuildFile; fileRef = 33810390167434C0006781FF /* AORCarpet.m */; };
->>>>>>> 1077c666bcae27a6cc0029018dae98cdc2f18b46
 		E06F92E516722A7000BED8B7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F92E416722A7000BED8B7 /* UIKit.framework */; };
 		E06F92E716722A7000BED8B7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F92E616722A7000BED8B7 /* Foundation.framework */; };
 		E06F92E916722A7000BED8B7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F92E816722A7000BED8B7 /* CoreGraphics.framework */; };
@@ -32,13 +29,10 @@
 /* Begin PBXFileReference section */
 		3381038B1673ED24006781FF /* AORStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORStar.h; sourceTree = "<group>"; };
 		3381038C1673ED24006781FF /* AORStar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORStar.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		DC2EAC791674484600D3391F /* AORExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORExamples.h; sourceTree = "<group>"; };
 		DC2EAC7A1674484600D3391F /* AORExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORExamples.m; sourceTree = "<group>"; };
-=======
 		3381038F167434C0006781FF /* AORCarpet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORCarpet.h; sourceTree = "<group>"; };
 		33810390167434C0006781FF /* AORCarpet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORCarpet.m; sourceTree = "<group>"; };
->>>>>>> 1077c666bcae27a6cc0029018dae98cdc2f18b46
 		E06F92E016722A7000BED8B7 /* Recursion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recursion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06F92E416722A7000BED8B7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E06F92E616722A7000BED8B7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -213,11 +207,8 @@
 				E06F930416722A7000BED8B7 /* AORViewController.m in Sources */,
 				E06F931516722FF000BED8B7 /* AORSierpinski.m in Sources */,
 				3381038D1673ED24006781FF /* AORStar.m in Sources */,
-<<<<<<< HEAD
 				DC2EAC7B1674484600D3391F /* AORExamples.m in Sources */,
-=======
 				33810391167434C0006781FF /* AORCarpet.m in Sources */,
->>>>>>> 1077c666bcae27a6cc0029018dae98cdc2f18b46
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
