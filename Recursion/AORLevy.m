@@ -13,8 +13,6 @@
 @property CGPoint p1, p2;
 @end
 
-#define MAX_DEPTH 13
-
 @implementation AORLevy
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2
@@ -36,33 +34,21 @@
 
 - (void)defineShapePath
 {
-    CGFloat dist = sqrt(powf((self.p1.x+self.p2.x),2) + powf((self.p1.y+self.p2.y), 2));
     CGFloat xdir = self.p2.x-self.p1.x;
     CGFloat ydir = self.p2.y-self.p1.y;
     CGFloat perpx = -ydir/2;
     CGFloat perpy = xdir/2;
     CGPoint mid = CGPointMake((self.p1.x+self.p2.x)/2, (self.p1.y+self.p2.y)/2);
     CGPoint newPoint = CGPointMake(mid.x+perpx, mid.y+perpy);
-    
-//    CGPathMoveToPoint(self.linePath, NULL, self.p1.x, self.p1.y);
-//    CGPathAddLineToPoint(self.linePath, NULL, newPoint.x, newPoint.y);
-//    CGPathAddLineToPoint(self.linePath, NULL, self.p2.x, self.p2.y);
-    //CGPathCloseSubpath(self.linePath);
 
     self.paths = [NSArray arrayWithObjects:
                   [NSValue valueWithPointer:createPathFromPoints(self.p1, newPoint)],
                   [NSValue valueWithPointer:createPathFromPoints(newPoint, self.p2)], nil];
-
-//    else {
-//        [self drawWithP1:self.p1 p2:newPoint depth:depth-1];
-//        [self drawWithP1:newPoint p2:self.p2 depth:depth-1];
-//    }
 }
 
 
 - (void)defineChildren
 {
-    CGFloat dist = sqrt(powf((self.p1.x+self.p2.x),2) + powf((self.p1.y+self.p2.y), 2));
     CGFloat xdir = self.p2.x-self.p1.x;
     CGFloat ydir = self.p2.y-self.p1.y;
     CGFloat perpx = -ydir/2;

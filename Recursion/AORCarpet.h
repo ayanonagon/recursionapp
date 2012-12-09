@@ -9,10 +9,8 @@
 #import <Foundation/Foundation.h>
 #include "AORObject.h"
 
-@class CAShapeLayer;
+#define MAX_DEPTH 3
 
 @interface AORCarpet : AORObject <AORObjectProtocol>
-
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 p4:(CGPoint)p4;
-
 @end
