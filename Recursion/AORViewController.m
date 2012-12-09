@@ -9,6 +9,7 @@
 #import "AORViewController.h"
 #import "AORSierpinski.h"
 #import "AORStar.h"
+#import "AORCarpet.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORViewController ()
@@ -17,6 +18,7 @@
 @property CGMutablePathRef linePath;
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORStar *star;
+@property (strong, nonatomic) AORCarpet *carpet;
 @end
 
 @implementation AORViewController
@@ -44,7 +46,7 @@
     CGPoint p1 = CGPointMake(600, 500);
     CGPoint p2 = CGPointMake(625, 575);
     CGPoint p3 = CGPointMake(550, 625);
-    CGPoint p4 = CGPointMake(475, 575);*/
+    CGPoint p4 = CGPointMake(475, 575);
     CGPoint p0 = CGPointMake(400, 600);
     CGPoint p1 = CGPointMake(410, 600);
     CGPoint p2 = CGPointMake(412, 607.2);
@@ -57,8 +59,20 @@
                        [NSValue valueWithCGPoint:p3],
                        [NSValue valueWithCGPoint:p4],
                        nil];
+<<<<<<< HEAD
     [self.star drawWithPoints:points depth:6];
 >>>>>>> 46705bde828a0608f7554686372ddb4036b0cba9
+=======
+    [self.star drawWithPoints:points depth:6];*/
+    
+    //for testing carpet
+    self.carpet = [[AORCarpet alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
+    CGPoint p1 = CGPointMake(200.0, 200.0);
+    CGPoint p2 = CGPointMake(600.0, 200.0);
+    CGPoint p3 = CGPointMake(600.0, 600.0);
+    CGPoint p4 = CGPointMake(200.0, 600.0);
+    [self.carpet drawWithP1:p1 p2:p2 p3:p3 p4:p4 depth:5];
+>>>>>>> 1077c666bcae27a6cc0029018dae98cdc2f18b46
 
 }
 
@@ -111,9 +125,9 @@
     [self.shapeLayer removeFromSuperlayer];
     self.shapeLayer = [CAShapeLayer layer];
     self.shapeLayer.path = self.linePath;
-	UIColor *strokeColor = [UIColor greenColor];
+	UIColor *strokeColor = [UIColor colorWithRed:0.2 green:.6313 blue:.7882 alpha:1.0];
 	self.shapeLayer.strokeColor = strokeColor.CGColor;
-	self.shapeLayer.lineWidth = 2.0;
+	self.shapeLayer.lineWidth = 1.5;
     UIColor *fillColor = [UIColor darkGrayColor];
     self.shapeLayer.fillColor = fillColor.CGColor;
 	self.shapeLayer.fillRule = kCAFillRuleNonZero;
