@@ -7,6 +7,10 @@
 //
 
 #import "AORExamples.h"
+#import "AORSierpinski.h"
+#import "AORCarpet.h"
+
+#include <QuartzCore/QuartzCore.h>
 
 @implementation AORExamples
 
@@ -34,6 +38,20 @@
 //    [self.star drawWithPoints:points depth:6];
 //    return self;
     return self;
+}
+
++ (CALayer *)drawSierpinski
+{
+    return [[[AORSierpinski alloc] initWithP1:CGPointMake(100.0, 400.0) p2:CGPointMake(400.0, 400.0) p3:CGPointMake(200.0, 100.0)] layer];
+}
+
++ (CALayer*)drawCarpet
+{
+    CGPoint A = CGPointMake(100.0, 100.0);
+    CGPoint B = CGPointMake(100.0, 500.0);
+    CGPoint C = CGPointMake(500.0, 500.0);
+    CGPoint D = CGPointMake(500.0, 100.0);
+    return [[[AORCarpet alloc] initWithP1:A p2:B p3:C p4:D] layer];
 }
 
 @end

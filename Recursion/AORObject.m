@@ -8,9 +8,6 @@
 
 #import "AORObject.h"
 
-@interface AORObject ()
-@end
-
 @implementation AORObject
 
 - (id)configureShape
@@ -78,3 +75,11 @@
 }
 
 @end
+
+CGMutablePathRef createPathFromPoints(CGPoint p1, CGPoint p2)
+{
+    CGMutablePathRef line = CGPathCreateMutable();
+    CGPathMoveToPoint(line, NULL, p1.x, p1.y);
+    CGPathAddLineToPoint(line, NULL, p2.x, p2.y);
+    return line;
+}

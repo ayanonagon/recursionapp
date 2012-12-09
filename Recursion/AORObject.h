@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic) CALayer *layer;
 /* Call this method after initializing your shape's points. */
--(id)configureShape;
+- (id)configureShape;
 /* Stores all paths for this shape. */
 @property NSArray *paths;
 /* The animations of each path */
@@ -31,3 +31,6 @@
 /* How to draw the children */
 - (void)defineChildren;
 @end
+
+/* Returns a CGPathRef configured to draw from p1 to p2. */
+CGMutablePathRef createPathFromPoints(CGPoint p1, CGPoint p2);

@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <QuartzCore/QuartzCore.h>
 
 @interface AORExamples : NSObject
-
++ (CALayer *)drawSierpinski;
++ (CALayer *)drawCarpet;
 @end

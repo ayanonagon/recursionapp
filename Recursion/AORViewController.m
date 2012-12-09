@@ -11,6 +11,7 @@
 #import "AORStar.h"
 #import "AORCarpet.h"
 #import "AORLevy.h"
+#import "AORExamples.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORViewController ()
@@ -68,6 +69,8 @@
 //    CGPoint p1 = CGPointMake(200.0, 200.0);
 //    CGPoint p2 = CGPointMake(500.0, 200.0);
 //    [self.levy drawWithP1:p1 p2:p2 depth:15];
+// [self.rootLayer addSublayer:[AORExamples drawSierpinski]];
+    [self.rootLayer addSublayer:[AORExamples drawCarpet]];
 }
 
 - (void)didReceiveMemoryWarning

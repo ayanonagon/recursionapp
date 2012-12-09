@@ -11,10 +11,8 @@
 
 @class CAShapeLayer;
 
-@interface AORCarpet : NSObject <AORObjectProtocol>
+@interface AORCarpet : AORObject <AORObjectProtocol>
 
-@property (strong, nonatomic) CALayer *layer;
-
-- (void)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 p4:(CGPoint)p4;
+- (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 p4:(CGPoint)p4;
 
 @end
