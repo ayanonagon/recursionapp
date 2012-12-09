@@ -31,19 +31,12 @@
 
 @implementation AORSierpinski
 
+#define MAX_DEPTH 7
+
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3
 {
     self = [super init];
-    if (self) {
-        self.p1 = p1;
-        self.p2 = p2;
-        self.p3 = p3;
-        self.depth = 5;
-        self.animationStopped = NO;
-        [self defineShapePath];
-        [self defineShapeLayer];
-    }
-    return self;
+    return [self initWithP1:p1 p2:p2 p3:p3 depth:MAX_DEPTH];
 }
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth

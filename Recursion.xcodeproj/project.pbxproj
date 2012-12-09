@@ -36,6 +36,7 @@
 		338103971674524D006781FF /* AORLevy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORLevy.m; sourceTree = "<group>"; };
 		DC2EAC791674484600D3391F /* AORExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORExamples.h; sourceTree = "<group>"; };
 		DC2EAC7A1674484600D3391F /* AORExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORExamples.m; sourceTree = "<group>"; };
+		DCF212F316751023000EB240 /* AORObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AORObject.h; sourceTree = "<group>"; };
 		E06F92E016722A7000BED8B7 /* Recursion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recursion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06F92E416722A7000BED8B7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E06F92E616722A7000BED8B7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -110,6 +111,7 @@
 				E06F92FF16722A7000BED8B7 /* MainStoryboard_iPad.storyboard */,
 				E06F930216722A7000BED8B7 /* AORViewController.h */,
 				E06F930316722A7000BED8B7 /* AORViewController.m */,
+				DCF212F316751023000EB240 /* AORObject.h */,
 				3381038F167434C0006781FF /* AORCarpet.h */,
 				33810390167434C0006781FF /* AORCarpet.m */,
 				338103961674524D006781FF /* AORLevy.h */,
