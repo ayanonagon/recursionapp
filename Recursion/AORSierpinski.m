@@ -26,7 +26,7 @@
     return self;
 }
 
-# pragma mark - The Magic
+#pragma mark - The Magic
 
 -(void)startAnimation
 {

@@ -42,7 +42,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-# pragma mark Touch Handling
+#pragma mark - Touch Handling
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -59,7 +59,7 @@
     [self.shapeLayer setNeedsDisplay];
 }
 
-# pragma mark Utils
+#pragma mark - Utils
 
 -(void)setUpLinePathAndShapeLayer
 {
