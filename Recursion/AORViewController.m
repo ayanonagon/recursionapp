@@ -69,9 +69,8 @@
 //    CGPoint p1 = CGPointMake(200.0, 200.0);
 //    CGPoint p2 = CGPointMake(500.0, 200.0);
 //    [self.levy drawWithP1:p1 p2:p2 depth:15];
-    [self.rootLayer addSublayer:[AORExamples drawSierpinski]];
-    [self.rootLayer addSublayer:[AORExamples drawCarpet]];
-    [self.rootLayer addSublayer:[AORExamples drawLevy]];
+// [self.rootLayer addSublayer:[AORExamples drawSierpinski]];
+//[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,8 +120,9 @@
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
-    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:CGPointMake(300.0, 150.0)];
-    [self.rootLayer addSublayer:self.sierpinski.layer];
+    self.levy = [[AORLevy alloc] initWithP1:point0 p2:point1];
+    [self.rootLayer addSublayer:self.levy.layer];
+    
 }
 
 -(void)handleThreePoints:(NSArray *)allTouches
