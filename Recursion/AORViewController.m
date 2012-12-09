@@ -15,8 +15,6 @@
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;
-@property (strong, nonatomic) CAShapeLayer *shapeLayer;
-@property CGMutablePathRef linePath;
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORStar *star;
 @property (strong, nonatomic) AORCarpet *carpet;
@@ -33,10 +31,6 @@
     self.rootLayer	= [CALayer layer];
 	self.rootLayer.frame = self.view.bounds;
 	[self.view.layer addSublayer:self.rootLayer];
-    
-    // Set up drawing classes.
-    self.sierpinski = [[AORSierpinski alloc] initWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
-    [self.rootLayer addSublayer:self.sierpinski.layer];
 
     //for testing star
     // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
@@ -132,7 +126,6 @@
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
-    // Draw Sierpinski
     self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
     [self.rootLayer addSublayer:self.sierpinski.layer];
 }
@@ -154,7 +147,6 @@
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
     CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
-    // This should be the star.
     self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
     [self.rootLayer addSublayer:self.sierpinski.layer];
 }

@@ -31,7 +31,7 @@
 
 @implementation AORSierpinski
 
-#define MAX_DEPTH 7
+#define MAX_DEPTH 5
 
 - (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3
 {
