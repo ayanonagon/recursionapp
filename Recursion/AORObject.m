@@ -39,7 +39,7 @@
         CGPathRelease(path);
     }
     self.paths = nil;
-    self.layer = nil;
+    [self.layer removeAllAnimations];
 }
 
 - (void)defineShapeLayer
