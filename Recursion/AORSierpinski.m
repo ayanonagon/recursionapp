@@ -38,15 +38,6 @@
     [self.shapeLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
--(void)setupPathWithPoint:(CGPoint)start endPoint:(CGPoint)end
-{
-    CGPathMoveToPoint(self.linePath, NULL, start.x, start.y);
-    CGPathAddLineToPoint(self.linePath, NULL, end.x, end.y);
-    
-    CGPathCloseSubpath(self.linePath);
-    [self startAnimation];
-}
-
 - (void)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth
 {
     CGPathMoveToPoint(self.linePath, NULL, p1.x, p1.y);
