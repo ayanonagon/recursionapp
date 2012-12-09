@@ -32,8 +32,9 @@
     [self setUpLinePathAndShapeLayer];
     
     // Set up drawing classes.
-    self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-    [self.sierpinski drawWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+    self.sierpinski = [[AORSierpinski alloc] initWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+    [self.rootLayer addSublayer:self.sierpinski.shapeLayer];
+    [self.sierpinski.shapeLayer setNeedsDisplay];
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,25 +56,20 @@
     switch ([[event allTouches] count]) {
         case 1:
             // This should be not a Sierpinski.
-            self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-            [self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
             break;
         case 2:
             // This should also be not a Sierpinski.
-            self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-            [self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
         case 3:
             // Draw Sierpinski
-            self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-            [self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
         case 4:
             // This should also be not a Sierpinski.
-            self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-            [self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
         case 5:
             // This should be the star.
-            self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-            [self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+            self.sierpinski = [[AORSierpinski alloc] initWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
         default:
             break;
     }

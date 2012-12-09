@@ -11,7 +11,11 @@
 @class CAShapeLayer;
 
 @interface AORSierpinski : NSObject
--(id)initWithShapeLayer:(CAShapeLayer *)layer linePath:(CGMutablePathRef)path;
-- (void)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth;
+@property (strong, nonatomic) CAShapeLayer *shapeLayer;
+
+-(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3;
+-(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth;
+-(void)startDrawing;
+-(void)stopDrawing;
 @end
 
