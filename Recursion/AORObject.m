@@ -39,6 +39,7 @@
         CGPathRelease(path);
     }
     self.paths = nil;
+    self.layer = nil;
 }
 
 - (void)defineShapeLayer
