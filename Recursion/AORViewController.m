@@ -35,11 +35,10 @@
     // Set up line path and shape layer.
     [self setUpLinePathAndShapeLayer];
     
-<<<<<<< HEAD
     // Set up drawing classes.
     self.sierpinski = [[AORSierpinski alloc] initWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
     [self.rootLayer addSublayer:self.sierpinski.layer];
-=======
+
     //for testing star
     self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     /*CGPoint p0 = CGPointMake(500, 500);
@@ -59,10 +58,8 @@
                        [NSValue valueWithCGPoint:p3],
                        [NSValue valueWithCGPoint:p4],
                        nil];
-<<<<<<< HEAD
+
     [self.star drawWithPoints:points depth:6];
->>>>>>> 46705bde828a0608f7554686372ddb4036b0cba9
-=======
     [self.star drawWithPoints:points depth:6];*/
     
     //for testing carpet
@@ -72,7 +69,6 @@
     CGPoint p3 = CGPointMake(600.0, 600.0);
     CGPoint p4 = CGPointMake(200.0, 600.0);
     [self.carpet drawWithP1:p1 p2:p2 p3:p3 p4:p4 depth:5];
->>>>>>> 1077c666bcae27a6cc0029018dae98cdc2f18b46
 
 }
 
