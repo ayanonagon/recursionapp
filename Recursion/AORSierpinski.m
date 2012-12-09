@@ -21,11 +21,9 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORSierpinski ()
-@property CGMutablePathRef linePath;
-@property CABasicAnimation *pathAnimation;
-@property CGPoint p1;
-@property CGPoint p2;
-@property CGPoint p3;
+@property NSArray *lines;
+@property CAAnimationGroup *lineAnimations;
+@property CGPoint p1, p2, p3;
 @property NSArray *children;
 @property int depth;
 @end
@@ -42,8 +40,8 @@
         self.depth = 5;
         [self defineShapePath];
         [self defineShapeLayer];
-        [self defineShapeAnimation];
-        //[self defineChildren];
+        
+        [self defineChildren];
     }
     return self;
 }
@@ -58,9 +56,10 @@
         self.depth = depth;
         [self defineShapePath];
         [self defineShapeLayer];
-        [self defineShapeAnimation];
-//        if (self.depth)
-  //          [self defineChildren];
+        
+        if (self.depth) {
+            [self defineChildren];
+        }
     }
     return self;
 }
@@ -77,40 +76,65 @@
     AORSierpinski *c3 = [[AORSierpinski alloc] initWithP1:c p2:self.p2 p3:b depth:self.depth-1];
     self.children = [NSArray arrayWithObjects:c1, c2, c3, nil];
     for (AORSierpinski *child in self.children) {
-        [self.shapeLayer addSublayer:child.shapeLayer];
+        [self.layer addSublayer:child.layer];
     }
 }
 
 -(void)defineShapeLayer
 {
-    self.shapeLayer = [CAShapeLayer layer];
-    self.shapeLayer.path = self.linePath;
-	UIColor *strokeColor = [UIColor blackColor];
-	self.shapeLayer.strokeColor = strokeColor.CGColor;
-	self.shapeLayer.lineWidth = 2.0;
-    UIColor *fillColor = [UIColor darkGrayColor];
-    self.shapeLayer.fillColor = fillColor.CGColor;
-	self.shapeLayer.fillRule = kCAFillRuleNonZero;
+    self.layer = [CALayer layer];
+    
+    for (NSValue *lineWrapped in self.lines) {
+        CGMutablePathRef line = [lineWrapped pointerValue];
+        CAShapeLayer *lineLayer = [CAShapeLayer layer];
+        lineLayer.path = line;
+        UIColor *strokeColor = [UIColor blackColor];
+        lineLayer.strokeColor = strokeColor.CGColor;
+        lineLayer.lineWidth = 2.0;
+        UIColor *fillColor = [UIColor darkGrayColor];
+        lineLayer.fillColor = fillColor.CGColor;
+        lineLayer.fillRule = kCAFillRuleNonZero;
+        
+        [self setAnimationForLineLayer:lineLayer];
+        
+        [self.layer addSublayer:lineLayer];
+    }
+    
+	
 }
 
--(void)defineShapeAnimation
+-(void)setAnimationForLineLayer:(CAShapeLayer*) lineLayer
 {
-    self.pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    self.pathAnimation.duration = 3.0;
-    self.pathAnimation.fromValue = @0.0;
-    self.pathAnimation.toValue = @1.0;
-    [self.pathAnimation setDelegate:self];
-    [self.shapeLayer addAnimation:self.pathAnimation forKey:@"strokeEndAnimation"];
+    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+    pathAnimation.duration = 5.0;
+    pathAnimation.fromValue = @0.0;
+    pathAnimation.toValue = @1.0;
+    [pathAnimation setDelegate:self];
+    [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
 - (void)defineShapePath
 {
-    self.linePath = CGPathCreateMutable();
-    CGPathMoveToPoint(self.linePath, NULL, self.p1.x, self.p1.y);
-    CGPathAddLineToPoint(self.linePath, NULL, self.p2.x, self.p2.y);
-    CGPathAddLineToPoint(self.linePath, NULL, self.p3.x, self.p3.y);
-    CGPathAddLineToPoint(self.linePath, NULL, self.p1.x, self.p1.y);
-    CGPathCloseSubpath(self.linePath);
+    CGMutablePathRef line1 = CGPathCreateMutable();
+    CGMutablePathRef line2 = CGPathCreateMutable();
+    CGMutablePathRef line3 = CGPathCreateMutable();
+    
+    CGPathMoveToPoint(line1, NULL, self.p1.x, self.p1.y);
+    CGPathAddLineToPoint(line1, NULL, self.p2.x, self.p2.y);
+    CGPathCloseSubpath(line1);
+    
+    CGPathMoveToPoint(line2, NULL, self.p2.x, self.p2.y);
+    CGPathAddLineToPoint(line2, NULL, self.p3.x, self.p3.y);
+    CGPathCloseSubpath(line2);
+    
+    CGPathMoveToPoint(line3, NULL, self.p3.x, self.p3.y);
+    CGPathAddLineToPoint(line3, NULL, self.p1.x, self.p1.y);
+    CGPathCloseSubpath(line3);
+    
+    self.lines = [NSArray arrayWithObjects:
+                  [NSValue valueWithPointer:line1],
+                  [NSValue valueWithPointer:line2],
+                  [NSValue valueWithPointer:line3], nil];
 }
 
 -(void)startDrawing {

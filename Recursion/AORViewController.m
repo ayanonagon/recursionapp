@@ -33,8 +33,8 @@
     
     // Set up drawing classes.
     self.sierpinski = [[AORSierpinski alloc] initWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
-    [self.rootLayer addSublayer:self.sierpinski.shapeLayer];
-    [self.sierpinski.shapeLayer setNeedsDisplay];
+    [self.rootLayer addSublayer:self.sierpinski.layer];
+
 }
 
 - (void)didReceiveMemoryWarning

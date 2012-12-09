@@ -11,7 +11,7 @@
 @class CAShapeLayer;
 
 @interface AORSierpinski : NSObject
-@property (strong, nonatomic) CAShapeLayer *shapeLayer;
+@property (strong, nonatomic) CALayer *layer;
 
 -(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3;
 -(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth;
