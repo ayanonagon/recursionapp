@@ -8,6 +8,7 @@
 
 #import "AORViewController.h"
 #import "AORSierpinski.h"
+#import "AORStar.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORViewController ()
@@ -15,6 +16,7 @@
 @property (strong, nonatomic) CAShapeLayer *shapeLayer;
 @property CGMutablePathRef linePath;
 @property (strong, nonatomic) AORSierpinski *sierpinski;
+@property (strong, nonatomic) AORStar *star;
 @end
 
 @implementation AORViewController
@@ -32,8 +34,30 @@
     [self setUpLinePathAndShapeLayer];
     
     // Set up drawing classes.
-    self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-    [self.sierpinski drawWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+    //self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
+    //[self.sierpinski drawWithP1:CGPointMake(100.0, 800.0) p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+    
+    //for testing star
+    self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
+    /*CGPoint p0 = CGPointMake(500, 500);
+    CGPoint p1 = CGPointMake(600, 500);
+    CGPoint p2 = CGPointMake(625, 575);
+    CGPoint p3 = CGPointMake(550, 625);
+    CGPoint p4 = CGPointMake(475, 575);*/
+    CGPoint p0 = CGPointMake(400, 600);
+    CGPoint p1 = CGPointMake(410, 600);
+    CGPoint p2 = CGPointMake(412, 607.2);
+    CGPoint p3 = CGPointMake(405, 612);
+    CGPoint p4 = CGPointMake(398, 607.2);
+    NSArray *points = [NSArray arrayWithObjects:
+                       [NSValue valueWithCGPoint:p0],
+                       [NSValue valueWithCGPoint:p1],
+                       [NSValue valueWithCGPoint:p2],
+                       [NSValue valueWithCGPoint:p3],
+                       [NSValue valueWithCGPoint:p4],
+                       nil];
+    [self.star drawWithPoints:points depth:6];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -55,8 +79,8 @@
     // Set up drawing classes.
     self.sierpinski = [[AORSierpinski alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     
-    [self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
-    [self.shapeLayer setNeedsDisplay];
+    //[self.sierpinski drawWithP1:point p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) depth:5];
+    //[self.shapeLayer setNeedsDisplay];
 }
 
 # pragma mark Utils
@@ -70,7 +94,7 @@
     [self.shapeLayer removeFromSuperlayer];
     self.shapeLayer = [CAShapeLayer layer];
     self.shapeLayer.path = self.linePath;
-	UIColor *strokeColor = [UIColor blackColor];
+	UIColor *strokeColor = [UIColor greenColor];
 	self.shapeLayer.strokeColor = strokeColor.CGColor;
 	self.shapeLayer.lineWidth = 2.0;
     UIColor *fillColor = [UIColor darkGrayColor];
