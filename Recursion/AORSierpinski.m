@@ -6,56 +6,143 @@
 //  Copyright (c) 2012 CIS 399 Project. All rights reserved.
 //
 
+/**
+ * By default, triangles will have a depth of 7, however,
+ * ideally we would want to continue creating sub-shapes as
+ * long as fingers are held down. Doing this dynamically is 
+ * a bit complicated, but each AORSierpinski object would have
+ * three children objects it calls the constructor and draw
+ * on after it has done animating. It is the 'done animating' that is
+ * difficult to figure out right now.
+ *
+ */
+
 #import "AORSierpinski.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORSierpinski ()
-@property (weak, nonatomic) CAShapeLayer *shapeLayer;
-@property CGMutablePathRef linePath;
+@property NSArray *lines;
+@property CAAnimationGroup *lineAnimations;
+@property CGPoint p1, p2, p3;
+@property NSArray *children;
+@property int depth;
 @end
 
 @implementation AORSierpinski
 
--(id)initWithShapeLayer:(CAShapeLayer *)layer linePath:(CGMutablePathRef)path
+- (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3
 {
     self = [super init];
     if (self) {
-        self.shapeLayer = layer;
-        self.linePath = path;
+        self.p1 = p1;
+        self.p2 = p2;
+        self.p3 = p3;
+        self.depth = 5;
+        [self defineShapePath];
+        [self defineShapeLayer];
+        
+        [self defineChildren];
+    }
+    return self;
+}
+
+- (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth
+{
+    self = [super init];
+    if (self) {
+        self.p1 = p1;
+        self.p2 = p2;
+        self.p3 = p3;
+        self.depth = depth;
+        [self defineShapePath];
+        [self defineShapeLayer];
+        
+        if (self.depth) {
+            [self defineChildren];
+        }
     }
     return self;
 }
 
 #pragma mark - The Magic
 
--(void)startAnimation
+-(void)defineChildren
+{
+    CGPoint a = CGPointMake((self.p1.x + self.p3.x)/2, (self.p1.y + self.p3.y)/2);
+    CGPoint b = CGPointMake((self.p3.x + self.p2.x)/2, (self.p2.y + self.p3.y)/2);
+    CGPoint c = CGPointMake((self.p1.x + self.p2.x)/2, (self.p1.y + self.p2.y)/2);
+    AORSierpinski *c1 = [[AORSierpinski alloc] initWithP1:a p2:b p3:self.p3 depth:self.depth-1];
+    AORSierpinski *c2 = [[AORSierpinski alloc] initWithP1:self.p1 p2:c p3:a depth:self.depth-1];
+    AORSierpinski *c3 = [[AORSierpinski alloc] initWithP1:c p2:self.p2 p3:b depth:self.depth-1];
+    self.children = [NSArray arrayWithObjects:c1, c2, c3, nil];
+    for (AORSierpinski *child in self.children) {
+        [self.layer addSublayer:child.layer];
+    }
+}
+
+-(void)defineShapeLayer
+{
+    self.layer = [CALayer layer];
+    
+    for (NSValue *lineWrapped in self.lines) {
+        CGMutablePathRef line = [lineWrapped pointerValue];
+        CAShapeLayer *lineLayer = [CAShapeLayer layer];
+        lineLayer.path = line;
+        UIColor *strokeColor = [UIColor blackColor];
+        lineLayer.strokeColor = strokeColor.CGColor;
+        lineLayer.lineWidth = 2.0;
+        UIColor *fillColor = [UIColor darkGrayColor];
+        lineLayer.fillColor = fillColor.CGColor;
+        lineLayer.fillRule = kCAFillRuleNonZero;
+        
+        [self setAnimationForLineLayer:lineLayer];
+        
+        [self.layer addSublayer:lineLayer];
+    }
+    
+	
+}
+
+-(void)setAnimationForLineLayer:(CAShapeLayer*) lineLayer
 {
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 3.0;
+    pathAnimation.duration = 5.0;
     pathAnimation.fromValue = @0.0;
     pathAnimation.toValue = @1.0;
     [pathAnimation setDelegate:self];
-    [self.shapeLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+    [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
-- (void)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth
+- (void)defineShapePath
 {
-    CGPathMoveToPoint(self.linePath, NULL, p1.x, p1.y);
-    CGPathAddLineToPoint(self.linePath, NULL, p2.x, p2.y);
-    CGPathAddLineToPoint(self.linePath, NULL, p3.x, p3.y);
-    CGPathAddLineToPoint(self.linePath, NULL, p1.x, p1.y);
-    CGPathCloseSubpath(self.linePath);
-    [self startAnimation];
+    CGMutablePathRef line1 = CGPathCreateMutable();
+    CGMutablePathRef line2 = CGPathCreateMutable();
+    CGMutablePathRef line3 = CGPathCreateMutable();
     
-    if (depth > 1) {
-        CGPoint a = CGPointMake((p1.x + p3.x)/2, (p1.y + p3.y)/2);
-        CGPoint b = CGPointMake((p3.x + p2.x)/2, (p2.y + p3.y)/2);
-        CGPoint c = CGPointMake((p1.x + p2.x)/2, (p1.y + p2.y)/2);
-        
-        [self drawWithP1:a p2:b p3:p3 depth:depth-1];
-        [self drawWithP1:p1 p2:c p3:a depth:depth-1];
-        [self drawWithP1:c p2:p2 p3:b depth:depth-1];
-    }
+    CGPathMoveToPoint(line1, NULL, self.p1.x, self.p1.y);
+    CGPathAddLineToPoint(line1, NULL, self.p2.x, self.p2.y);
+    CGPathCloseSubpath(line1);
+    
+    CGPathMoveToPoint(line2, NULL, self.p2.x, self.p2.y);
+    CGPathAddLineToPoint(line2, NULL, self.p3.x, self.p3.y);
+    CGPathCloseSubpath(line2);
+    
+    CGPathMoveToPoint(line3, NULL, self.p3.x, self.p3.y);
+    CGPathAddLineToPoint(line3, NULL, self.p1.x, self.p1.y);
+    CGPathCloseSubpath(line3);
+    
+    self.lines = [NSArray arrayWithObjects:
+                  [NSValue valueWithPointer:line1],
+                  [NSValue valueWithPointer:line2],
+                  [NSValue valueWithPointer:line3], nil];
+}
+
+-(void)startDrawing {
+
+}
+
+-(void)stopDrawing {
+    
 }
 
 @end
