@@ -14,6 +14,7 @@
 {
     self.animationStopped = NO;
     self.layer = [CALayer layer];
+    self.paths = nil;
     [self defineShapePath];
     [self defineShapeLayer];
     return self;
@@ -29,7 +30,7 @@
     if (self.depth) {
         [self defineChildren];
     }
-    [self destroyPaths];
+    //[self destroyPaths];
 }
 
 - (void)destroyPaths
@@ -93,4 +94,10 @@ CGMutablePathRef createPathFromPoints(CGPoint p1, CGPoint p2)
     CGPathMoveToPoint(line, NULL, p1.x, p1.y);
     CGPathAddLineToPoint(line, NULL, p2.x, p2.y);
     return line;
+}
+
+void augmentPath(CGMutablePathRef path, CGPoint p1, CGPoint p2) {
+    // Need to clear path
+    CGPathMoveToPoint(path, NULL, p1.x, p1.y);
+    CGPathAddLineToPoint(path, NULL, p2.x, p2.y);
 }

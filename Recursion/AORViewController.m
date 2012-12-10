@@ -32,6 +32,11 @@
     self.rootLayer	= [CALayer layer];
 	self.rootLayer.frame = self.view.bounds;
 	[self.view.layer addSublayer:self.rootLayer];
+    
+    self.levy = [AORLevy alloc];
+    self.sierpinski = [AORSierpinski alloc];
+    self.carpet = [AORCarpet alloc];
+    self.star = [AORStar alloc];
 
     //for testing star
     // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
@@ -95,7 +100,7 @@
 -(void)handleOnePoint:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
-    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
+    [self.sierpinski initWithP1:point0 p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
     [self.rootLayer addSublayer:self.sierpinski.layer];
 }
 
@@ -103,7 +108,7 @@
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
-    self.levy = [[AORLevy alloc] initWithP1:point0 p2:point1];
+    [self.levy initWithP1:point0 p2:point1];
     [self.rootLayer addSublayer:self.levy.layer];
     
 }
@@ -113,7 +118,7 @@
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
-    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
+    [self.sierpinski initWithP1:point0 p2:point1 p3:point2];
     [self.rootLayer addSublayer:self.sierpinski.layer];
 }
 
@@ -123,7 +128,7 @@
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
-    self.carpet = [[AORCarpet alloc] initWithP1:point0 p2:point1 p3:point2 p4:point3];
+    [self.carpet initWithP1:point0 p2:point1 p3:point2 p4:point3];
     [self.rootLayer addSublayer:self.carpet.layer];
 }
 
@@ -134,7 +139,7 @@
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
     CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
-    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
+    [self.sierpinski initWithP1:point0 p2:point1 p3:point2];
     [self.rootLayer addSublayer:self.sierpinski.layer];
 }
 
@@ -144,14 +149,10 @@
 
 -(void)clearCanvas
 {
-    self.levy = nil;
-    self.sierpinski = nil;
-    self.carpet = nil;
-    self.star = nil;
-
     for (CALayer *layer in self.rootLayer.sublayers) {
         [layer removeFromSuperlayer];
     }
+    [self.levy clearLayers];
 }
 
 @end
