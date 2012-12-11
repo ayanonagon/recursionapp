@@ -20,7 +20,12 @@
     return self;
 }
 
-/* Defines children and their behavior for recursive animation/drawing */
+/**
+ * The recursive call; creates child objects.
+ *
+ * The finished flag to tell if we continue, then query
+ * the animation object for the key
+ */
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     if (self.animationStopped) {
@@ -33,6 +38,10 @@
     //[self destroyPaths];
 }
 
+// Why should they be destroyed? Can't I reuse them?
+// The problem is, those with high depth won't be re-used as often.
+// So, we look at the depth, and delete those with a larger than threshold
+// depth.
 - (void)destroyPaths
 {
     for (NSValue *lineWrapped in self.paths) {
@@ -43,6 +52,9 @@
     [self.layer removeAllAnimations];
 }
 
+/**
+ * Color of lines for this object
+ */
 - (void)defineShapeLayer
 {
     for (NSValue *lineWrapped in self.paths) {
@@ -55,7 +67,7 @@
         UIColor *fillColor = [UIColor darkGrayColor];
         pathLayer.fillColor = fillColor.CGColor;
         pathLayer.fillRule = kCAFillRuleNonZero;
-        
+
         [self setAnimationForPathLayer:pathLayer];
         [self.layer addSublayer:pathLayer];
     }
@@ -72,11 +84,11 @@
     [pathLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
-/** 
+/**
  * Must be overridden!
  */
 - (void)defineChildren {
-    
+
 }
 
 /**
