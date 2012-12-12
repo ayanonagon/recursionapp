@@ -49,8 +49,8 @@
         
 //[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
 //[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
-//[self.rootLayer addSublayer:[AORExamples drawStar]];
-    [ self.rootLayer addSublayer:[AORExamples drawOneTouch]];
+[self.rootLayer addSublayer:[AORExamples drawStar]];
+ //   [ self.rootLayer addSublayer:[AORExamples drawOneTouch]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,8 +92,8 @@
 -(void)handleOnePoint:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
-    [self.sierpinski initWithP1:point0 p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
-    [self.rootLayer addSublayer:self.sierpinski.layer];
+    [self.oneTouch initWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
+    [self.rootLayer addSublayer:self.oneTouch.layer];
 }
 
 -(void)handleTwoPoints:(NSArray *)allTouches

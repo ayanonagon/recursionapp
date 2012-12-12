@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AORObject.h"
 
-#define STAR_MAX_DEPTH 4
+#define STAR_MAX_DEPTH 5
 
 @interface AORStar : AORObject <AORObjectProtocol>
 - (id)initWithPoints:(NSArray *)points;

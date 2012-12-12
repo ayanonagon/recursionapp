@@ -9,14 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "AORObject.h"
 
-@class CAShapeLayer;
 
-@interface AOROneTouch : NSObject <AORObjectProtocol>
+#define MAX_DEPTH 5
 
-@property (strong, nonatomic) CALayer *layer;
-
+@interface AOROneTouch : AORObject <AORObjectProtocol>
 -(id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds;
--(id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds depth:(int)depth;
-
-
 @end
