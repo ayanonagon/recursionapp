@@ -49,7 +49,7 @@
         
 //[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
 //[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
-[self.rootLayer addSublayer:[AORExamples drawStar]];
+//[self.rootLayer addSublayer:[AORExamples drawStar]];
  //   [ self.rootLayer addSublayer:[AORExamples drawOneTouch]];
 }
 
