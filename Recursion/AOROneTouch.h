@@ -11,7 +11,7 @@
 
 @class CAShapeLayer;
 
-@interface AOROneTouch : NSObject <AORObject>
+@interface AOROneTouch : NSObject <AORObjectProtocol>
 
 @property (strong, nonatomic) CALayer *layer;
 

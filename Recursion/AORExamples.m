@@ -11,6 +11,7 @@
 #import "AORCarpet.h"
 #import "AORLevy.h"
 #import "AORStar.h"
+#import "AOROneTouch.h"
 
 #include <QuartzCore/QuartzCore.h>
 
@@ -56,6 +57,13 @@
                        nil];
     
     return [[[AORStar alloc] initWithPoints:points] layer];
+}
+
++ (CALayer *)drawOneTouch
+{
+    CGRect bounds = CGRectMake(0.0, 0.0, 500.0, 500.0);
+    CGPoint p = CGPointMake(400, 200.0);
+    return [[[AOROneTouch alloc] initWithP1:p bounds:bounds depth:5] layer];
 }
 
 @end

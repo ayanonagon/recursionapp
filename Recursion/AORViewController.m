@@ -12,6 +12,7 @@
 #import "AORCarpet.h"
 #import "AORLevy.h"
 #import "AORExamples.h"
+#import "AOROneTouch.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORViewController ()
@@ -20,6 +21,7 @@
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
+@property (strong, nonatomic) AOROneTouch *oneTouch;
 @end
 
 @implementation AORViewController
@@ -37,28 +39,18 @@
     self.sierpinski = [AORSierpinski alloc];
     self.carpet = [AORCarpet alloc];
     self.star = [AORStar alloc];
+    self.oneTouch = [AOROneTouch alloc];
 
     //for testing star
     // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     /*
     [self.star drawWithPoints:points depth:6];*/
     
-    //for testing carpet
-    /*self.carpet = [[AORCarpet alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-    CGPoint p1 = CGPointMake(200.0, 200.0);
-    CGPoint p2 = CGPointMake(600.0, 100.0);
-    CGPoint p3 = CGPointMake(700.0, 600.0);
-    CGPoint p4 = CGPointMake(400.0, 700.0);
-    [self.carpet drawWithP1:p1 p2:p2 p3:p3 p4:p4 depth:5];*/
-    
-    //for testing levy
-//    self.levy = [[AORLevy alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-//    CGPoint p1 = CGPointMake(200.0, 200.0);
-//    CGPoint p2 = CGPointMake(500.0, 200.0);
-//    [self.levy drawWithP1:p1 p2:p2 depth:15];
+        
 //[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
 //[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
 //[self.rootLayer addSublayer:[AORExamples drawStar]];
+    [ self.rootLayer addSublayer:[AORExamples drawOneTouch]];
 }
 
 - (void)didReceiveMemoryWarning
