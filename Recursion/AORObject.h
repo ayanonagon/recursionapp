@@ -10,10 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface AORObject : NSObject
-
-@property (strong, nonatomic) CALayer *layer;
-/* Call this method after initializing your shape's points. */
-- (id)configureShape;
+@property (strong, nonatomic) CAShapeLayer *layer;
 /* Stores all paths for this shape. */
 @property NSArray *paths;
 /* The animations of each path */
@@ -23,6 +20,11 @@
 /* The depth of this drawing */
 @property int depth;
 @property (atomic) BOOL animationStopped;
+/* TODO: Ideally, this class method will create the appropriate
+ * objects given the number of points. */
++ (AORObject *)objectFromPoints:(NSArray *) points;
+/* Call this method after initializing your shape's points. */
+- (id)configureShape;
 @end
 
 @protocol AORObjectProtocol <NSObject>
@@ -34,6 +36,7 @@
 
 /* Returns a CGPathRef configured to draw from p1 to p2. */
 CGMutablePathRef createPathFromPoints(CGPoint p1, CGPoint p2);
-
-/* Augments an existing CGPathRef to draw differently. */
+/* Augments an existing CGPathRef to draw differently.
+ * THIS DOES NOT WORK ON PATHS APPARENTLY.
+ */
 void augmentPath(CGMutablePathRef path, CGPoint p1, CGPoint p2);

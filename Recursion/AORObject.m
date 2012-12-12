@@ -13,7 +13,7 @@
 - (id)configureShape
 {
     self.animationStopped = NO;
-    self.layer = [CALayer layer];
+    self.layer = [CAShapeLayer layer];
     self.paths = nil;
     [self defineShapePath];
     [self defineShapeLayer];
@@ -44,6 +44,9 @@
 // depth.
 - (void)destroyPaths
 {
+    // We need to assign a new layer, because the old one will
+    // have been faded out, and it contains the sublayers we will
+    // resuse.. Actually, do we not create new ones?
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef path = [lineWrapped pointerValue];
         CGPathRelease(path);
@@ -64,24 +67,36 @@
         UIColor *strokeColor = [UIColor blackColor];
         pathLayer.strokeColor = strokeColor.CGColor;
         pathLayer.lineWidth = 1.0;
-        UIColor *fillColor = [UIColor darkGrayColor];
+        UIColor *fillColor = [UIColor redColor];
         pathLayer.fillColor = fillColor.CGColor;
         pathLayer.fillRule = kCAFillRuleNonZero;
 
         [self setAnimationForPathLayer:pathLayer];
         [self.layer addSublayer:pathLayer];
     }
+    self.layer.fillColor = [[UIColor redColor] CGColor];
+    self.layer.fillRule = kCAFillRuleNonZero;
 }
 
 - (void)setAnimationForPathLayer:(CAShapeLayer *)pathLayer
 {
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 0.5;
+    pathAnimation.duration = 0.3;
     pathAnimation.fromValue = @0.0;
     pathAnimation.toValue = @1.0;
     [pathAnimation setDelegate:self];
     pathAnimation.autoreverses = NO;
     [pathLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
+}
+
+/* We need this to get rid of CG objects that are 
+ * not automatically looked after by ARC.
+ */
+- (void)dealloc {
+    for (NSValue *lineWrapped in self.paths) {
+        CGMutablePathRef line = [lineWrapped pointerValue];
+        CGPathRelease(line);
+    }
 }
 
 /**

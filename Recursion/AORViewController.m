@@ -20,6 +20,7 @@
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
+@property (strong, nonatomic) NSMutableArray *objects;
 @end
 
 @implementation AORViewController
@@ -27,22 +28,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     // Set up the root layer.
     self.rootLayer	= [CALayer layer];
-	self.rootLayer.frame = self.view.bounds;
-	[self.view.layer addSublayer:self.rootLayer];
-    
-    self.levy = [AORLevy alloc];
-    self.sierpinski = [AORSierpinski alloc];
-    self.carpet = [AORCarpet alloc];
-    self.star = [AORStar alloc];
+    self.rootLayer.frame = self.view.bounds;
+    [self.view.layer addSublayer:self.rootLayer];
+
+//    self.levy = [AORLevy alloc];
+//    self.sierpinski = [AORSierpinski alloc];
+//    self.carpet = [AORCarpet alloc];
+//    self.star = [AORStar alloc];
 
     //for testing star
     // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     /*
     [self.star drawWithPoints:points depth:6];*/
-    
+
     //for testing carpet
     /*self.carpet = [[AORCarpet alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     CGPoint p1 = CGPointMake(200.0, 200.0);
@@ -50,7 +51,7 @@
     CGPoint p3 = CGPointMake(700.0, 600.0);
     CGPoint p4 = CGPointMake(400.0, 700.0);
     [self.carpet drawWithP1:p1 p2:p2 p3:p3 p4:p4 depth:5];*/
-    
+
     //for testing levy
 //    self.levy = [[AORLevy alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
 //    CGPoint p1 = CGPointMake(200.0, 200.0);
@@ -59,6 +60,7 @@
 //[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
 //[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
 //[self.rootLayer addSublayer:[AORExamples drawStar]];
+    //[self.rootLayer addSublayer:[AORExamples drawLevy]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,7 +75,7 @@
 {
     [self clearCanvas];
     NSArray *allTouches = [[event allTouches] allObjects];
-    
+
     switch ([[event allTouches] count]) {
         case 1:
             [self handleOnePoint:allTouches];
@@ -95,22 +97,37 @@
     }
 }
 
+// This would work ideally. Trying to refine the interface to
+// AOR objects
+-(void)touchesMoved2:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSArray *allTouches = [[event allTouches] allObjects];
+    int n = [[event allTouches] count];
+    NSMutableArray *points = [NSMutableArray array];
+    for (int i = 0; i < n; i++) {
+        [points addObject:[NSValue valueWithCGPoint:
+                           [[allTouches objectAtIndex:i]
+                            locationInView:self.view]]];
+    }
+    //[self.objects addObject:[AORObject objectFromPoints:points]];
+}
+
 #pragma mark - Drawing
 
 -(void)handleOnePoint:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
-    [self.sierpinski initWithP1:point0 p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0)];
-    [self.rootLayer addSublayer:self.sierpinski.layer];
+    self.carpet = [[AORCarpet alloc] initWithP1:point0 p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) p4:CGPointMake(700.0, 700.0)];
+    [self.rootLayer addSublayer:self.carpet.layer];
 }
 
 -(void)handleTwoPoints:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
-    [self.levy initWithP1:point0 p2:point1];
+    self.levy = [[AORLevy alloc] initWithP1:point0 p2:point1];
     [self.rootLayer addSublayer:self.levy.layer];
-    
+
 }
 
 -(void)handleThreePoints:(NSArray *)allTouches
@@ -118,7 +135,7 @@
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
-    [self.sierpinski initWithP1:point0 p2:point1 p3:point2];
+    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
     [self.rootLayer addSublayer:self.sierpinski.layer];
 }
 
@@ -128,7 +145,7 @@
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
-    [self.carpet initWithP1:point0 p2:point1 p3:point2 p4:point3];
+    self.carpet = [[AORCarpet alloc] initWithP1:point0 p2:point1 p3:point2 p4:point3];
     [self.rootLayer addSublayer:self.carpet.layer];
 }
 
@@ -149,10 +166,20 @@
 
 -(void)clearCanvas
 {
-    for (CALayer *layer in self.rootLayer.sublayers) {
-        [layer removeFromSuperlayer];
-    }
-    [self.levy clearLayers];
+//    for (CALayer *layer in self.rootLayer.sublayers) {
+//        [layer removeFromSuperlayer];
+//        // Copy the object layer and delete the
+//    }
+    // Also unnecessary if the current layer will just stay; on object death.
+    // Objects die when user lets go, we'll need to call something for that.
+    [self.rootLayer removeFromSuperlayer];
+    self.rootLayer = [CALayer layer];
+    self.rootLayer.frame = self.view.bounds;
+    [self.view.layer addSublayer:self.rootLayer];
+    self.carpet = nil;
+    self.sierpinski = nil;
+    self.levy = nil; 
+    // [self.levy clearLayers];
 }
 
 @end
