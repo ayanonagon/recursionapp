@@ -21,11 +21,8 @@
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
-<<<<<<< HEAD
 @property (strong, nonatomic) NSMutableArray *objects;
-=======
 @property (strong, nonatomic) AOROneTouch *oneTouch;
->>>>>>> 47b70a7295d117ca80e238894544233d15c6e790
 @end
 
 @implementation AORViewController
@@ -36,7 +33,6 @@
 
     // Set up the root layer.
     self.rootLayer	= [CALayer layer];
-<<<<<<< HEAD
     self.rootLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:self.rootLayer];
 
@@ -44,22 +40,12 @@
 //    self.sierpinski = [AORSierpinski alloc];
 //    self.carpet = [AORCarpet alloc];
 //    self.star = [AORStar alloc];
-=======
-	self.rootLayer.frame = self.view.bounds;
-	[self.view.layer addSublayer:self.rootLayer];
-    
-    self.levy = [AORLevy alloc];
-    self.sierpinski = [AORSierpinski alloc];
-    self.carpet = [AORCarpet alloc];
-    self.star = [AORStar alloc];
-    self.oneTouch = [AOROneTouch alloc];
->>>>>>> 47b70a7295d117ca80e238894544233d15c6e790
 
     //for testing star
     // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
     /*
     [self.star drawWithPoints:points depth:6];*/
-<<<<<<< HEAD
+
 
     //for testing carpet
     /*self.carpet = [[AORCarpet alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
@@ -78,14 +64,13 @@
 //[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
 //[self.rootLayer addSublayer:[AORExamples drawStar]];
     //[self.rootLayer addSublayer:[AORExamples drawLevy]];
-=======
+
     
         
 //[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
 //[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
-[self.rootLayer addSublayer:[AORExamples drawStar]];
+//[self.rootLayer addSublayer:[AORExamples drawStar]];
  //   [ self.rootLayer addSublayer:[AORExamples drawOneTouch]];
->>>>>>> 47b70a7295d117ca80e238894544233d15c6e790
 }
 
 - (void)didReceiveMemoryWarning
@@ -142,13 +127,8 @@
 -(void)handleOnePoint:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
-<<<<<<< HEAD
-    self.carpet = [[AORCarpet alloc] initWithP1:point0 p2:CGPointMake(800.0, 800.0) p3:CGPointMake(300.0, 150.0) p4:CGPointMake(700.0, 700.0)];
-    [self.rootLayer addSublayer:self.carpet.layer];
-=======
-    [self.oneTouch initWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
+    self.oneTouch = [[AOROneTouch alloc] initWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
     [self.rootLayer addSublayer:self.oneTouch.layer];
->>>>>>> 47b70a7295d117ca80e238894544233d15c6e790
 }
 
 -(void)handleTwoPoints:(NSArray *)allTouches

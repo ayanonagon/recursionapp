@@ -17,6 +17,7 @@
     self.paths = nil;
     [self defineShapePath];
     [self defineShapeLayer];
+    [self defineTheme];
     return self;
 }
 
@@ -28,7 +29,7 @@
  */
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
-    if (self.animationStopped) {
+    if (self.animationStopped || !flag) {
         return;
     }
     self.animationStopped = YES;
@@ -60,14 +61,39 @@
  */
 - (void)defineShapeLayer
 {
+    UIColor *strokeColor = [UIColor blackColor];
+    switch (self.depth) {
+        case 0:
+        case 3:
+        case 6:
+        case 9:
+            strokeColor = [UIColor purpleColor];
+            break;
+        case 1:
+        case 4:
+        case 7:
+        case 10:
+            strokeColor = [UIColor redColor];
+            break;
+        case 2:
+        case 5:
+        case 8:
+        case 11:
+            strokeColor = [UIColor brownColor];
+            break;
+        default:
+            strokeColor = [UIColor blackColor];
+            break;
+    }
+    
+    UIColor *fillColor = [UIColor redColor];
+    
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef line = [lineWrapped pointerValue];
         CAShapeLayer *pathLayer = [CAShapeLayer layer];
         pathLayer.path = line;
-        UIColor *strokeColor = [UIColor blackColor];
         pathLayer.strokeColor = strokeColor.CGColor;
         pathLayer.lineWidth = 1.0;
-        UIColor *fillColor = [UIColor redColor];
         pathLayer.fillColor = fillColor.CGColor;
         pathLayer.fillRule = kCAFillRuleNonZero;
 
@@ -89,14 +115,24 @@
     [pathLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
+- (void)defineTheme
+{
+    // A theme is an array of colors that will be
+    // applied to recursive levels
+    
+}
+
 /* We need this to get rid of CG objects that are 
  * not automatically looked after by ARC.
  */
 - (void)dealloc {
+    NSLog(@"Deallocating AORObject.");
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef line = [lineWrapped pointerValue];
         CGPathRelease(line);
     }
+    [self.layer removeFromSuperlayer];
+    self.children = nil;
 }
 
 /**

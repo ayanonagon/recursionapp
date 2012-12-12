@@ -20,6 +20,7 @@
 /* The depth of this drawing */
 @property int depth;
 @property (atomic) BOOL animationStopped;
+@property NSArray *theme;
 /* TODO: Ideally, this class method will create the appropriate
  * objects given the number of points. */
 + (AORObject *)objectFromPoints:(NSArray *) points;
