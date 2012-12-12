@@ -1,7 +1,6 @@
 
 
 * Object hierarchy
-
 ** Group of objects held by root view
    These aren't held by other aorobjects.
 
@@ -16,12 +15,12 @@
    This entails remembering a recursive drawing session. 
 
 ** Root view
-
    Changes to the root layer, this is where the fade out to an
    aorobject layer should be performend. 
 
+
 * Performance
-** Keep high depth objects around
+** TODO Keep high depth objects around
    Delete the objects from memory after we use them, but only if their
    depth is lower than a set threshold. This way, we only keep around
    objects that are very frequently redrawn, especially the first
@@ -37,6 +36,9 @@
 
 ** TODO Ensure only children number of objects exist at each level
    If there is a way to programmatically test for this that would be ideal.
+
+** Path destruction
+   It seems that paths must be destroyed, and cannot be reused. 
 
 * Visual Upgrades
 ** TODO Color the objects

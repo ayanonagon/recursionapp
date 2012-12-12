@@ -18,7 +18,7 @@
 
 - (id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds
 {
-    return [self initWithP1:p1 bounds:bounds depth:MAX_DEPTH];
+    return [self initWithP1:p1 bounds:bounds depth:ONE_TOUCH_MAX_DEPTH];
 }
 
 - (id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds depth:(int)depth
