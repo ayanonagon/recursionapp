@@ -11,6 +11,7 @@
 #import "AORCarpet.h"
 #import "AORLevy.h"
 #import "AORStar.h"
+#import "AOROneTouch.h"
 
 #include <QuartzCore/QuartzCore.h>
 
@@ -37,16 +38,16 @@
 
 + (CALayer *)drawStar
 {
-//    CGPoint p0 = CGPointMake(500, 500);
-//    CGPoint p1 = CGPointMake(600, 500);
-//    CGPoint p2 = CGPointMake(625, 575);
-//    CGPoint p3 = CGPointMake(550, 625);
-//    CGPoint p4 = CGPointMake(475, 575);
-    CGPoint p0 = CGPointMake(400, 600);
+    CGPoint p0 = CGPointMake(500, 500);
+    CGPoint p1 = CGPointMake(600, 500);
+    CGPoint p2 = CGPointMake(625, 575);
+    CGPoint p3 = CGPointMake(550, 625);
+    CGPoint p4 = CGPointMake(475, 575);
+    /*CGPoint p0 = CGPointMake(400, 600);
     CGPoint p1 = CGPointMake(410, 600);
     CGPoint p2 = CGPointMake(412, 607.2);
     CGPoint p3 = CGPointMake(405, 612);
-    CGPoint p4 = CGPointMake(398, 607.2);
+    CGPoint p4 = CGPointMake(398, 607.2);*/
     NSArray *points = [NSArray arrayWithObjects:
                        [NSValue valueWithCGPoint:p0],
                        [NSValue valueWithCGPoint:p1],
@@ -56,6 +57,13 @@
                        nil];
     
     return [[[AORStar alloc] initWithPoints:points] layer];
+}
+
++ (CALayer *)drawOneTouch
+{
+    CGRect bounds = CGRectMake(0.0, 0.0, 755.0, 1024.0);
+    CGPoint p = CGPointMake(400, 200.0);
+    return [[[AOROneTouch alloc] initWithP1:p bounds:bounds] layer];
 }
 
 @end

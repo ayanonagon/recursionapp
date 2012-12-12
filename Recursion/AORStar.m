@@ -83,6 +83,8 @@
             p2co = [val CGPointValue];
         }
         
+        //p1 = [val CGPointValue];
+        
         CGFloat ax = p1.x - p1co.x;
         CGFloat ay = p1.y - p1co.y;
         CGFloat bx = p2.x - p2co.x;
@@ -94,19 +96,25 @@
         NSValue *v = [NSValue valueWithCGPoint:intersect];
         [newPoints insertObject:v atIndex:i];
         
-        if (!firstPath) {
+        /*if (!firstPath) {
             firstPath = CGPathCreateMutable();
             CGPathMoveToPoint(firstPath, NULL, start.x, start.y);
             CGPathAddLineToPoint(firstPath, NULL, intersect.x, intersect.y);
             CGPathAddLineToPoint(firstPath, NULL, p2.x, p2.y);
             [mutablePaths addObject:[NSValue valueWithPointer:firstPath]];
         }
-        else {
-            CGMutablePathRef newPath = CGPathCreateMutable();
-            CGPathAddLineToPoint(newPath, NULL, intersect.x, intersect.y);
-            CGPathAddLineToPoint(newPath, NULL, p2.x, p2.y);
-            [mutablePaths addObject:[NSValue valueWithPointer:newPath]];
-        }
+        else {*/
+        CGMutablePathRef path1 = CGPathCreateMutable();
+        CGMutablePathRef path2 = CGPathCreateMutable();
+
+        CGPathMoveToPoint(path1, NULL, p1.x, p1.y);
+        CGPathAddLineToPoint(path1, NULL, intersect.x, intersect.y);
+        CGPathMoveToPoint(path2, NULL, intersect.x, intersect.y);
+        CGPathAddLineToPoint(path2, NULL, p2.x, p2.y);
+
+        [mutablePaths addObject:[NSValue valueWithPointer:path1]];
+        [mutablePaths addObject:[NSValue valueWithPointer:path2]];
+        //}
     }
     
     self.paths = [NSArray arrayWithArray:mutablePaths];

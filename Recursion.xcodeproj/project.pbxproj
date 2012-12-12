@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3345EA3F167801C30039B606 /* AOROneTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3345EA3E167801C30039B606 /* AOROneTouch.m */; };
 		3381038D1673ED24006781FF /* AORStar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3381038C1673ED24006781FF /* AORStar.m */; };
 		33810391167434C0006781FF /* AORCarpet.m in Sources */ = {isa = PBXBuildFile; fileRef = 33810390167434C0006781FF /* AORCarpet.m */; };
 		338103981674524D006781FF /* AORLevy.m in Sources */ = {isa = PBXBuildFile; fileRef = 338103971674524D006781FF /* AORLevy.m */; };
@@ -29,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3345EA3D167801C30039B606 /* AOROneTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AOROneTouch.h; sourceTree = "<group>"; };
+		3345EA3E167801C30039B606 /* AOROneTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AOROneTouch.m; sourceTree = "<group>"; };
 		3381038B1673ED24006781FF /* AORStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORStar.h; sourceTree = "<group>"; };
 		3381038C1673ED24006781FF /* AORStar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORStar.m; sourceTree = "<group>"; };
 		3381038F167434C0006781FF /* AORCarpet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORCarpet.h; sourceTree = "<group>"; };
@@ -52,8 +55,8 @@
 		E06F92F616722A7000BED8B7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E06F92F816722A7000BED8B7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E06F92FA16722A7000BED8B7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		E06F92FD16722A7000BED8B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		E06F930016722A7000BED8B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		E06F92FD16722A7000BED8B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		E06F930016722A7000BED8B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		E06F930216722A7000BED8B7 /* AORViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AORViewController.h; sourceTree = "<group>"; };
 		E06F930316722A7000BED8B7 /* AORViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AORViewController.m; sourceTree = "<group>"; };
 		E06F930E16722AE700BED8B7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -107,6 +110,8 @@
 		E06F92EA16722A7000BED8B7 /* Recursion */ = {
 			isa = PBXGroup;
 			children = (
+				3345EA3D167801C30039B606 /* AOROneTouch.h */,
+				3345EA3E167801C30039B606 /* AOROneTouch.m */,
 				E06F92F316722A7000BED8B7 /* AORAppDelegate.h */,
 				E06F92F416722A7000BED8B7 /* AORAppDelegate.m */,
 				E06F92FC16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard */,
@@ -221,6 +226,7 @@
 				33810391167434C0006781FF /* AORCarpet.m in Sources */,
 				338103981674524D006781FF /* AORLevy.m in Sources */,
 				DCF212F616751522000EB240 /* AORObject.m in Sources */,
+				3345EA3F167801C30039B606 /* AOROneTouch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

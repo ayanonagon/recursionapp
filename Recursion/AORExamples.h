@@ -14,5 +14,9 @@
 + (CALayer *)drawCarpet;
 + (CALayer *)drawLevy;
 + (CALayer *)drawStar;
+<<<<<<< HEAD
 + (CALayer *)drawStar2;
+=======
++ (CALayer *)drawOneTouch;
+>>>>>>> 47b70a7295d117ca80e238894544233d15c6e790
 @end

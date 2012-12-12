@@ -10,22 +10,14 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface AOROneTouch ()
-@property NSArray *lines;
-@property CAAnimationGroup *lineAnimations;
 @property CGPoint p1;
 @property CGRect bounds;
-@property NSArray *children;
-@property int depth;
-@property (atomic) BOOL animationStopped;
 @end
 
 @implementation AOROneTouch
 
-#define MAX_DEPTH 5
-
 - (id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds
 {
-    self = [super init];
     return [self initWithP1:p1 bounds:bounds depth:MAX_DEPTH];
 }
 
@@ -36,68 +28,26 @@
         self.p1 = p1;
         self.bounds = bounds;
         self.depth = depth;
-        self.animationStopped = NO;
-        [self defineShapePath];
-        [self defineShapeLayer];
+        [self configureShape];
     }
     return self;
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
-{
-    if (self.animationStopped) {
-        return;
-    }
-    self.animationStopped = YES;
-    if (self.depth) {
-        [self defineChildren];
-    }
-}
-
-#pragma mark - The Magic
 
 -(void)defineChildren
 {
-    CGPoint p1 = CGPointMake((self.p1.x*self.p1.x)/self.bounds.size.width, self.p1.y + (((self.p1.y - self.bounds.origin.y)*(self.bounds.origin.y + self.bounds.size.height - self.p1.y))/self.bounds.size.height));
+    CGPoint p1 = CGPointMake(self.bounds.origin.x + ((self.p1.x-self.bounds.origin.x)*(self.p1.x-self.bounds.origin.x))/self.bounds.size.width, self.p1.y + (((self.p1.y - self.bounds.origin.y)*(self.bounds.origin.y + self.bounds.size.height - self.p1.y))/self.bounds.size.height));
     CGRect bounds1 = CGRectMake(self.bounds.origin.x, self.p1.y, (self.p1.x - self.bounds.origin.x), (self.bounds.origin.y + self.bounds.size.height - self.p1.y));
     AOROneTouch *c1 = [[AOROneTouch alloc] initWithP1:p1 bounds:bounds1 depth:self.depth-1];
-    self.children = [NSArray arrayWithObjects:c1, nil];
+    
+    CGRect bounds2 = CGRectMake(self.p1.x, self.bounds.origin.y, (self.bounds.origin.x + self.bounds.size.width - self.p1.x), (self.p1.y - self.bounds.origin.y));
+    CGPoint p2 = CGPointMake(self.p1.x + (((self.p1.x - self.bounds.origin.x) * (self.bounds.origin.x + self.bounds.size.width - self.p1.x))/self.bounds.size.width), self.bounds.origin.y + ((self.p1.y-self.bounds.origin.y) * (self.p1.y-self.bounds.origin.y)/self.bounds.size.height));
+    AOROneTouch *c2 = [[AOROneTouch alloc] initWithP1:p2 bounds:bounds2 depth:self.depth-1];
+    
+    self.children = [NSArray arrayWithObjects:c1, c2, nil];
     for (AOROneTouch *child in self.children) {
         [self.layer addSublayer:child.layer];
     }
-}
-
--(void)defineShapeLayer
-{
-    self.layer = [CALayer layer];
-    
-    for (NSValue *lineWrapped in self.lines) {
-        CGMutablePathRef line = [lineWrapped pointerValue];
-        CAShapeLayer *lineLayer = [CAShapeLayer layer];
-        lineLayer.path = line;
-        UIColor *strokeColor = [UIColor blackColor];
-        lineLayer.strokeColor = strokeColor.CGColor;
-        lineLayer.lineWidth = 2.0;
-        UIColor *fillColor = [UIColor darkGrayColor];
-        lineLayer.fillColor = fillColor.CGColor;
-        lineLayer.fillRule = kCAFillRuleNonZero;
-        
-        [self setAnimationForLineLayer:lineLayer];
-        
-        [self.layer addSublayer:lineLayer];
-    }
-    
-}
-
--(void)setAnimationForLineLayer:(CAShapeLayer*) lineLayer
-{
-    CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    pathAnimation.duration = 0.5;
-    pathAnimation.fromValue = @0.0;
-    pathAnimation.toValue = @1.0;
-    [pathAnimation setDelegate:self];
-    pathAnimation.autoreverses = NO;
-    [lineLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
 - (void)defineShapePath
@@ -137,7 +87,7 @@
     CGPathMoveToPoint(line8, NULL, self.p1.x, (self.bounds.origin.y + self.bounds.size.height));
     CGPathAddLineToPoint(line8, NULL, self.p1.x, self.p1.y);
     
-    self.lines = [NSArray arrayWithObjects:
+    self.paths = [NSArray arrayWithObjects:
                   [NSValue valueWithPointer:line1],
                   [NSValue valueWithPointer:line2],
                   [NSValue valueWithPointer:line3],
@@ -149,12 +99,5 @@
     
 }
 
--(void)startDrawing {
-    
-}
-
--(void)stopDrawing {
-    
-}
 
 @end
