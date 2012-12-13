@@ -23,7 +23,8 @@
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
 @property (strong, nonatomic) NSMutableDictionary *animLayers;
-@property (strong, nonatomic) NSMutableArray *layerQueue;
+@property (strong, nonatomic) CALayer *previousLayer;
+@property (strong, nonatomic) NSMutableArray *layerFadeQueue;
 @property (strong, nonatomic) NSMutableArray *objects;
 
 @end
@@ -39,7 +40,7 @@
     self.rootLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:self.rootLayer];
     self.animLayers = [NSMutableDictionary dictionary];
-    self.layerQueue = [NSMutableArray array];
+    self.layerFadeQueue = [NSMutableArray array];
     
     // Initialize them all. They get re-configured
     // by setting new points.
@@ -105,56 +106,62 @@
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
-    NSLog(@"animations are stopping");
-//    // Get the key and layer from this nsdict
-//    NSNumber *key = [NSNumber numberWithUnsignedInt:[anim hash]];
-//    CALayer *layerToRemove = [self.animLayers objectForKey:key];
-//    [self.animLayers removeObjectForKey:key];
-// Pop the queue and remove this layer
-    CALayer *layerToRemove = [self.layerQueue objectAtIndex:0];
-    NSLog(@"Getting ready to remove %@", layerToRemove);
+    // Pop the queue and remove this layer
+    CALayer *layerToRemove = [self.layerFadeQueue objectAtIndex:0];
     if (layerToRemove) {
-        [self.layerQueue removeObjectAtIndex:0];
-        // Removes this layer from the root layer
-        NSLog(@"%@", [layerToRemove superlayer]);
+        [self.layerFadeQueue removeObjectAtIndex:0];
         [layerToRemove removeFromSuperlayer];
-        NSLog(@"is equal to %@", self.rootLayer);
+    }
+}
+
+-(void)fadeOutLayer:(CALayer *)layer
+{
+    [layer removeAllAnimations];
+    layer.opacity = 0.0;
+    CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeOutAnimation.duration = 3.0;
+    fadeOutAnimation.fromValue = @1.0;
+    fadeOutAnimation.toValue = @0.0;
+    // Add to queue so it can be cleaned after
+    [self.layerFadeQueue addObject:layer];
+    [fadeOutAnimation setDelegate:self];
+    [layer addAnimation:fadeOutAnimation forKey:@"animateOpacity"];
+
+}
+
+-(void)fadeOutPreviousLayer
+{
+    // Pick up the last layer
+    if (self.previousLayer) {
+        [self fadeOutLayer:self.previousLayer];
+        self.previousLayer = nil;
     }
 }
 
 -(void)handleOnePoint:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    
     // Reclaim old layer and animate to fade
-    CALayer *oldOneTouchLayer = [self.oneTouch layer];
-    [oldOneTouchLayer removeAllAnimations];
-    oldOneTouchLayer.opacity = 0.0;
-    CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    fadeOutAnimation.duration = 3.0;
-    fadeOutAnimation.fromValue = @1.0;
-    fadeOutAnimation.toValue = @0.0;
-//    NSNumber *key = [NSNumber numberWithUnsignedInt:[fadeOutAnimation hash]];
-//    [self.animLayers setObject:oldOneTouchLayer forKey:key];
-// Add to queue so it can be cleaned after
-    [self.layerQueue addObject:oldOneTouchLayer];
-    NSLog(@"Adding layer %@.", oldOneTouchLayer);
-    [fadeOutAnimation setDelegate:self];
-    [oldOneTouchLayer addAnimation:fadeOutAnimation forKey:@"animateOpacity"];
-    // Need to set the opacity to zero i guess
-//    oldOneTouchLayer.opacity=0.0;
-//    oldOneTouchLayer.zPosition=-100;
-    // Presumably, this creates a new layer.
+    // This can be abstracted out with function call
+    // Here should be fadeOutPreviousLayer
+    //[self fadeOutLayer:self.oneTouch.layer];
+    [self fadeOutPreviousLayer];
     self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
     [self.rootLayer addSublayer:self.oneTouch.layer];
+    // Add this layer to the layerQueue
+    self.previousLayer = self.oneTouch.layer;
 }
 
 -(void)handleTwoPoints:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
-    self.levy = [self.levy initWithP1:point0 p2:point1];
+    
+    [self fadeOutPreviousLayer];
+    self.levy = [self.levy drawWithP1:point0 p2:point1];
     [self.rootLayer addSublayer:self.levy.layer];
-
+    self.previousLayer = self.levy.layer;
 }
 
 -(void)handleThreePoints:(NSArray *)allTouches

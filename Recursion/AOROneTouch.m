@@ -71,8 +71,6 @@
     CGPoint p2 = CGPointMake(self.p1.x + (((self.p1.x - self.bounds.origin.x) * (self.bounds.origin.x + self.bounds.size.width - self.p1.x))/self.bounds.size.width), self.bounds.origin.y + ((self.p1.y-self.bounds.origin.y) * (self.p1.y-self.bounds.origin.y)/self.bounds.size.height));
     [c2 drawWithP1:p2 bounds:bounds2 depth:self.depth-1];
     
-    // Later, this is just the same array no need to recreate.
-//    self.children = [NSArray arrayWithObjects:c1, c2, nil];
     for (AOROneTouch *child in self.children) {
         // This is possibly necessary to keep old layers around.
         [self.layer addSublayer:child.layer];

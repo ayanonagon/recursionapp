@@ -16,7 +16,7 @@
     if (self) {
         self.paths = nil;
         self.children = nil;
-        self.layer = [CALayer layer];
+        self.layer = nil;
     }
     return self;
 }

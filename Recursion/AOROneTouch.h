@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "AORObject.h"
 
-
 #define ONE_TOUCH_MAX_DEPTH 6
 
 @interface AOROneTouch : AORObject <AORObjectProtocol>
