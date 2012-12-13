@@ -19,7 +19,7 @@
 
 + (CALayer *)drawSierpinski
 {
-    return [[[AORSierpinski alloc] initWithP1:CGPointMake(600.0, 400.0) p2:CGPointMake(400.0, 400.0) p3:CGPointMake(200.0, 600.0)] layer];
+    return [[[[AORSierpinski alloc] init] drawWithP1:CGPointMake(600.0, 400.0) p2:CGPointMake(400.0, 400.0) p3:CGPointMake(200.0, 600.0)] layer];
 }
 
 + (CALayer*)drawCarpet

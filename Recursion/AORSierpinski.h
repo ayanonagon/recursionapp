@@ -12,6 +12,7 @@
 #define MAX_DEPTH 5
 
 @interface AORSierpinski : AORObject <AORObjectProtocol>
--(id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3;
+-(id)init;
+-(id)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3;
 @end
 

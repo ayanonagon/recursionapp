@@ -22,7 +22,6 @@
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
-@property (strong, nonatomic) NSMutableDictionary *animLayers;
 @property (strong, nonatomic) CALayer *previousLayer;
 @property (strong, nonatomic) NSMutableArray *layerFadeQueue;
 @property (strong, nonatomic) NSMutableArray *objects;
@@ -39,7 +38,6 @@
     self.rootLayer	= [CALayer layer];
     self.rootLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:self.rootLayer];
-    self.animLayers = [NSMutableDictionary dictionary];
     self.layerFadeQueue = [NSMutableArray array];
     
     // Initialize them all. They get re-configured
@@ -63,8 +61,9 @@
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [self clearCanvas];
+    //[self fadeOutPreviousLayer];
     NSArray *allTouches = [[event allTouches] allObjects];
-
+    
     switch ([[event allTouches] count]) {
         case 1:
             [self handleOnePoint:allTouches];
@@ -119,7 +118,7 @@
     [layer removeAllAnimations];
     layer.opacity = 0.0;
     CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    fadeOutAnimation.duration = 3.0;
+    fadeOutAnimation.duration = 1.0;
     fadeOutAnimation.fromValue = @1.0;
     fadeOutAnimation.toValue = @0.0;
     // Add to queue so it can be cleaned after
@@ -146,7 +145,6 @@
     // This can be abstracted out with function call
     // Here should be fadeOutPreviousLayer
     //[self fadeOutLayer:self.oneTouch.layer];
-    [self fadeOutPreviousLayer];
     self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
     [self.rootLayer addSublayer:self.oneTouch.layer];
     // Add this layer to the layerQueue
@@ -158,7 +156,6 @@
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     
-    [self fadeOutPreviousLayer];
     self.levy = [self.levy drawWithP1:point0 p2:point1];
     [self.rootLayer addSublayer:self.levy.layer];
     self.previousLayer = self.levy.layer;
@@ -169,8 +166,9 @@
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
-    self.sierpinski = [[AORSierpinski alloc] initWithP1:point0 p2:point1 p3:point2];
+    self.sierpinski = [self.sierpinski drawWithP1:point0 p2:point1 p3:point2];
     [self.rootLayer addSublayer:self.sierpinski.layer];
+    self.previousLayer = self.sierpinski.layer;
 }
 
 -(void)handleFourPoints:(NSArray *)allTouches
@@ -179,8 +177,9 @@
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
-    self.carpet = [[AORCarpet alloc] initWithP1:point0 p2:point1 p3:point2 p4:point3];
+    self.carpet = [self.carpet drawWithP1:point0 p2:point1 p3:point2 p4:point3];
     [self.rootLayer addSublayer:self.carpet.layer];
+    self.previousLayer = self.carpet.layer;
 }
 
 -(void)handleFivePoints:(NSArray *)allTouches
@@ -190,7 +189,7 @@
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
     CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
-    [self.sierpinski initWithP1:point0 p2:point1 p3:point2];
+    self.sierpinski = [self.sierpinski drawWithP1:point0 p2:point1 p3:point2];
     [self.rootLayer addSublayer:self.sierpinski.layer];
 }
 
@@ -200,10 +199,10 @@
 
 -(void)clearCanvas
 {
-//    for (CALayer *layer in self.rootLayer.sublayers) {
-//        [layer removeFromSuperlayer];
-//        // Copy the object layer and delete the
-//    }
+    for (CALayer *layer in self.rootLayer.sublayers) {
+        [layer removeFromSuperlayer];
+        // Copy the object layer and delete the
+    }
     // Also unnecessary if the current layer will just stay; on object death.
     // Objects die when user lets go, we'll need to call something for that.
 //    [self.rootLayer removeFromSuperlayer];

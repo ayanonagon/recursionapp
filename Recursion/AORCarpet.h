@@ -12,5 +12,6 @@
 #define CARPET_MAX_DEPTH 3
 
 @interface AORCarpet : AORObject <AORObjectProtocol>
-- (id)initWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 p4:(CGPoint)p4;
+- (id)init;
+- (id)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 p4:(CGPoint)p4;
 @end

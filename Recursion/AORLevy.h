@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AORObject.h"
 
-#define LEVY_MAX_DEPTH 10
+#define LEVY_MAX_DEPTH 8
 
 @interface AORLevy : AORObject <AORObjectProtocol>
 - (id)init;
