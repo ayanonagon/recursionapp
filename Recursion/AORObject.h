@@ -26,6 +26,7 @@
 + (AORObject *)objectFromPoints:(NSArray *) points;
 /* Call this method after initializing your shape's points. */
 - (id)configureShape;
+- (void)setAnimationForPathLayer:(CAShapeLayer *)pathLayer;
 @end
 
 @protocol AORObjectProtocol <NSObject>

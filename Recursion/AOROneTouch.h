@@ -10,8 +10,9 @@
 #import "AORObject.h"
 
 
-#define ONE_TOUCH_MAX_DEPTH 10
+#define ONE_TOUCH_MAX_DEPTH 6
 
 @interface AOROneTouch : AORObject <AORObjectProtocol>
--(id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds;
+-(id)init;
+-(id)drawWithP1:(CGPoint)p1 bounds:(CGRect)bounds;
 @end

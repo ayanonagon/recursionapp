@@ -17,12 +17,14 @@
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;
+@property (strong, nonatomic) AOROneTouch *oneTouch;
 @property (strong, nonatomic) AORLevy *levy;
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
+
 @property (strong, nonatomic) NSMutableArray *objects;
-@property (strong, nonatomic) AOROneTouch *oneTouch;
+
 @end
 
 @implementation AORViewController
@@ -36,41 +38,14 @@
     self.rootLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:self.rootLayer];
 
-//    self.levy = [AORLevy alloc];
-//    self.sierpinski = [AORSierpinski alloc];
-//    self.carpet = [AORCarpet alloc];
-//    self.star = [AORStar alloc];
-
-    //for testing star
-    // self.star = [[AORStar alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-    /*
-    [self.star drawWithPoints:points depth:6];*/
-
-
-    //for testing carpet
-    /*self.carpet = [[AORCarpet alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-    CGPoint p1 = CGPointMake(200.0, 200.0);
-    CGPoint p2 = CGPointMake(600.0, 100.0);
-    CGPoint p3 = CGPointMake(700.0, 600.0);
-    CGPoint p4 = CGPointMake(400.0, 700.0);
-    [self.carpet drawWithP1:p1 p2:p2 p3:p3 p4:p4 depth:5];*/
-
-    //for testing levy
-//    self.levy = [[AORLevy alloc] initWithShapeLayer:self.shapeLayer linePath:self.linePath];
-//    CGPoint p1 = CGPointMake(200.0, 200.0);
-//    CGPoint p2 = CGPointMake(500.0, 200.0);
-//    [self.levy drawWithP1:p1 p2:p2 depth:15];
-//[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
-//[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
-//[self.rootLayer addSublayer:[AORExamples drawStar]];
-    //[self.rootLayer addSublayer:[AORExamples drawLevy]];
-
-    
-        
-//[self.rootLayer addSublayer:[AORExamples drawSierpinski]];
-//[ self.rootLayer addSublayer:[AORExamples drawCarpet]];
-//[self.rootLayer addSublayer:[AORExamples drawStar]];
- //   [ self.rootLayer addSublayer:[AORExamples drawOneTouch]];
+    // Initialize them all. They get re-configured
+    // by setting new points.
+    // We also want them to create all their children beforehand.
+    self.oneTouch = [[AOROneTouch alloc] init];
+    self.levy = [[AORLevy alloc] init];
+    self.sierpinski = [[AORSierpinski alloc] init];
+    self.carpet = [[AORCarpet alloc] init];
+    self.star = [[AORStar alloc] init];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,6 +80,7 @@
         default:
             break;
     }
+    // After handling a touch some maintenance?
 }
 
 // This would work ideally. Trying to refine the interface to
@@ -127,7 +103,7 @@
 -(void)handleOnePoint:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
-    self.oneTouch = [[AOROneTouch alloc] initWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
+    self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
     [self.rootLayer addSublayer:self.oneTouch.layer];
 }
 
@@ -135,7 +111,7 @@
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
-    self.levy = [[AORLevy alloc] initWithP1:point0 p2:point1];
+    self.levy = [self.levy initWithP1:point0 p2:point1];
     [self.rootLayer addSublayer:self.levy.layer];
 
 }

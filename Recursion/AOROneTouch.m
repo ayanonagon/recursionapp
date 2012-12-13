@@ -16,36 +16,65 @@
 
 @implementation AOROneTouch
 
-- (id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds
-{
-    return [self initWithP1:p1 bounds:bounds depth:ONE_TOUCH_MAX_DEPTH];
-}
-
-- (id)initWithP1:(CGPoint)p1 bounds:(CGRect)bounds depth:(int)depth
+-(id)init
 {
     self = [super init];
     if (self) {
-        self.p1 = p1;
-        self.bounds = bounds;
-        self.depth = depth;
-        [self configureShape];
     }
     return self;
 }
 
+// initparent vs. initchild maybe?
 
+- (id)drawWithP1:(CGPoint)p1 bounds:(CGRect)bounds
+{
+    return [self drawWithP1:p1 bounds:bounds depth:ONE_TOUCH_MAX_DEPTH];
+}
+
+- (id)drawWithP1:(CGPoint)p1 bounds:(CGRect)bounds depth:(int)depth
+{
+        self.p1 = p1;
+        self.bounds = bounds;
+        self.depth = depth;
+        [self configureShape];
+    // define the children here recursively so they don't ever
+    // need redefinition
+    return self;
+}
+
+/**
+ * Creating the children here doesn't seem to be detrimental
+ * to performance, but it does feel like something that can 
+ * be abstracted out.
+ */
 -(void)defineChildren
 {
+    // The old children are there, let's not recreate them.
+    AOROneTouch *c1 = [self.children objectAtIndex:0];
+    AOROneTouch *c2 = [self.children objectAtIndex:1];
+    
+    if (!c1 && !c2) {
+        c1 = [[AOROneTouch alloc] init];
+        c2 = [[AOROneTouch alloc] init];
+        self.children = [NSArray arrayWithObjects:c1, c2, nil];
+    }
+    else if (!c1 || !c2) {
+        NSLog(@"ERROR: Some children uninitialized");
+        return;
+    }
+    
     CGPoint p1 = CGPointMake(self.bounds.origin.x + ((self.p1.x-self.bounds.origin.x)*(self.p1.x-self.bounds.origin.x))/self.bounds.size.width, self.p1.y + (((self.p1.y - self.bounds.origin.y)*(self.bounds.origin.y + self.bounds.size.height - self.p1.y))/self.bounds.size.height));
     CGRect bounds1 = CGRectMake(self.bounds.origin.x, self.p1.y, (self.p1.x - self.bounds.origin.x), (self.bounds.origin.y + self.bounds.size.height - self.p1.y));
-    AOROneTouch *c1 = [[AOROneTouch alloc] initWithP1:p1 bounds:bounds1 depth:self.depth-1];
+    [c1 drawWithP1:p1 bounds:bounds1 depth:self.depth-1];
     
     CGRect bounds2 = CGRectMake(self.p1.x, self.bounds.origin.y, (self.bounds.origin.x + self.bounds.size.width - self.p1.x), (self.p1.y - self.bounds.origin.y));
     CGPoint p2 = CGPointMake(self.p1.x + (((self.p1.x - self.bounds.origin.x) * (self.bounds.origin.x + self.bounds.size.width - self.p1.x))/self.bounds.size.width), self.bounds.origin.y + ((self.p1.y-self.bounds.origin.y) * (self.p1.y-self.bounds.origin.y)/self.bounds.size.height));
-    AOROneTouch *c2 = [[AOROneTouch alloc] initWithP1:p2 bounds:bounds2 depth:self.depth-1];
+    [c2 drawWithP1:p2 bounds:bounds2 depth:self.depth-1];
     
-    self.children = [NSArray arrayWithObjects:c1, c2, nil];
+    // Later, this is just the same array no need to recreate.
+//    self.children = [NSArray arrayWithObjects:c1, c2, nil];
     for (AOROneTouch *child in self.children) {
+        // This is possibly necessary to keep old layers around.
         [self.layer addSublayer:child.layer];
     }
 }
@@ -96,7 +125,28 @@
                   [NSValue valueWithPointer:line6],
                   [NSValue valueWithPointer:line7],
                   [NSValue valueWithPointer:line8], nil];
-    
+
+    // Here the assumption is that ARC will now take care
+    // of these objects for us.
+//    self.paths = [NSArray arrayWithObjects:
+//                  (__bridge_transfer id)line1,
+//                  (__bridge_transfer id)line2,
+//                  (__bridge_transfer id)line3,
+//                  (__bridge_transfer id)line4,
+//                  (__bridge_transfer id)line5,
+//                  (__bridge_transfer id)line6,
+//                  (__bridge_transfer id)line7,
+//                  (__bridge_transfer id)line8, ni]
+//  // We need to release the lines we made now. They
+//  // are being held by the array paths still
+//    CGPathRelease(line1);
+//    CGPathRelease(line2);
+//    CGPathRelease(line3);
+//    CGPathRelease(line4);
+//    CGPathRelease(line5);
+//    CGPathRelease(line6);
+//    CGPathRelease(line7);
+//    CGPathRelease(line8);
 }
 
 

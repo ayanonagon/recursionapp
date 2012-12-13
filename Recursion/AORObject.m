@@ -10,11 +10,27 @@
 
 @implementation AORObject
 
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        self.paths = nil;
+        self.layer = nil;
+        self.children = nil;
+    }
+    return self;
+}
+
+/**
+ * A new shape configuration means new paths, and a new layer.
+ */
 - (id)configureShape
 {
     self.animationStopped = NO;
+    // Make a new layer, the old one is degrading.
     self.layer = [CAShapeLayer layer];
-    self.paths = nil;
+    // Destroy old paths first; no need if using bezier
+    [self destroyPaths];
     [self defineShapePath];
     [self defineShapeLayer];
     [self defineTheme];
@@ -39,10 +55,8 @@
     //[self destroyPaths];
 }
 
-// Why should they be destroyed? Can't I reuse them?
-// The problem is, those with high depth won't be re-used as often.
-// So, we look at the depth, and delete those with a larger than threshold
-// depth.
+// Mutable path refs cannot be re-used, as far as we can tell
+// Does our future layer need them? We'll find out from a segfault if so
 - (void)destroyPaths
 {
     // We need to assign a new layer, because the old one will
@@ -53,7 +67,6 @@
         CGPathRelease(path);
     }
     self.paths = nil;
-    [self.layer removeAllAnimations];
 }
 
 /**
@@ -126,7 +139,6 @@
  * not automatically looked after by ARC.
  */
 - (void)dealloc {
-    NSLog(@"Deallocating AORObject.");
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef line = [lineWrapped pointerValue];
         CGPathRelease(line);

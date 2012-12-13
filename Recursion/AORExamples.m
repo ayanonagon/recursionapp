@@ -63,7 +63,7 @@
 {
     CGRect bounds = CGRectMake(0.0, 0.0, 755.0, 1024.0);
     CGPoint p = CGPointMake(400, 200.0);
-    return [[[AOROneTouch alloc] initWithP1:p bounds:bounds] layer];
+    return [[[[AOROneTouch alloc] init] drawWithP1:p bounds:bounds] layer];
 }
 
 @end
