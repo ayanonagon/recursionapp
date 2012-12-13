@@ -22,7 +22,8 @@
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
-
+@property (strong, nonatomic) NSMutableDictionary *animLayers;
+@property (strong, nonatomic) NSMutableArray *layerQueue;
 @property (strong, nonatomic) NSMutableArray *objects;
 
 @end
@@ -37,7 +38,9 @@
     self.rootLayer	= [CALayer layer];
     self.rootLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:self.rootLayer];
-
+    self.animLayers = [NSMutableDictionary dictionary];
+    self.layerQueue = [NSMutableArray array];
+    
     // Initialize them all. They get re-configured
     // by setting new points.
     // We also want them to create all their children beforehand.
@@ -100,9 +103,47 @@
 
 #pragma mark - Drawing
 
+-(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    NSLog(@"animations are stopping");
+//    // Get the key and layer from this nsdict
+//    NSNumber *key = [NSNumber numberWithUnsignedInt:[anim hash]];
+//    CALayer *layerToRemove = [self.animLayers objectForKey:key];
+//    [self.animLayers removeObjectForKey:key];
+// Pop the queue and remove this layer
+    CALayer *layerToRemove = [self.layerQueue objectAtIndex:0];
+    NSLog(@"Getting ready to remove %@", layerToRemove);
+    if (layerToRemove) {
+        [self.layerQueue removeObjectAtIndex:0];
+        // Removes this layer from the root layer
+        NSLog(@"%@", [layerToRemove superlayer]);
+        [layerToRemove removeFromSuperlayer];
+        NSLog(@"is equal to %@", self.rootLayer);
+    }
+}
+
 -(void)handleOnePoint:(NSArray *)allTouches
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    // Reclaim old layer and animate to fade
+    CALayer *oldOneTouchLayer = [self.oneTouch layer];
+    [oldOneTouchLayer removeAllAnimations];
+    oldOneTouchLayer.opacity = 0.0;
+    CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeOutAnimation.duration = 3.0;
+    fadeOutAnimation.fromValue = @1.0;
+    fadeOutAnimation.toValue = @0.0;
+//    NSNumber *key = [NSNumber numberWithUnsignedInt:[fadeOutAnimation hash]];
+//    [self.animLayers setObject:oldOneTouchLayer forKey:key];
+// Add to queue so it can be cleaned after
+    [self.layerQueue addObject:oldOneTouchLayer];
+    NSLog(@"Adding layer %@.", oldOneTouchLayer);
+    [fadeOutAnimation setDelegate:self];
+    [oldOneTouchLayer addAnimation:fadeOutAnimation forKey:@"animateOpacity"];
+    // Need to set the opacity to zero i guess
+//    oldOneTouchLayer.opacity=0.0;
+//    oldOneTouchLayer.zPosition=-100;
+    // Presumably, this creates a new layer.
     self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
     [self.rootLayer addSublayer:self.oneTouch.layer];
 }
@@ -158,13 +199,13 @@
 //    }
     // Also unnecessary if the current layer will just stay; on object death.
     // Objects die when user lets go, we'll need to call something for that.
-    [self.rootLayer removeFromSuperlayer];
-    self.rootLayer = [CALayer layer];
-    self.rootLayer.frame = self.view.bounds;
-    [self.view.layer addSublayer:self.rootLayer];
-    self.carpet = nil;
-    self.sierpinski = nil;
-    self.levy = nil; 
+//    [self.rootLayer removeFromSuperlayer];
+//    self.rootLayer = [CALayer layer];
+//    self.rootLayer.frame = self.view.bounds;
+//    [self.view.layer addSublayer:self.rootLayer];
+//    self.carpet = nil;
+//    self.sierpinski = nil;
+//    self.levy = nil; 
     // [self.levy clearLayers];
 }
 

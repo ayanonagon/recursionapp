@@ -15,8 +15,8 @@
     self = [super init];
     if (self) {
         self.paths = nil;
-        self.layer = nil;
         self.children = nil;
+        self.layer = [CALayer layer];
     }
     return self;
 }
