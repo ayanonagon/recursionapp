@@ -14,6 +14,10 @@
 #import "AORExamples.h"
 #import "AOROneTouch.h"
 #import <QuartzCore/QuartzCore.h>
+#include <math.h>
+
+#define MAX_LAYER_COUNT 4
+#define TOUCHES_DELTA 0.5
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;
@@ -26,6 +30,7 @@
 @property (strong, nonatomic) NSMutableArray *layerFadeQueue;
 @property (strong, nonatomic) NSArray *colors;
 @property int themeIndex;
+@property (strong, nonatomic) NSArray *lastTouches;
 
 @end
 
@@ -104,12 +109,52 @@
 
 #pragma mark - Touch Handling
 
+- (int)distanceBetweenPoint1:(CGPoint)p1 Point2:(CGPoint)p2
+{
+    return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y ,2));
+}
+
+/** 
+ * Check to see if this set of points is distinct enough
+ * from the previous set, via distance or number of 
+ * touches, and save the points as last seen points for the
+ * next time this is called. 
+ */ 
+- (BOOL)pointsAreDistinctEnough:(NSArray *)allTouches
+{
+    NSLog(@"Would operate on %@", allTouches);
+    BOOL result = NO;
+    if ([allTouches count] != [self.lastTouches count]) {
+        result = YES;
+    }
+    else {
+        // Find distance
+        int distanceSum = 0;
+        for (int i = 0; i < [allTouches count]; i++) {
+            UITouch *touch = [allTouches objectAtIndex:i];
+            CGPoint p1 = [touch locationInView:self.view];
+            CGPoint p2 = [touch previousLocationInView:self.view];
+            distanceSum += [self distanceBetweenPoint1:p1 Point2:p2];
+        }
+        if (distanceSum > TOUCHES_DELTA) {
+            result = YES;
+        }
+    }
+    // Either way, save new points
+    [self setLastTouches:allTouches];
+    return result;
+}
+
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    // There should be a condition on handling touches; based on timing
+    // or distance this point is from the previous point.
+    
     //[self clearCanvas];
     [self fadeOutPreviousLayer];
     NSArray *allTouches = [[event allTouches] allObjects];
-    
+//    if (![self pointsAreDistinctEnough:allTouches])
+//        return;
     switch ([[event allTouches] count]) {
         case 1:
             [self handleOnePoint:allTouches];
@@ -161,6 +206,10 @@
 
 -(void)fadeOutLayer:(CALayer *)layer
 {
+    // If we have too many layers on screen, get rid of this one.
+    if ([self.layerFadeQueue count] > MAX_LAYER_COUNT) {
+        [layer removeFromSuperlayer];
+    }
     [layer removeAllAnimations];
     layer.opacity = 0.0;
     CABasicAnimation *fadeOutAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
