@@ -97,6 +97,7 @@
 [[self.children objectAtIndex:7] drawWithP1:I p2:J p3:self.p3 p4:L depth:self.depth-1];
 
     for (AORCarpet *child in self.children) {
+        child.theme = self.theme;
         [self.layer addSublayer:child.layer];
     }
 }

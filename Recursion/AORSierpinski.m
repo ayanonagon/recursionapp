@@ -67,6 +67,7 @@
 
     
     for (AORSierpinski *child in self.children) {
+        child.theme = self.theme;
         [self.layer addSublayer:child.layer];
     }
 }
