@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import <CoreImage/CoreImage.h>
 
 @interface AORObject : NSObject
 @property (strong, nonatomic) CAShapeLayer *layer;

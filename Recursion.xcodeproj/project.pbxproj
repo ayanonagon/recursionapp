@@ -13,6 +13,7 @@
 		338103981674524D006781FF /* AORLevy.m in Sources */ = {isa = PBXBuildFile; fileRef = 338103971674524D006781FF /* AORLevy.m */; };
 		DC2EAC7B1674484600D3391F /* AORExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = DC2EAC7A1674484600D3391F /* AORExamples.m */; };
 		DCF212F616751522000EB240 /* AORObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DCF212F516751522000EB240 /* AORObject.m */; };
+		DCF3A620167ADA95002AE263 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF3A61F167ADA95002AE263 /* CoreImage.framework */; };
 		E06F92E516722A7000BED8B7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F92E416722A7000BED8B7 /* UIKit.framework */; };
 		E06F92E716722A7000BED8B7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F92E616722A7000BED8B7 /* Foundation.framework */; };
 		E06F92E916722A7000BED8B7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F92E816722A7000BED8B7 /* CoreGraphics.framework */; };
@@ -42,6 +43,7 @@
 		DC2EAC7A1674484600D3391F /* AORExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORExamples.m; sourceTree = "<group>"; };
 		DCF212F316751023000EB240 /* AORObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AORObject.h; sourceTree = "<group>"; };
 		DCF212F516751522000EB240 /* AORObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORObject.m; sourceTree = "<group>"; };
+		DCF3A61F167ADA95002AE263 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		E06F92E016722A7000BED8B7 /* Recursion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Recursion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E06F92E416722A7000BED8B7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E06F92E616722A7000BED8B7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -69,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DCF3A620167ADA95002AE263 /* CoreImage.framework in Frameworks */,
 				E06F930F16722AE700BED8B7 /* QuartzCore.framework in Frameworks */,
 				E06F92E516722A7000BED8B7 /* UIKit.framework in Frameworks */,
 				E06F92E716722A7000BED8B7 /* Foundation.framework in Frameworks */,
@@ -82,6 +85,7 @@
 		E06F92D516722A7000BED8B7 = {
 			isa = PBXGroup;
 			children = (
+				DCF3A61F167ADA95002AE263 /* CoreImage.framework */,
 				E06F92EA16722A7000BED8B7 /* Recursion */,
 				E06F92E316722A7000BED8B7 /* Frameworks */,
 				E06F92E116722A7000BED8B7 /* Products */,

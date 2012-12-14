@@ -40,6 +40,7 @@
     self.rootLayer	= [CALayer layer];
     self.rootLayer.frame = self.view.bounds;
     [self.view.layer addSublayer:self.rootLayer];
+    self.rootLayer.backgroundColor = [[UIColor blackColor] CGColor];
     self.layerFadeQueue = [NSMutableArray array];
     self.themeIndex = 0;
     
@@ -220,8 +221,13 @@
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
     CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
-    self.sierpinski = [self.sierpinski drawWithP1:point0 p2:point1 p3:point2];
-    [self.rootLayer addSublayer:self.sierpinski.layer];
+    self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
+                                           [NSValue valueWithCGPoint:point0],
+                                           [NSValue valueWithCGPoint: point1],
+                                           [NSValue valueWithCGPoint:point2],
+                                           [NSValue valueWithCGPoint:point3],
+                                           [NSValue valueWithCGPoint:point4], nil]];
+    [self.rootLayer addSublayer:self.star.layer];
 }
 
 
