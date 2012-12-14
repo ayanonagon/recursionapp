@@ -41,7 +41,7 @@
     [self.view.layer addSublayer:self.rootLayer];
     self.rootLayer.backgroundColor = [[UIColor blackColor] CGColor];
     self.layerFadeQueue = [NSMutableArray array];
-    self.themeIndex = 3;
+    self.themeIndex = 4;
     [self initColors];
     
     // Initialize them all. They get re-configured
@@ -101,10 +101,22 @@
                            neo4,
                            neo5, nil];
     
+    UIColor *sun1 = [UIColor colorWithRed:1 green:.549 blue:.4118 alpha:1];
+    UIColor *sun2 = [UIColor colorWithRed:1 green:.4157 blue:.4157 alpha:1];
+    UIColor *sun3 = [UIColor colorWithRed:.8039 green:.4078 blue:.5373 alpha:1];
+    UIColor *sun4 = [UIColor colorWithRed:.545 green:.4 blue:.545 alpha:1];
+    UIColor *sun5 = [UIColor colorWithRed:.2745 green:.5098 blue:.7059 alpha:1];
+    NSArray *sunset = [NSArray arrayWithObjects:sun1,
+                       sun2,
+                       sun3,
+                       sun4,
+                       sun5, nil];
+    
     self.colors = [NSArray arrayWithObjects:christmas,
                    neon,
                    ocean,
                    neopolitan,
+                   sunset,
                    nil];
 }
 
