@@ -20,7 +20,7 @@
 
 
 * Performance
-** TODO Keep high depth objects around
+** DONE Keep high depth objects around
    Delete the objects from memory after we use them, but only if their
    depth is lower than a set threshold. This way, we only keep around
    objects that are very frequently redrawn, especially the first
@@ -34,16 +34,30 @@
 *** Watch out for 
     Having the objects around a priori might make them draw faster.
 
-** TODO Ensure only children number of objects exist at each level
+** DONE Ensure only children number of objects exist at each level
    If there is a way to programmatically test for this that would be ideal.
 
 ** Path destruction
    It seems that paths must be destroyed, and cannot be reused. 
 
+** TODO Calculate distance between touches to determine draw rate
+   Layers/objects get created way to frequently between small user
+   touch movements. Because Core Animation is laggy, we want to try to
+   limit this number. By checking the cumulative, pair-wise distance
+   between touches with equal number of points, we can refrain from
+   calling object creation functions on too-close pairs of
+   points/touches. 
+
+* Usability
+** TODO Have some way to change between themes
+   Something like a double-tap
+
 * Visual Upgrades
-** TODO Color the objects
-** TODO Color each level
-** TODO Pick random colors or from a given set "theme"
+** TODO More shapes
+   As many as we can!
+** DONE Color the objects
+** DONE Color each level
+** DONE Pick random colors or from a given set "theme"
    Just a way to have the colors changing, and the themes would be
    recursive colors that go nicely.
 ** Find a way to change the stroke style
@@ -61,7 +75,7 @@
    and have the shapes morph into each other or fade out and new ones
    begin. 
 
-** TODO Fade out dead animations while drawing new ones 
+** DONE Fade out dead animations while drawing new ones 
    This one should actually be easy. When redrawing the canvas, simply
    set the animation of the existing object to fade out, this should
    take effect immediately. 
