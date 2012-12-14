@@ -67,7 +67,9 @@
     
     if (!c1 && !c2) {
         c1 = [[AORLevy alloc] init];
+        c1.theme = self.theme;
         c2 = [[AORLevy alloc] init];
+        c2.theme = self.theme;
         self.children = [NSArray arrayWithObjects:c1, c2, nil];
     }
     else if (!c1 || !c2) {

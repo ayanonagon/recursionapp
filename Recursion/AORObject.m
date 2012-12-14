@@ -17,6 +17,7 @@
         self.paths = nil;
         self.children = nil;
         self.layer = nil;
+        self.theme = [NSArray arrayWithObjects:[UIColor blueColor], nil];
     }
     return self;
 }
@@ -33,7 +34,6 @@
     [self destroyPaths];
     [self defineShapePath];
     [self defineShapeLayer];
-    [self defineTheme];
     return self;
 }
 
@@ -75,7 +75,7 @@
 - (void)defineShapeLayer
 {
     UIColor *strokeColor = [UIColor blackColor];
-    switch (self.depth) {
+    /*switch (self.depth) {
         case 0:
         case 3:
         case 6:
@@ -97,7 +97,9 @@
         default:
             strokeColor = [UIColor blackColor];
             break;
-    }
+    }*/
+    int colorIndex = self.depth % [self.theme count];
+    strokeColor = [self.theme objectAtIndex:colorIndex];
     
     UIColor *fillColor = [UIColor redColor];
     
@@ -128,12 +130,6 @@
     [pathLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
-- (void)defineTheme
-{
-    // A theme is an array of colors that will be
-    // applied to recursive levels
-    
-}
 
 /* We need this to get rid of CG objects that are 
  * not automatically looked after by ARC.
