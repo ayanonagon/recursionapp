@@ -48,8 +48,11 @@
     
     if (!c1 && !c2 && !c3) {
         c1 = [[AORSierpinski alloc] init];
+        c1.theme = self.theme;
         c2 = [[AORSierpinski alloc] init];
+        c2.theme = self.theme;
         c3 = [[AORSierpinski alloc] init];
+        c3.theme = self.theme;
         self.children = [NSArray arrayWithObjects:c1, c2, c3, nil];
     }
     else if (!c1 || !c2 || !c3) {

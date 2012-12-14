@@ -67,6 +67,8 @@
         NSMutableArray *mutableChildren = [NSMutableArray array];
         for (int i = 0; i < 8; i++) {
             [mutableChildren addObject:[[AORCarpet alloc] init]];
+            AORCarpet *child = [mutableChildren objectAtIndex:i];
+            child.theme = self.theme;
         }
     self.children = [NSArray arrayWithArray:mutableChildren];
     }
