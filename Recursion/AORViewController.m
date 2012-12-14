@@ -16,7 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 #include <math.h>
 
-#define MAX_LAYER_COUNT 4
+#define MAX_LAYER_COUNT 8
 #define TOUCHES_DELTA 0.5
 
 @interface AORViewController ()
