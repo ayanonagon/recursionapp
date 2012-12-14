@@ -93,8 +93,8 @@
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self clearCanvas];
-    //[self fadeOutPreviousLayer];
+    //[self clearCanvas];
+    [self fadeOutPreviousLayer];
     NSArray *allTouches = [[event allTouches] allObjects];
     
     switch ([[event allTouches] count]) {
@@ -232,7 +232,9 @@
                                            [NSValue valueWithCGPoint:point2],
                                            [NSValue valueWithCGPoint:point3],
                                            [NSValue valueWithCGPoint:point4], nil]];
+    self.star.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.star.layer];
+    self.previousLayer = self.star.layer;
 }
 
 
