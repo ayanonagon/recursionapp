@@ -24,7 +24,6 @@
 @property (strong, nonatomic) AORStar *star;
 @property (strong, nonatomic) CALayer *previousLayer;
 @property (strong, nonatomic) NSMutableArray *layerFadeQueue;
-@property (strong, nonatomic) NSMutableArray *objects;
 
 @end
 
