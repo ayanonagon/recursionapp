@@ -41,7 +41,7 @@
     [self.view.layer addSublayer:self.rootLayer];
     self.rootLayer.backgroundColor = [[UIColor blackColor] CGColor];
     self.layerFadeQueue = [NSMutableArray array];
-    self.themeIndex = 0;
+    self.themeIndex = 2;
     [self initColors];
     
     // Initialize them all. They get re-configured
@@ -78,8 +78,21 @@
                      neonGreen,
                      nil];
     
+    UIColor *ocean1 = [UIColor colorWithRed:0 green:.545 blue:.545 alpha:1];
+    UIColor *ocean2 = [UIColor colorWithRed:.2 green:.6314 blue:.7882 alpha:1];
+    UIColor *ocean3 = [UIColor colorWithRed:0 green:.7804 blue:.549 alpha:1];
+    UIColor *ocean4 = [UIColor colorWithRed:.498 green:1 blue:.8314 alpha:1];
+    UIColor *ocean5 = [UIColor colorWithRed:0 green:.4078 blue:.545 alpha:1];
+    NSArray *ocean = [NSArray arrayWithObjects:ocean1,
+                      ocean2,
+                      ocean3,
+                      ocean4,
+                      ocean5,
+                      nil];
+    
     self.colors = [NSArray arrayWithObjects:christmas,
                    neon,
+                   ocean,
                    nil];
 }
 
