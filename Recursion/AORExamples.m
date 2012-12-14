@@ -56,7 +56,7 @@
                        [NSValue valueWithCGPoint:p4],
                        nil];
     
-    return [[[AORStar alloc] initWithPoints:points] layer];
+    return [[[[AORStar alloc] init] drawWithPoints:points] layer];
 }
 
 + (CALayer *)drawOneTouch

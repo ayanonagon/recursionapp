@@ -12,5 +12,6 @@
 #define STAR_MAX_DEPTH 5
 
 @interface AORStar : AORObject <AORObjectProtocol>
-- (id)initWithPoints:(NSArray *)points;
+- (id)init;
+- (id)drawWithPoints:(NSArray *)points;
 @end

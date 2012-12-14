@@ -15,32 +15,28 @@
 
 @implementation AORStar
 
-- (id)initWithPoints:(NSArray *)points
-{
-    return [self initWithPoints:points depth:STAR_MAX_DEPTH];
-}
-
-- (id)initWithPoints:(NSArray *)points depth:(int)depth
+- (id)init
 {
     self = [super init];
     if (self) {
-        self.points = points;
-        self.depth = depth;
-        [self configureShape];
+        
     }
     return self;
 }
 
-// TODO: Don't know if she's relying on the call to closesubpath here
-//
-//-(void)setupPathWithPoint:(CGPoint)start endPoint:(CGPoint)end
-//{
-//    CGPathMoveToPoint(self.linePath, NULL, start.x, start.y);
-//    CGPathAddLineToPoint(self.linePath, NULL, end.x, end.y);
-//    
-//    CGPathCloseSubpath(self.linePath);
-//    [self startAnimation];
-//}
+- (id)drawWithPoints:(NSArray *)points
+{
+    return [self drawWithPoints:points depth:STAR_MAX_DEPTH];
+}
+
+- (id)drawWithPoints:(NSArray *)points depth:(int)depth
+{
+    self.points = points;
+    self.depth = depth;
+    [self configureShape];
+    return self;
+}
+
 
 - (void)defineShapePath
 {
@@ -132,8 +128,14 @@
 
 - (void)defineChildren
 {
-    self.children = [NSArray arrayWithObjects:
-                     [[AORStar alloc] initWithPoints:self.points depth:self.depth-1], nil];
+    AORStar *child = [self.children objectAtIndex:0];
+    if (!child) {
+        self.children = [NSArray arrayWithObjects:
+                         [[[AORStar alloc] init] drawWithPoints:self.points depth:self.depth-1], nil];
+    }
+    else {
+        [child drawWithPoints:self.points depth:self.depth-1];
+    }
     for (AORStar *child in self.children) {
         [self.layer addSublayer:child.layer];
     }
