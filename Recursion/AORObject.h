@@ -22,6 +22,9 @@
 @property int depth;
 @property (atomic) BOOL animationStopped;
 @property NSArray *theme;
+/* If our object were represented by a single path, this 
+ * would be it */
+@property CGMutablePathRef path;
 /* TODO: Ideally, this class method will create the appropriate
  * objects given the number of points. */
 + (AORObject *)objectFromPoints:(NSArray *) points;

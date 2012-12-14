@@ -18,6 +18,7 @@
         self.children = nil;
         self.layer = nil;
         self.theme = [NSArray arrayWithObjects:[UIColor blueColor], nil];
+        self.path = nil;
     }
     return self;
 }
@@ -67,6 +68,8 @@
         CGPathRelease(path);
     }
     self.paths = nil;
+    CGPathRelease(self.path);
+    self.path = nil;
 }
 
 /**
@@ -75,48 +78,33 @@
 - (void)defineShapeLayer
 {
     UIColor *strokeColor = [UIColor blackColor];
-    /*switch (self.depth) {
-        case 0:
-        case 3:
-        case 6:
-        case 9:
-            strokeColor = [UIColor purpleColor];
-            break;
-        case 1:
-        case 4:
-        case 7:
-        case 10:
-            strokeColor = [UIColor redColor];
-            break;
-        case 2:
-        case 5:
-        case 8:
-        case 11:
-            strokeColor = [UIColor brownColor];
-            break;
-        default:
-            strokeColor = [UIColor blackColor];
-            break;
-    }*/
     int colorIndex = self.depth % [self.theme count];
     strokeColor = [self.theme objectAtIndex:colorIndex];
     
     UIColor *fillColor = [UIColor redColor];
+ 
+    // Trying one path per shape instead
+    self.path = CGPathCreateMutable();
     
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef line = [lineWrapped pointerValue];
-        CAShapeLayer *pathLayer = [CAShapeLayer layer];
-        pathLayer.path = line;
-        pathLayer.strokeColor = strokeColor.CGColor;
-        pathLayer.lineWidth = 1.0;
-        pathLayer.fillColor = fillColor.CGColor;
-        pathLayer.fillRule = kCAFillRuleNonZero;
-
-        [self setAnimationForPathLayer:pathLayer];
-        [self.layer addSublayer:pathLayer];
+//        CAShapeLayer *pathLayer = [CAShapeLayer layer];
+//        pathLayer.path = line;
+//        pathLayer.strokeColor = strokeColor.CGColor;
+//        pathLayer.lineWidth = 1.0;
+//        pathLayer.fillColor = fillColor.CGColor;
+//        pathLayer.fillRule = kCAFillRuleNonZero;
+//
+//        [self setAnimationForPathLayer:pathLayer];
+//        [self.layer addSublayer:pathLayer];
+        CGPathAddPath(self.path, NULL, line);
     }
-    self.layer.fillColor = [[UIColor redColor] CGColor];
+    self.layer.path = self.path;
+    self.layer.strokeColor = strokeColor.CGColor;
+    self.layer.lineWidth = 1.0;
+    self.layer.fillColor = fillColor.CGColor;
     self.layer.fillRule = kCAFillRuleNonZero;
+    [self setAnimationForPathLayer:self.layer];
 }
 
 - (void)setAnimationForPathLayer:(CAShapeLayer *)pathLayer
