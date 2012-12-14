@@ -1,4 +1,0 @@
-recursionapp
-============
-
-Recursion iPad App
