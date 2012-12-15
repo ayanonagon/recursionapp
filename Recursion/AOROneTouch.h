@@ -14,4 +14,5 @@
 @interface AOROneTouch : AORObject <AORObjectProtocol>
 -(id)init;
 -(id)drawWithP1:(CGPoint)p1 bounds:(CGRect)bounds;
+- (id)drawWithP1:(CGPoint)p1 bounds:(CGRect)bounds depth:(int)depth;
 @end

@@ -16,7 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 #include <math.h>
 
-#define MAX_LAYER_COUNT 8
+#define MAX_LAYER_COUNT 20
 #define TOUCHES_DELTA 0.5
 
 @interface AORViewController ()
@@ -146,7 +146,7 @@
  */ 
 - (BOOL)pointsAreDistinctEnough:(NSArray *)allTouches
 {
-    NSLog(@"Would operate on %@", allTouches);
+    // NSLog(@"Would operate on %@", allTouches);
     BOOL result = NO;
     if ([allTouches count] != [self.lastTouches count]) {
         result = YES;
@@ -181,24 +181,52 @@
 //        return;
     switch ([[event allTouches] count]) {
         case 1:
-            [self handleOnePoint:allTouches];
+            [self handleOnePoint:allTouches all:NO];
             break;
         case 2:
-            [self handleTwoPoints:allTouches];
+            [self handleTwoPoints:allTouches all:NO];
             break;
         case 3:
-            [self handleThreePoints:allTouches];
+            [self handleThreePoints:allTouches all:NO];
             break;
         case 4:
-            [self handleFourPoints:allTouches];
+            [self handleFourPoints:allTouches all:NO];
             break;
         case 5:
-            [self handleFivePoints:allTouches];
+            [self handleFivePoints:allTouches all:NO];
             break;
         default:
             break;
     }
     // After handling a touch some maintenance?
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self touchesMoved:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self fadeOutPreviousLayer];
+     NSArray *allTouches = [[event allTouches] allObjects];
+     switch ([[event allTouches] count]) {
+         case 1:
+             [self handleOnePoint:allTouches all:YES];
+             break;
+         case 2:
+             [self handleTwoPoints:allTouches all:YES];
+             break;
+         case 3:
+             [self handleThreePoints:allTouches all:YES];
+             break;
+         case 4:
+             [self handleFourPoints:allTouches all:YES];
+             break;
+         case 5:
+             [self handleFivePoints:allTouches all:YES];
+             break;
+         default:
+             break;
+     }
 }
 
 // This would work ideally. Trying to refine the interface to
@@ -256,7 +284,7 @@
     }
 }
 
--(void)handleOnePoint:(NSArray *)allTouches
+-(void)handleOnePoint:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     
@@ -264,60 +292,84 @@
     // This can be abstracted out with function call
     // Here should be fadeOutPreviousLayer
     //[self fadeOutLayer:self.oneTouch.layer];
-    self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
+    if (all) {
+        self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
+    } else {
+        self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0) depth:0];
+    }
     self.oneTouch.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.oneTouch.layer];
     // Add this layer to the layerQueue
     self.previousLayer = self.oneTouch.layer;
 }
 
--(void)handleTwoPoints:(NSArray *)allTouches
+-(void)handleTwoPoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
-    
-    self.levy = [self.levy drawWithP1:point0 p2:point1];
+    if (all) {
+        self.levy = [self.levy drawWithP1:point0 p2:point1];
+    } else {
+        self.levy = [self.levy drawWithP1:point0 p2:point1 depth:0];
+    }
     self.levy.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.levy.layer];
     self.previousLayer = self.levy.layer;
 }
 
--(void)handleThreePoints:(NSArray *)allTouches
+-(void)handleThreePoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
-    self.sierpinski = [self.sierpinski drawWithP1:point0 p2:point1 p3:point2];
+    if (all) {
+        self.sierpinski = [self.sierpinski drawWithP1:point0 p2:point1 p3:point2];
+    } else {
+        self.sierpinski = [self.sierpinski drawWithP1:point0 p2:point1 p3:point2 depth:0];
+    }
     self.sierpinski.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.sierpinski.layer];
     self.previousLayer = self.sierpinski.layer;
 }
 
--(void)handleFourPoints:(NSArray *)allTouches
+-(void)handleFourPoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
-    self.carpet = [self.carpet drawWithP1:point0 p2:point1 p3:point2 p4:point3];
+    if (all) {
+        self.carpet = [self.carpet drawWithP1:point0 p2:point1 p3:point2 p4:point3];
+    } else {
+        self.carpet = [self.carpet drawWithP1:point0 p2:point1 p3:point2 p4:point3 depth:0];
+    }
     self.carpet.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.carpet.layer];
     self.previousLayer = self.carpet.layer;
 }
 
--(void)handleFivePoints:(NSArray *)allTouches
+-(void)handleFivePoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
     CGPoint point2 = [(UITouch *)[allTouches objectAtIndex:2] locationInView:self.view];
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
     CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
-    self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
-                                           [NSValue valueWithCGPoint:point0],
-                                           [NSValue valueWithCGPoint: point1],
-                                           [NSValue valueWithCGPoint:point2],
-                                           [NSValue valueWithCGPoint:point3],
-                                           [NSValue valueWithCGPoint:point4], nil]];
+    if (all) {
+        self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
+                                               [NSValue valueWithCGPoint:point0],
+                                               [NSValue valueWithCGPoint:point1],
+                                               [NSValue valueWithCGPoint:point2],
+                                               [NSValue valueWithCGPoint:point3],
+                                               [NSValue valueWithCGPoint:point4], nil]];
+    } else {
+        self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
+                                               [NSValue valueWithCGPoint:point0],
+                                               [NSValue valueWithCGPoint:point1],
+                                               [NSValue valueWithCGPoint:point2],
+                                               [NSValue valueWithCGPoint:point3],
+                                               [NSValue valueWithCGPoint:point4], nil] depth:0];
+    }
     self.star.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.star.layer];
     self.previousLayer = self.star.layer;

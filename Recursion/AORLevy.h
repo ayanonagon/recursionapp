@@ -14,4 +14,6 @@
 @interface AORLevy : AORObject <AORObjectProtocol>
 - (id)init;
 - (id)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2;
+- (id)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 depth:(int)depth;
+
 @end

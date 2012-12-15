@@ -14,5 +14,6 @@
 @interface AORSierpinski : AORObject <AORObjectProtocol>
 -(id)init;
 -(id)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3;
+- (id)drawWithP1:(CGPoint)p1 p2:(CGPoint)p2 p3:(CGPoint)p3 depth:(int)depth;
 @end
 
