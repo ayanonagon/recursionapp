@@ -14,4 +14,5 @@
 @interface AORStar : AORObject <AORObjectProtocol>
 - (id)init;
 - (id)drawWithPoints:(NSArray *)points;
+- (id)drawWithPoints:(NSArray *)points depth:(int)depth;
 @end

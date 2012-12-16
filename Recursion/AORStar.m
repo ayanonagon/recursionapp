@@ -41,10 +41,6 @@
 - (void)defineShapePath
 {
     NSMutableArray *newPoints = [NSMutableArray array];
-    NSValue *val = [self.points objectAtIndex:0];
-    CGPoint start = [val CGPointValue];
-    // CGPathMoveToPoint(self.linePath, NULL, start.x, start.y);
-    CGMutablePathRef firstPath = nil;
     NSMutableArray *mutablePaths = [NSMutableArray array];
     for(int i = 0; i < 5; i++){
         NSValue *val;
@@ -79,8 +75,6 @@
             p2co = [val CGPointValue];
         }
         
-        //p1 = [val CGPointValue];
-        
         CGFloat ax = p1.x - p1co.x;
         CGFloat ay = p1.y - p1co.y;
         CGFloat bx = p2.x - p2co.x;
@@ -92,14 +86,6 @@
         NSValue *v = [NSValue valueWithCGPoint:intersect];
         [newPoints insertObject:v atIndex:i];
         
-        /*if (!firstPath) {
-            firstPath = CGPathCreateMutable();
-            CGPathMoveToPoint(firstPath, NULL, start.x, start.y);
-            CGPathAddLineToPoint(firstPath, NULL, intersect.x, intersect.y);
-            CGPathAddLineToPoint(firstPath, NULL, p2.x, p2.y);
-            [mutablePaths addObject:[NSValue valueWithPointer:firstPath]];
-        }
-        else {*/
         CGMutablePathRef path1 = CGPathCreateMutable();
         CGMutablePathRef path2 = CGPathCreateMutable();
 
@@ -110,20 +96,10 @@
 
         [mutablePaths addObject:[NSValue valueWithPointer:path1]];
         [mutablePaths addObject:[NSValue valueWithPointer:path2]];
-        //}
     }
     
     self.paths = [NSArray arrayWithArray:mutablePaths];
     self.points = [NSArray arrayWithArray:newPoints];
-    
-    // CGPathCloseSubpath(self.linePath);
-    // [self startAnimation];
-//    
-//    if (depth > 1){
-//        [self drawWithPoints:newPoints depth:depth-1];
-//    
-//    }
-    
 }
 
 - (void)defineChildren

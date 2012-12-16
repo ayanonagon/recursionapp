@@ -53,16 +53,10 @@
     if (self.depth) {
         [self defineChildren];
     }
-    //[self destroyPaths];
 }
 
-// Mutable path refs cannot be re-used, as far as we can tell
-// Does our future layer need them? We'll find out from a segfault if so
 - (void)destroyPaths
 {
-    // We need to assign a new layer, because the old one will
-    // have been faded out, and it contains the sublayers we will
-    // resuse.. Actually, do we not create new ones?
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef path = [lineWrapped pointerValue];
         CGPathRelease(path);
@@ -82,21 +76,10 @@
     strokeColor = [self.theme objectAtIndex:colorIndex];
     
     UIColor *fillColor = [UIColor redColor];
- 
-    // Trying one path per shape instead
     self.path = CGPathCreateMutable();
     
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef line = [lineWrapped pointerValue];
-//        CAShapeLayer *pathLayer = [CAShapeLayer layer];
-//        pathLayer.path = line;
-//        pathLayer.strokeColor = strokeColor.CGColor;
-//        pathLayer.lineWidth = 1.0;
-//        pathLayer.fillColor = fillColor.CGColor;
-//        pathLayer.fillRule = kCAFillRuleNonZero;
-//
-//        [self setAnimationForPathLayer:pathLayer];
-//        [self.layer addSublayer:pathLayer];
         CGPathAddPath(self.path, NULL, line);
     }
     self.layer.path = self.path;
@@ -118,11 +101,8 @@
     [pathLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
-
-/* We need this to get rid of CG objects that are 
- * not automatically looked after by ARC.
- */
-- (void)dealloc {
+- (void)dealloc
+{
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef line = [lineWrapped pointerValue];
         CGPathRelease(line);
@@ -134,14 +114,16 @@
 /**
  * Must be overridden!
  */
-- (void)defineChildren {
+- (void)defineChildren
+{
 
 }
 
 /**
  * Must be overridden!
  */
-- (void)defineShapePath {
+- (void)defineShapePath
+{
     NSLog(@"The wrong shape path");
 }
 
@@ -155,8 +137,8 @@ CGMutablePathRef createPathFromPoints(CGPoint p1, CGPoint p2)
     return line;
 }
 
-void augmentPath(CGMutablePathRef path, CGPoint p1, CGPoint p2) {
-    // Need to clear path
+void augmentPath(CGMutablePathRef path, CGPoint p1, CGPoint p2)
+{
     CGPathMoveToPoint(path, NULL, p1.x, p1.y);
     CGPathAddLineToPoint(path, NULL, p2.x, p2.y);
 }
