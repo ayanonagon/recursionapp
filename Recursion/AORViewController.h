@@ -9,7 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface AORViewController : UIViewController
-- (IBAction)swipe:(UISwipeGestureRecognizer *)sender;
-- (IBAction)doubleTap:(UITapGestureRecognizer *)sender;
 
 @end

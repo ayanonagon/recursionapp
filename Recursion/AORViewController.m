@@ -128,7 +128,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Touch Handling
@@ -146,7 +145,6 @@
  */ 
 - (BOOL)pointsAreDistinctEnough:(NSArray *)allTouches
 {
-    // NSLog(@"Would operate on %@", allTouches);
     BOOL result = NO;
     if ([allTouches count] != [self.lastTouches count]) {
         result = YES;
@@ -169,16 +167,10 @@
     return result;
 }
 
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // There should be a condition on handling touches; based on timing
-    // or distance this point is from the previous point.
-    
-    //[self clearCanvas];
     [self fadeOutPreviousLayer];
     NSArray *allTouches = [[event allTouches] allObjects];
-//    if (![self pointsAreDistinctEnough:allTouches])
-//        return;
     switch ([[event allTouches] count]) {
         case 1:
             [self handleOnePoint:allTouches all:NO];
@@ -198,14 +190,15 @@
         default:
             break;
     }
-    // After handling a touch some maintenance?
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [self touchesMoved:touches withEvent:event];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     [self fadeOutPreviousLayer];
      NSArray *allTouches = [[event allTouches] allObjects];
      switch ([[event allTouches] count]) {
@@ -229,24 +222,9 @@
      }
 }
 
-// This would work ideally. Trying to refine the interface to
-// AOR objects
--(void)touchesMoved2:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    NSArray *allTouches = [[event allTouches] allObjects];
-    int n = [[event allTouches] count];
-    NSMutableArray *points = [NSMutableArray array];
-    for (int i = 0; i < n; i++) {
-        [points addObject:[NSValue valueWithCGPoint:
-                           [[allTouches objectAtIndex:i]
-                            locationInView:self.view]]];
-    }
-    //[self.objects addObject:[AORObject objectFromPoints:points]];
-}
-
 #pragma mark - Drawing
 
--(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     // Pop the queue and remove this layer
     CALayer *layerToRemove = [self.layerFadeQueue objectAtIndex:0];
@@ -256,7 +234,7 @@
     }
 }
 
--(void)fadeOutLayer:(CALayer *)layer
+- (void)fadeOutLayer:(CALayer *)layer
 {
     // If we have too many layers on screen, get rid of this one.
     if ([self.layerFadeQueue count] > MAX_LAYER_COUNT) {
@@ -275,7 +253,7 @@
 
 }
 
--(void)fadeOutPreviousLayer
+- (void)fadeOutPreviousLayer
 {
     // Pick up the last layer
     if (self.previousLayer) {
@@ -284,14 +262,9 @@
     }
 }
 
--(void)handleOnePoint:(NSArray *)allTouches all:(BOOL)all
+- (void)handleOnePoint:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
-    
-    // Reclaim old layer and animate to fade
-    // This can be abstracted out with function call
-    // Here should be fadeOutPreviousLayer
-    //[self fadeOutLayer:self.oneTouch.layer];
     if (all) {
         self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
     } else {
@@ -303,7 +276,7 @@
     self.previousLayer = self.oneTouch.layer;
 }
 
--(void)handleTwoPoints:(NSArray *)allTouches all:(BOOL)all
+- (void)handleTwoPoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
@@ -317,7 +290,7 @@
     self.previousLayer = self.levy.layer;
 }
 
--(void)handleThreePoints:(NSArray *)allTouches all:(BOOL)all
+- (void)handleThreePoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
@@ -332,7 +305,7 @@
     self.previousLayer = self.sierpinski.layer;
 }
 
--(void)handleFourPoints:(NSArray *)allTouches all:(BOOL)all
+- (void)handleFourPoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
@@ -348,7 +321,7 @@
     self.previousLayer = self.carpet.layer;
 }
 
--(void)handleFivePoints:(NSArray *)allTouches all:(BOOL)all
+- (void)handleFivePoints:(NSArray *)allTouches all:(BOOL)all
 {
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:1] locationInView:self.view];
@@ -379,22 +352,11 @@
 
 #pragma mark - Utils
 
--(void)clearCanvas
+- (void)clearCanvas
 {
     for (CALayer *layer in self.rootLayer.sublayers) {
         [layer removeFromSuperlayer];
-        // Copy the object layer and delete the
     }
-    // Also unnecessary if the current layer will just stay; on object death.
-    // Objects die when user lets go, we'll need to call something for that.
-//    [self.rootLayer removeFromSuperlayer];
-//    self.rootLayer = [CALayer layer];
-//    self.rootLayer.frame = self.view.bounds;
-//    [self.view.layer addSublayer:self.rootLayer];
-//    self.carpet = nil;
-//    self.sierpinski = nil;
-//    self.levy = nil; 
-    // [self.levy clearLayers];
 }
 
 @end

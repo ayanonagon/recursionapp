@@ -43,6 +43,5 @@
 /* Returns a CGPathRef configured to draw from p1 to p2. */
 CGMutablePathRef createPathFromPoints(CGPoint p1, CGPoint p2);
 /* Augments an existing CGPathRef to draw differently.
- * THIS DOES NOT WORK ON PATHS APPARENTLY.
  */
 void augmentPath(CGMutablePathRef path, CGPoint p1, CGPoint p2);

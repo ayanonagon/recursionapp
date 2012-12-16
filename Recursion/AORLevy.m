@@ -36,12 +36,6 @@
     self.p2 = p2;
     self.depth = depth;
     [self configureShape];
-//        if (!self.child1) {
-//            self.child1 = [AORLevy alloc];
-//        }
-//        if (!self.child2) {
-//            self.child2 = [AORLevy alloc];
-//        }
     return self;
 }
 

@@ -24,8 +24,6 @@
     return self;
 }
 
-// initparent vs. initchild maybe?
-
 - (id)drawWithP1:(CGPoint)p1 bounds:(CGRect)bounds
 {
     return [self drawWithP1:p1 bounds:bounds depth:ONE_TOUCH_MAX_DEPTH];
@@ -33,12 +31,10 @@
 
 - (id)drawWithP1:(CGPoint)p1 bounds:(CGRect)bounds depth:(int)depth
 {
-        self.p1 = p1;
-        self.bounds = bounds;
-        self.depth = depth;
-        [self configureShape];
-    // define the children here recursively so they don't ever
-    // need redefinition
+    self.p1 = p1;
+    self.bounds = bounds;
+    self.depth = depth;
+    [self configureShape];
     return self;
 }
 
@@ -49,7 +45,6 @@
  */
 -(void)defineChildren
 {
-    // The old children are there, let's not recreate them.
     AOROneTouch *c1 = [self.children objectAtIndex:0];
     AOROneTouch *c2 = [self.children objectAtIndex:1];
     
@@ -74,7 +69,6 @@
     [c2 drawWithP1:p2 bounds:bounds2 depth:self.depth-1];
     
     for (AOROneTouch *child in self.children) {
-        // This is possibly necessary to keep old layers around.
         [self.layer addSublayer:child.layer];
     }
 }
@@ -125,28 +119,6 @@
                   [NSValue valueWithPointer:line6],
                   [NSValue valueWithPointer:line7],
                   [NSValue valueWithPointer:line8], nil];
-
-    // Here the assumption is that ARC will now take care
-    // of these objects for us.
-//    self.paths = [NSArray arrayWithObjects:
-//                  (__bridge_transfer id)line1,
-//                  (__bridge_transfer id)line2,
-//                  (__bridge_transfer id)line3,
-//                  (__bridge_transfer id)line4,
-//                  (__bridge_transfer id)line5,
-//                  (__bridge_transfer id)line6,
-//                  (__bridge_transfer id)line7,
-//                  (__bridge_transfer id)line8, ni]
-//  // We need to release the lines we made now. They
-//  // are being held by the array paths still
-//    CGPathRelease(line1);
-//    CGPathRelease(line2);
-//    CGPathRelease(line3);
-//    CGPathRelease(line4);
-//    CGPathRelease(line5);
-//    CGPathRelease(line6);
-//    CGPathRelease(line7);
-//    CGPathRelease(line8);
 }
 
 
