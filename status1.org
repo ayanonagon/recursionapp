@@ -51,6 +51,13 @@ simulator. This was a challenge in memory management.
    calling object creation functions on too-close pairs of
    points/touches. 
 
+** TODO Keep full objects around longer
+   Before removing a layer from root layer, ask it if it's depth is
+   maximum. 
+*** TODO Subclass CAShapeLayer 
+    Add a depth field so it can be queried before removing from root layer.
+
+
 * Usability
 ** TODO Double-tap to change between themes
 ** TODO A main menu
@@ -66,12 +73,6 @@ simulator. This was a challenge in memory management.
 
 
 * Visuals
-** TODO Keep full objects around longer
-   Before removing a layer from root layer, ask it if it's depth is
-   maximum. 
-*** TODO Subclass CAShapeLayer 
-    Add a depth field so it can be queried before removing from root layer.
-
 ** More shapes
    As many as we can!
 *** TODO 5 finger default
