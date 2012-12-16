@@ -12,6 +12,7 @@
 #import "AORLevy.h"
 #import "AORStar.h"
 #import "AOROneTouch.h"
+#import "AORPentaflake.h"
 
 #include <QuartzCore/QuartzCore.h>
 
@@ -58,6 +59,25 @@
     CGRect bounds = CGRectMake(0.0, 0.0, 755.0, 1024.0);
     CGPoint p = CGPointMake(400, 200.0);
     return [[[[AOROneTouch alloc] init] drawWithP1:p bounds:bounds] layer];
+}
+
++ (CALayer *)drawPentaflake
+{
+    CGPoint p0 = CGPointMake(500, 500);
+    CGPoint p1 = CGPointMake(600, 500);
+    CGPoint p2 = CGPointMake(625, 575);
+    CGPoint p3 = CGPointMake(550, 625);
+    CGPoint p4 = CGPointMake(475, 575);
+    NSArray *points = [NSArray arrayWithObjects:
+                       [NSValue valueWithCGPoint:p0],
+                       [NSValue valueWithCGPoint:p1],
+                       [NSValue valueWithCGPoint:p2],
+                       [NSValue valueWithCGPoint:p3],
+                       [NSValue valueWithCGPoint:p4],
+                       nil];
+    
+    return [[[[AORPentaflake alloc] init] drawWithPoints:points] layer];
+   
 }
 
 @end

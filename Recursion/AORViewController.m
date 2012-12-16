@@ -13,6 +13,7 @@
 #import "AORLevy.h"
 #import "AORExamples.h"
 #import "AOROneTouch.h"
+#import "AORPentaflake.h"
 #import <QuartzCore/QuartzCore.h>
 #include <math.h>
 
@@ -26,6 +27,7 @@
 @property (strong, nonatomic) AORSierpinski *sierpinski;
 @property (strong, nonatomic) AORCarpet *carpet;
 @property (strong, nonatomic) AORStar *star;
+@property (strong, nonatomic) AORPentaflake *pentaflake;
 @property (strong, nonatomic) CALayer *previousLayer;
 @property (strong, nonatomic) NSMutableArray *layerFadeQueue;
 @property (strong, nonatomic) NSArray *colors;
@@ -62,6 +64,33 @@
     self.carpet.theme = [self.colors objectAtIndex:self.themeIndex];
     self.star = [[AORStar alloc] init];
     self.star.theme = [self.colors objectAtIndex:self.themeIndex];
+    self.pentaflake = [[AORPentaflake alloc] init];
+    self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
+    
+    //code for testing pentaflake
+    
+    /*CGPoint p0 = CGPointMake(300, 300);
+    CGPoint p1 = CGPointMake(400, 300);
+    CGPoint p2 = CGPointMake(425, 375);
+    CGPoint p3 = CGPointMake(350, 425);
+    CGPoint p4 = CGPointMake(275, 375);*/
+    
+    CGPoint p0 = CGPointMake(300, 300);
+    CGPoint p1 = CGPointMake(500, 300);
+    CGPoint p2 = CGPointMake(550, 450);
+    CGPoint p3 = CGPointMake(400, 550);
+    CGPoint p4 = CGPointMake(250, 450);
+    NSArray *points = [NSArray arrayWithObjects:
+                       [NSValue valueWithCGPoint:p0],
+                       [NSValue valueWithCGPoint:p1],
+                       [NSValue valueWithCGPoint:p2],
+                       [NSValue valueWithCGPoint:p3],
+                       [NSValue valueWithCGPoint:p4],
+                       nil];
+    
+    self.pentaflake = [self.pentaflake drawWithPoints:points];
+    self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
+    [self.rootLayer addSublayer:self.pentaflake.layer];
 
 }
 
@@ -264,6 +293,7 @@
 
 - (void)handleOnePoint:(NSArray *)allTouches all:(BOOL)all
 {
+    
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     if (all) {
         self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];

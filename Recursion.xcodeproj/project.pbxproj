@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3345EA3F167801C30039B606 /* AOROneTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 3345EA3E167801C30039B606 /* AOROneTouch.m */; };
+		334B2089167E79760004445B /* AORPentaflake.m in Sources */ = {isa = PBXBuildFile; fileRef = 334B2088167E79760004445B /* AORPentaflake.m */; };
 		3381038D1673ED24006781FF /* AORStar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3381038C1673ED24006781FF /* AORStar.m */; };
 		33810391167434C0006781FF /* AORCarpet.m in Sources */ = {isa = PBXBuildFile; fileRef = 33810390167434C0006781FF /* AORCarpet.m */; };
 		338103981674524D006781FF /* AORLevy.m in Sources */ = {isa = PBXBuildFile; fileRef = 338103971674524D006781FF /* AORLevy.m */; };
@@ -33,6 +34,8 @@
 /* Begin PBXFileReference section */
 		3345EA3D167801C30039B606 /* AOROneTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AOROneTouch.h; sourceTree = "<group>"; };
 		3345EA3E167801C30039B606 /* AOROneTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AOROneTouch.m; sourceTree = "<group>"; };
+		334B2087167E79760004445B /* AORPentaflake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORPentaflake.h; sourceTree = "<group>"; };
+		334B2088167E79760004445B /* AORPentaflake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORPentaflake.m; sourceTree = "<group>"; };
 		3381038B1673ED24006781FF /* AORStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORStar.h; sourceTree = "<group>"; };
 		3381038C1673ED24006781FF /* AORStar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORStar.m; sourceTree = "<group>"; };
 		3381038F167434C0006781FF /* AORCarpet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORCarpet.h; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 				3381038B1673ED24006781FF /* AORStar.h */,
 				3381038C1673ED24006781FF /* AORStar.m */,
 				E06F92EB16722A7000BED8B7 /* Supporting Files */,
+				334B2087167E79760004445B /* AORPentaflake.h */,
+				334B2088167E79760004445B /* AORPentaflake.m */,
 			);
 			path = Recursion;
 			sourceTree = "<group>";
@@ -231,6 +236,7 @@
 				338103981674524D006781FF /* AORLevy.m in Sources */,
 				DCF212F616751522000EB240 /* AORObject.m in Sources */,
 				3345EA3F167801C30039B606 /* AOROneTouch.m in Sources */,
+				334B2089167E79760004445B /* AORPentaflake.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
