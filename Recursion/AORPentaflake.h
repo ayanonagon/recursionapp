@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "AORObject.h"
 
-#define PENTAFLAKE_MAX_DEPTH 3
+#define PENTAFLAKE_MAX_DEPTH 4
 
 @interface AORPentaflake : AORObject <AORObjectProtocol>
 -(id)init;

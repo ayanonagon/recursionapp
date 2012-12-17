@@ -48,7 +48,7 @@
     [self.view.layer addSublayer:self.rootLayer];
     self.rootLayer.backgroundColor = [[UIColor blackColor] CGColor];
     self.layerFadeQueue = [NSMutableArray array];
-    self.themeIndex = 4;
+    self.themeIndex = 2;
     [self initColors];
     
     // Initialize them all. They get re-configured
