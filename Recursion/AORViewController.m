@@ -307,14 +307,8 @@
 
 - (void)handleOnePoint:(NSArray *)allTouches all:(BOOL)all
 {
-    CGPoint p1 = CGPointMake(200, 200);
-    CGPoint p2 = CGPointMake(600, 200);
-    self.minkowski = [self.minkowski drawWithP1:p1 p2:p2];
-    self.minkowski.theme = [self.colors objectAtIndex:self.themeIndex];
-    [self.rootLayer addSublayer:self.minkowski.layer];
     
-    
-    /*CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     if (all) {
         self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
     } else {
@@ -323,7 +317,7 @@
     self.oneTouch.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.oneTouch.layer];
     // Add this layer to the layerQueue
-    self.previousLayer = self.oneTouch.layer;*/
+    self.previousLayer = self.oneTouch.layer;
 }
 
 - (void)handleTwoPoints:(NSArray *)allTouches all:(BOOL)all
@@ -396,6 +390,21 @@
     self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
     [self.rootLayer addSublayer:self.pentaflake.layer];
     self.previousLayer = self.pentaflake.layer;
+}
+
+- (void)handleSixPoints:(NSArray *)allTouches all:(BOOL)all
+{
+    CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
+    CGPoint point1 = [(UITouch *)[allTouches objectAtIndex:5] locationInView:self.view];
+    if (all) {
+        self.minkowski = [self.minkowski drawWithP1:point0 p2:point1];
+    }
+    else {
+        self.minkowski = [self.minkowski drawWithP1:point0 p2:point1 depth:0];
+    }
+    self.minkowski.theme = [self.colors objectAtIndex:self.themeIndex];
+    [self.rootLayer addSublayer:self.minkowski.layer];
+    self.previousLayer = self.minkowski.layer;
 }
 
 #pragma mark - Utils
