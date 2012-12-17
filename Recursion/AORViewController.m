@@ -71,26 +71,6 @@
     self.star.theme = [self.colors objectAtIndex:self.themeIndex];
     self.pentaflake = [[AORPentaflake alloc] init];
     self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
-    
-    //code for testing pentaflake
-    
-    CGPoint p0 = CGPointMake(300, 300);
-    CGPoint p1 = CGPointMake(500, 300);
-    CGPoint p2 = CGPointMake(550, 450);
-    CGPoint p3 = CGPointMake(400, 550);
-    CGPoint p4 = CGPointMake(250, 450);
-    NSArray *points = [NSArray arrayWithObjects:
-                       [NSValue valueWithCGPoint:p0],
-                       [NSValue valueWithCGPoint:p1],
-                       [NSValue valueWithCGPoint:p2],
-                       [NSValue valueWithCGPoint:p3],
-                       [NSValue valueWithCGPoint:p4],
-                       nil];
-    
-    self.pentaflake = [self.pentaflake drawWithPoints:points];
-    self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
-    [self.rootLayer addSublayer:self.pentaflake.layer];
-
 }
 
 - (void)initColors
@@ -389,26 +369,24 @@
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
     CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
     if (all) {
-        self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
+        self.pentaflake = [self.pentaflake drawWithPoints:[NSArray arrayWithObjects:
                                                [NSValue valueWithCGPoint:point0],
                                                [NSValue valueWithCGPoint:point1],
                                                [NSValue valueWithCGPoint:point2],
                                                [NSValue valueWithCGPoint:point3],
                                                [NSValue valueWithCGPoint:point4], nil]];
     } else {
-        self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
+        self.pentaflake = [self.pentaflake drawWithPoints:[NSArray arrayWithObjects:
                                                [NSValue valueWithCGPoint:point0],
                                                [NSValue valueWithCGPoint:point1],
                                                [NSValue valueWithCGPoint:point2],
                                                [NSValue valueWithCGPoint:point3],
                                                [NSValue valueWithCGPoint:point4], nil] depth:0];
     }
-    self.star.theme = [self.colors objectAtIndex:self.themeIndex];
-    [self.rootLayer addSublayer:self.star.layer];
-    self.previousLayer = self.star.layer;
+    self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
+    [self.rootLayer addSublayer:self.pentaflake.layer];
+    self.previousLayer = self.pentaflake.layer;
 }
-
-
 
 #pragma mark - Utils
 
