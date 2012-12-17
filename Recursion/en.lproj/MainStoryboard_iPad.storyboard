@@ -19,9 +19,9 @@
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="UUd-1S-7cQ">
+                <tapGestureRecognizer numberOfTapsRequired="2" id="UUd-1S-7cQ">
                     <connections>
-                        <action selector="doubleTap:" destination="2" id="J93-9s-ai3"/>
+                        <action selector="tapTap:" destination="2" id="1Am-cf-eVJ"/>
                         <outlet property="delegate" destination="5" id="Suj-6H-8rO"/>
                     </connections>
                 </tapGestureRecognizer>
@@ -32,10 +32,6 @@
     <classes>
         <class className="AORViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AORViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="doubleTap:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="action" name="swipe:" candidateClass="UISwipeGestureRecognizer"/>
-            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

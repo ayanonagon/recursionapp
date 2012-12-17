@@ -34,6 +34,8 @@
 @property int themeIndex;
 @property (strong, nonatomic) NSArray *lastTouches;
 
+@property (strong, nonatomic) NSDate *lastTap;
+
 @end
 
 @implementation AORViewController
@@ -41,6 +43,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.multipleTouchEnabled = YES;  
 
     // Set up the root layer.
     self.rootLayer	= [CALayer layer];
@@ -192,6 +195,8 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesMoved:touches withEvent:event];
+
     [self fadeOutPreviousLayer];
     NSArray *allTouches = [[event allTouches] allObjects];
     switch ([[event allTouches] count]) {
@@ -217,11 +222,25 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    
+    // Logic for switching between colors with double tap.
+    NSDate *currentTime = [NSDate date];
+    NSTimeInterval timeSinceLastTap = [currentTime timeIntervalSinceDate:self.lastTap];
+    self.lastTap = currentTime;
+    if (timeSinceLastTap < 1) {
+        self.themeIndex = (self.themeIndex + 1) % self.colors.count;
+    }
+
+    NSLog(@"touches began");
+    [super touchesBegan:touches withEvent:event];
+
     [self touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesEnded:touches withEvent:event];
+
     [self fadeOutPreviousLayer];
      NSArray *allTouches = [[event allTouches] allObjects];
      switch ([[event allTouches] count]) {
