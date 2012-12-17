@@ -19,6 +19,7 @@
 
 #define MAX_LAYER_COUNT 20
 #define TOUCHES_DELTA 0.5
+#define DOUBLE_TAP_INTERVAL 0.3
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;
@@ -33,6 +34,9 @@
 @property (strong, nonatomic) NSArray *colors;
 @property int themeIndex;
 @property (strong, nonatomic) NSArray *lastTouches;
+@property BOOL touchesEnding;
+
+@property (strong, nonatomic) NSDate *lastTap;
 
 @end
 
@@ -41,6 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.multipleTouchEnabled = YES;  
 
     // Set up the root layer.
     self.rootLayer	= [CALayer layer];
@@ -66,26 +71,6 @@
     self.star.theme = [self.colors objectAtIndex:self.themeIndex];
     self.pentaflake = [[AORPentaflake alloc] init];
     self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
-    
-    //code for testing pentaflake
-    
-    CGPoint p0 = CGPointMake(300, 300);
-    CGPoint p1 = CGPointMake(500, 300);
-    CGPoint p2 = CGPointMake(550, 450);
-    CGPoint p3 = CGPointMake(400, 550);
-    CGPoint p4 = CGPointMake(250, 450);
-    NSArray *points = [NSArray arrayWithObjects:
-                       [NSValue valueWithCGPoint:p0],
-                       [NSValue valueWithCGPoint:p1],
-                       [NSValue valueWithCGPoint:p2],
-                       [NSValue valueWithCGPoint:p3],
-                       [NSValue valueWithCGPoint:p4],
-                       nil];
-    
-    self.pentaflake = [self.pentaflake drawWithPoints:points];
-    self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
-    [self.rootLayer addSublayer:self.pentaflake.layer];
-
 }
 
 - (void)initColors
@@ -192,8 +177,14 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesMoved:touches withEvent:event];
+
+    if (self.touchesEnding) return;
+
     [self fadeOutPreviousLayer];
+
     NSArray *allTouches = [[event allTouches] allObjects];
+
     switch ([[event allTouches] count]) {
         case 1:
             [self handleOnePoint:allTouches all:NO];
@@ -217,31 +208,56 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+
+    // Logic for switching between colors with double tap.
+    NSDate *currentTime = [NSDate date];
+    NSTimeInterval timeSinceLastTap = [currentTime timeIntervalSinceDate:self.lastTap];
+    self.lastTap = currentTime;
+    if ([[event allTouches] count] == 1 && timeSinceLastTap < DOUBLE_TAP_INTERVAL) {
+        self.themeIndex = (self.themeIndex + 1) % self.colors.count;
+        NSLog(@"changing theme");
+    }
+
+    self.touchesEnding = NO;
+    [super touchesBegan:touches withEvent:event];
     [self touchesMoved:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [super touchesEnded:touches withEvent:event];
+
+    if (!self.touchesEnding) {
+        self.lastTouches = [event.allTouches allObjects];
+        self.touchesEnding = YES;
+    }
+
+    if ([touches count] == [[event.allTouches allObjects] count]) {
+        self.touchesEnding = NO;
+    } else {
+        return;
+    }
+    
     [self fadeOutPreviousLayer];
-     NSArray *allTouches = [[event allTouches] allObjects];
-     switch ([[event allTouches] count]) {
-         case 1:
-             [self handleOnePoint:allTouches all:YES];
+    NSArray* allTouches = self.lastTouches;
+    switch ([allTouches count]) {
+        case 1:
+            [self handleOnePoint:allTouches all:YES];
+            break;
+        case 2:
+            [self handleTwoPoints:allTouches all:YES];
              break;
-         case 2:
-             [self handleTwoPoints:allTouches all:YES];
-             break;
-         case 3:
-             [self handleThreePoints:allTouches all:YES];
-             break;
-         case 4:
-             [self handleFourPoints:allTouches all:YES];
-             break;
-         case 5:
-             [self handleFivePoints:allTouches all:YES];
-             break;
-         default:
-             break;
+        case 3:
+            [self handleThreePoints:allTouches all:YES];
+            break;
+        case 4:
+            [self handleFourPoints:allTouches all:YES];
+            break;
+        case 5:
+            [self handleFivePoints:allTouches all:YES];
+            break;
+        default:
+            break;
      }
 }
 
@@ -353,26 +369,24 @@
     CGPoint point3 = [(UITouch *)[allTouches objectAtIndex:3] locationInView:self.view];
     CGPoint point4 = [(UITouch *)[allTouches objectAtIndex:4] locationInView:self.view];
     if (all) {
-        self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
+        self.pentaflake = [self.pentaflake drawWithPoints:[NSArray arrayWithObjects:
                                                [NSValue valueWithCGPoint:point0],
                                                [NSValue valueWithCGPoint:point1],
                                                [NSValue valueWithCGPoint:point2],
                                                [NSValue valueWithCGPoint:point3],
                                                [NSValue valueWithCGPoint:point4], nil]];
     } else {
-        self.star = [self.star drawWithPoints:[NSArray arrayWithObjects:
+        self.pentaflake = [self.pentaflake drawWithPoints:[NSArray arrayWithObjects:
                                                [NSValue valueWithCGPoint:point0],
                                                [NSValue valueWithCGPoint:point1],
                                                [NSValue valueWithCGPoint:point2],
                                                [NSValue valueWithCGPoint:point3],
                                                [NSValue valueWithCGPoint:point4], nil] depth:0];
     }
-    self.star.theme = [self.colors objectAtIndex:self.themeIndex];
-    [self.rootLayer addSublayer:self.star.layer];
-    self.previousLayer = self.star.layer;
+    self.pentaflake.theme = [self.colors objectAtIndex:self.themeIndex];
+    [self.rootLayer addSublayer:self.pentaflake.layer];
+    self.previousLayer = self.pentaflake.layer;
 }
-
-
 
 #pragma mark - Utils
 
