@@ -19,7 +19,7 @@
 
 #define MAX_LAYER_COUNT 20
 #define TOUCHES_DELTA 0.5
-#define DOUBLE_TAP_INTERVAL 1.5
+#define DOUBLE_TAP_INTERVAL 0.3
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;
@@ -228,18 +228,18 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [super touchesBegan:touches withEvent:event];
 
     // Logic for switching between colors with double tap.
     NSDate *currentTime = [NSDate date];
     NSTimeInterval timeSinceLastTap = [currentTime timeIntervalSinceDate:self.lastTap];
     self.lastTap = currentTime;
-    if (timeSinceLastTap < DOUBLE_TAP_INTERVAL) {
+    if ([[event allTouches] count] == 1 && timeSinceLastTap < DOUBLE_TAP_INTERVAL) {
         self.themeIndex = (self.themeIndex + 1) % self.colors.count;
+        NSLog(@"changing theme");
     }
 
     self.touchesEnding = NO;
-
+    [super touchesBegan:touches withEvent:event];
     [self touchesMoved:touches withEvent:event];
 }
 
