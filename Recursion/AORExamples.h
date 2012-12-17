@@ -15,4 +15,5 @@
 + (CALayer *)drawLevy;
 + (CALayer *)drawStar;
 + (CALayer *)drawOneTouch;
++ (CALayer *)drawPentaflake;
 @end
