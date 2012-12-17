@@ -19,6 +19,7 @@
 
 #define MAX_LAYER_COUNT 20
 #define TOUCHES_DELTA 0.5
+#define DOUBLE_TAP_INTERVAL 1.5
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;
@@ -33,6 +34,7 @@
 @property (strong, nonatomic) NSArray *colors;
 @property int themeIndex;
 @property (strong, nonatomic) NSArray *lastTouches;
+@property BOOL touchesEnding;
 
 @property (strong, nonatomic) NSDate *lastTap;
 
@@ -197,8 +199,12 @@
 {
     [super touchesMoved:touches withEvent:event];
 
+    if (self.touchesEnding) return;
+
     [self fadeOutPreviousLayer];
+
     NSArray *allTouches = [[event allTouches] allObjects];
+
     switch ([[event allTouches] count]) {
         case 1:
             [self handleOnePoint:allTouches all:NO];
@@ -222,17 +228,17 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    
+    [super touchesBegan:touches withEvent:event];
+
     // Logic for switching between colors with double tap.
     NSDate *currentTime = [NSDate date];
     NSTimeInterval timeSinceLastTap = [currentTime timeIntervalSinceDate:self.lastTap];
     self.lastTap = currentTime;
-    if (timeSinceLastTap < 1) {
+    if (timeSinceLastTap < DOUBLE_TAP_INTERVAL) {
         self.themeIndex = (self.themeIndex + 1) % self.colors.count;
     }
 
-    NSLog(@"touches began");
-    [super touchesBegan:touches withEvent:event];
+    self.touchesEnding = NO;
 
     [self touchesMoved:touches withEvent:event];
 }
@@ -241,26 +247,37 @@
 {
     [super touchesEnded:touches withEvent:event];
 
+    if (!self.touchesEnding) {
+        self.lastTouches = [event.allTouches allObjects];
+        self.touchesEnding = YES;
+    }
+
+    if ([touches count] == [[event.allTouches allObjects] count]) {
+        self.touchesEnding = NO;
+    } else {
+        return;
+    }
+    
     [self fadeOutPreviousLayer];
-     NSArray *allTouches = [[event allTouches] allObjects];
-     switch ([[event allTouches] count]) {
-         case 1:
-             [self handleOnePoint:allTouches all:YES];
+    NSArray* allTouches = self.lastTouches;
+    switch ([allTouches count]) {
+        case 1:
+            [self handleOnePoint:allTouches all:YES];
+            break;
+        case 2:
+            [self handleTwoPoints:allTouches all:YES];
              break;
-         case 2:
-             [self handleTwoPoints:allTouches all:YES];
-             break;
-         case 3:
-             [self handleThreePoints:allTouches all:YES];
-             break;
-         case 4:
-             [self handleFourPoints:allTouches all:YES];
-             break;
-         case 5:
-             [self handleFivePoints:allTouches all:YES];
-             break;
-         default:
-             break;
+        case 3:
+            [self handleThreePoints:allTouches all:YES];
+            break;
+        case 4:
+            [self handleFourPoints:allTouches all:YES];
+            break;
+        case 5:
+            [self handleFivePoints:allTouches all:YES];
+            break;
+        default:
+            break;
      }
 }
 
