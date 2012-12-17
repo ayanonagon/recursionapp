@@ -37,9 +37,7 @@
 @property int themeIndex;
 @property (strong, nonatomic) NSArray *lastTouches;
 @property BOOL touchesEnding;
-
 @property (strong, nonatomic) NSDate *lastTap;
-
 @end
 
 @implementation AORViewController
@@ -47,7 +45,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.multipleTouchEnabled = YES;  
+    self.view.multipleTouchEnabled = YES;
 
     // Set up the root layer.
     self.rootLayer	= [CALayer layer];
@@ -57,10 +55,8 @@
     self.layerFadeQueue = [NSMutableArray array];
     self.themeIndex = 3;
     [self initColors];
-    
-    // Initialize them all. They get re-configured
-    // by setting new points.
-    // We also want them to create all their children beforehand.
+
+    // Initialize the drawing objects.
     self.oneTouch = [[AOROneTouch alloc] init];
     self.oneTouch.theme = [self.colors objectAtIndex:self.themeIndex];
     self.levy = [[AORLevy alloc] init];
@@ -77,6 +73,7 @@
     self.minkowski.theme = [self.colors objectAtIndex:self.themeIndex];
 }
 
+/// Create stock themes.
 - (void)initColors
 {
     UIColor *christmasRed = [UIColor colorWithRed:.6901 green:.0902 blue:.1216 alpha:1];
@@ -86,7 +83,7 @@
                           christmasGreen,
                           christmasWhite,
                           nil];
-    
+
     UIColor *neonPink = [UIColor colorWithRed:.9333 green:0 blue:.9333 alpha:1];
     UIColor *neonGold = [UIColor colorWithRed:1 green:.8431 blue:0 alpha:1];
     UIColor *neonGreen = [UIColor colorWithRed:.4627 green:.9333 blue:0 alpha:1];
@@ -94,7 +91,7 @@
                      neonGold,
                      neonGreen,
                      nil];
-    
+
     UIColor *ocean1 = [UIColor colorWithRed:0 green:.545 blue:.545 alpha:1];
     UIColor *ocean2 = [UIColor colorWithRed:.2 green:.6314 blue:.7882 alpha:1];
     UIColor *ocean3 = [UIColor colorWithRed:0 green:.7804 blue:.549 alpha:1];
@@ -106,7 +103,7 @@
                       ocean4,
                       ocean5,
                       nil];
-    
+
     UIColor *neo1 = [UIColor colorWithRed:.8039 green:.7529 blue:.6902 alpha:1];
     UIColor *neo2 = [UIColor colorWithRed:1 green:.9373 blue:.8588 alpha:1];
     UIColor *neo3 = [UIColor colorWithRed:1 green:.7529 blue:.796 alpha:1];
@@ -117,7 +114,7 @@
                            neo3,
                            neo4,
                            neo5, nil];
-    
+
     UIColor *sun1 = [UIColor colorWithRed:1 green:.549 blue:.4118 alpha:1];
     UIColor *sun2 = [UIColor colorWithRed:1 green:.4157 blue:.4157 alpha:1];
     UIColor *sun3 = [UIColor colorWithRed:.8039 green:.4078 blue:.5373 alpha:1];
@@ -128,7 +125,7 @@
                        sun3,
                        sun4,
                        sun5, nil];
-    
+
     self.colors = [NSArray arrayWithObjects:christmas,
                    neon,
                    ocean,
@@ -144,17 +141,18 @@
 
 #pragma mark - Touch Handling
 
+/// Computes Euclidean distance between p1 and p2.
 - (int)distanceBetweenPoint1:(CGPoint)p1 Point2:(CGPoint)p2
 {
     return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y ,2));
 }
 
-/** 
+/**
  * Check to see if this set of points is distinct enough
- * from the previous set, via distance or number of 
+ * from the previous set, via distance or number of
  * touches, and save the points as last seen points for the
- * next time this is called. 
- */ 
+ * next time this is called.
+ */
 - (BOOL)pointsAreDistinctEnough:(NSArray *)allTouches
 {
     BOOL result = NO;
@@ -244,7 +242,7 @@
     } else {
         return;
     }
-    
+
     [self fadeOutPreviousLayer];
     NSArray* allTouches = self.lastTouches;
     switch ([allTouches count]) {
@@ -273,6 +271,11 @@
 
 #pragma mark - Drawing
 
+/**
+ * Called after fade-out animation completes.
+ * Once the fade-out animation completes, the layers must be
+ * destroyed to save memory.
+ */
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
     // Pop the queue and remove this layer
@@ -283,6 +286,9 @@
     }
 }
 
+/**
+ * Performs fade-out animation on the provided layer.
+ */
 - (void)fadeOutLayer:(CALayer *)layer
 {
     // If we have too many layers on screen, get rid of this one.
@@ -302,9 +308,12 @@
 
 }
 
+/**
+ * Set the previously drawn layer to be faded-out. Utility function
+ * for touch-draw handling.
+ */
 - (void)fadeOutPreviousLayer
 {
-    // Pick up the last layer
     if (self.previousLayer) {
         [self fadeOutLayer:self.previousLayer];
         self.previousLayer = nil;
@@ -313,7 +322,7 @@
 
 - (void)handleOnePoint:(NSArray *)allTouches all:(BOOL)all
 {
-    
+
     CGPoint point0 = [(UITouch *)[allTouches objectAtIndex:0] locationInView:self.view];
     if (all) {
         self.oneTouch = [self.oneTouch drawWithP1:point0 bounds:CGRectMake(0.0, 0.0, 755.0, 1024.0)];
@@ -415,6 +424,7 @@
 
 #pragma mark - Utils
 
+/// Clears the entire canvas. Not used.
 - (void)clearCanvas
 {
     for (CALayer *layer in self.rootLayer.sublayers) {

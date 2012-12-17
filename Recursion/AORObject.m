@@ -25,13 +25,12 @@
 
 /**
  * A new shape configuration means new paths, and a new layer.
+ * Thus, this method must destroy the old paths (responsibly).
  */
 - (id)configureShape
 {
     self.animationStopped = NO;
-    // Make a new layer, the old one is degrading.
     self.layer = [CAShapeLayer layer];
-    // Destroy old paths first; no need if using bezier
     [self destroyPaths];
     [self defineShapePath];
     [self defineShapeLayer];
@@ -40,9 +39,7 @@
 
 /**
  * The recursive call; creates child objects.
- *
- * The finished flag to tell if we continue, then query
- * the animation object for the key
+ * Does not create any more children after depth limit.
  */
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
@@ -55,6 +52,9 @@
     }
 }
 
+/**
+ * Responsibly destroys C path objects from memory.
+ */
 - (void)destroyPaths
 {
     for (NSValue *lineWrapped in self.paths) {
@@ -67,17 +67,18 @@
 }
 
 /**
- * Color of lines for this object
+ * Defines the colors of lines for this object, but primarily, builds
+ * and sets the animation of the path from all the sub-paths.
  */
 - (void)defineShapeLayer
 {
     UIColor *strokeColor = [UIColor blackColor];
     int colorIndex = self.depth % [self.theme count];
     strokeColor = [self.theme objectAtIndex:colorIndex];
-    
+
     UIColor *fillColor = [UIColor redColor];
     self.path = CGPathCreateMutable();
-    
+
     for (NSValue *lineWrapped in self.paths) {
         CGMutablePathRef line = [lineWrapped pointerValue];
         CGPathAddPath(self.path, NULL, line);
@@ -90,6 +91,9 @@
     [self setAnimationForPathLayer:self.layer];
 }
 
+/**
+ * Given a path layer, sets its animation to the correct value.
+ */
 - (void)setAnimationForPathLayer:(CAShapeLayer *)pathLayer
 {
     CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
@@ -101,6 +105,7 @@
     [pathLayer addAnimation:pathAnimation forKey:@"strokeEndAnimation"];
 }
 
+/// Garbage collection for C objects not taken care of by Obj-C ARC.
 - (void)dealloc
 {
     for (NSValue *lineWrapped in self.paths) {
@@ -111,17 +116,13 @@
     self.children = nil;
 }
 
-/**
- * Must be overridden!
- */
+/// Overridden by subclass
 - (void)defineChildren
 {
 
 }
 
-/**
- * Must be overridden!
- */
+/// Overridden by subclass
 - (void)defineShapePath
 {
     NSLog(@"The wrong shape path");
@@ -129,16 +130,13 @@
 
 @end
 
+/**
+ * Creates a pathref that draws single line from p1 to p2.
+ */
 CGMutablePathRef createPathFromPoints(CGPoint p1, CGPoint p2)
 {
     CGMutablePathRef line = CGPathCreateMutable();
     CGPathMoveToPoint(line, NULL, p1.x, p1.y);
     CGPathAddLineToPoint(line, NULL, p2.x, p2.y);
     return line;
-}
-
-void augmentPath(CGMutablePathRef path, CGPoint p1, CGPoint p2)
-{
-    CGPathMoveToPoint(path, NULL, p1.x, p1.y);
-    CGPathAddLineToPoint(path, NULL, p2.x, p2.y);
 }
