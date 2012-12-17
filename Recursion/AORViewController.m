@@ -205,6 +205,9 @@
         case 5:
             [self handleFivePoints:allTouches all:NO];
             break;
+        case 6:
+            [self handleSixPoints:allTouches all:NO];
+            break;
         default:
             break;
     }
@@ -259,6 +262,9 @@
             break;
         case 5:
             [self handleFivePoints:allTouches all:YES];
+            break;
+        case 6:
+            [self handleSixPoints:allTouches all:YES];
             break;
         default:
             break;
