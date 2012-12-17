@@ -69,12 +69,6 @@
     
     //code for testing pentaflake
     
-    /*CGPoint p0 = CGPointMake(300, 300);
-    CGPoint p1 = CGPointMake(400, 300);
-    CGPoint p2 = CGPointMake(425, 375);
-    CGPoint p3 = CGPointMake(350, 425);
-    CGPoint p4 = CGPointMake(275, 375);*/
-    
     CGPoint p0 = CGPointMake(300, 300);
     CGPoint p1 = CGPointMake(500, 300);
     CGPoint p2 = CGPointMake(550, 450);

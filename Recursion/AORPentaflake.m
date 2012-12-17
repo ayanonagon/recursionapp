@@ -91,11 +91,11 @@
     CGPoint mid34 = CGPointMake((p3.x+p4.x)/2, (p3.y+p4.y)/2);
     CGPoint mid40 = CGPointMake((p4.x+p0.x)/2, (p4.y+p0.y)/2);
     
-    CGPoint A = CGPointMake((p1.x + (mid34.x-p1.x)*.6667), (p1.y + (mid34.y-p1.y)*.6667));
-    CGPoint B = CGPointMake((p2.x + (mid40.x-p2.x)*.6667), (p2.y + (mid40.y-p2.y)*.6667));
-    CGPoint C = CGPointMake((p3.x + (mid01.x-p3.x)*.6667), (p3.y + (mid01.y-p3.y)*.6667));
-    CGPoint D = CGPointMake((p4.x + (mid12.x-p4.x)*.6667), (p4.y + (mid12.y-p4.y)*.6667));
-    CGPoint E = CGPointMake((p0.x + (mid23.x-p0.x)*.6667), (p0.y + (mid23.y-p0.y)*.6667));
+    CGPoint A = CGPointMake((p1.x + (mid34.x-p1.x)*.75), (p1.y + (mid34.y-p1.y)*.75));
+    CGPoint B = CGPointMake((p2.x + (mid40.x-p2.x)*.75), (p2.y + (mid40.y-p2.y)*.75));
+    CGPoint C = CGPointMake((p3.x + (mid01.x-p3.x)*.75), (p3.y + (mid01.y-p3.y)*.75));
+    CGPoint D = CGPointMake((p4.x + (mid12.x-p4.x)*.75), (p4.y + (mid12.y-p4.y)*.75));
+    CGPoint E = CGPointMake((p0.x + (mid23.x-p0.x)*.75), (p0.y + (mid23.y-p0.y)*.75));
     
     CGPoint F = CGPointMake((p1.x + (p2.x-p1.x)*.4), (p1.y + (p2.y-p1.y)*.4));
     CGPoint G = CGPointMake((p1.x + (p2.x-p1.x)*.6), (p1.y + (p2.y-p1.y)*.6));
