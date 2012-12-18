@@ -91,7 +91,6 @@
 		E06F92D516722A7000BED8B7 = {
 			isa = PBXGroup;
 			children = (
-				DCF3A61F167ADA95002AE263 /* CoreImage.framework */,
 				E06F92EA16722A7000BED8B7 /* Recursion */,
 				E06F92E316722A7000BED8B7 /* Frameworks */,
 				E06F92E116722A7000BED8B7 /* Products */,
@@ -109,6 +108,7 @@
 		E06F92E316722A7000BED8B7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DCF3A61F167ADA95002AE263 /* CoreImage.framework */,
 				E06F930E16722AE700BED8B7 /* QuartzCore.framework */,
 				E06F92E416722A7000BED8B7 /* UIKit.framework */,
 				E06F92E616722A7000BED8B7 /* Foundation.framework */,
