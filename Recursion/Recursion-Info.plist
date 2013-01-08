@@ -8,8 +8,21 @@
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>Icon.png</string>
+				<string>Icon@2x.png</string>
+				<string>Icon-72.png</string>
+				<string>Icon-72@2x.png</string>
+			</array>
+		</dict>
+	</dict>
 	<key>CFBundleIdentifier</key>
-	<string>edu.upenn.cis399.${PRODUCT_NAME:rfc1034identifier}</string>
+	<string>edu.upenn.cis399.AOR</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
