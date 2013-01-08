@@ -1,1 +1,105 @@
-/Users/emish/Documents/School/cis399-recursion/recursionapp/status1.org
+#+TITLE:     AOR README
+#+AUTHOR:    Mishal Awadah, Elissa Wolf, Ayaka Nonaka
+#+OPTIONS:   H:2 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+
+* Object hierarchy
+** Group of objects held by root view
+   These aren't held by other aorobjects.
+
+** Children of root objects
+   The distinction here is that root objects, and consequently their
+   children, must linger. 
+
+   For all children that have completed their animations, we should
+   keep those around and just start the animation for children
+   objects.
+
+   This entails remembering a recursive drawing session. 
+
+** Root view
+   Changes to the root layer, this is where the fade out to an
+   aorobject layer should be performend. 
+
+
+* Performance
+The performance issues that would be posed by drawing recursively were
+harshly underestimated. It turns out that making recursive
+object hierarchies is difficult to manage with graphical objects,
+and difficult to optimize as well. Running on the iPad makes this
+even more significant, as it has a much lower FPS than the
+simulator. This was a challenge in memory management.
+
+** Object life
+   Objects constantly redraw, they do this by creating new layers to
+   draw on and add to the root layer.
+** Layer life
+   Layers exist as long as an object does, and for some time
+   afterwards depending on user interaction, layers are removed from
+   the root layer.
+** Ensure only children number of objects exist at each level
+   If there is a way to programmatically test for this that would be ideal.
+
+** Path destruction
+   It seems that paths must be destroyed, and cannot be reused. 
+** Calculate distance between touches to determine draw rate
+   Layers/objects get created way to frequently between small user
+   touch movements. Because Core Animation is laggy, we want to try to
+   limit this number. By checking the cumulative, pair-wise distance
+   between touches with equal number of points, we can refrain from
+   calling object creation functions on too-close pairs of
+   points/touches. 
+
+** TODO Don't keep depth 1 objects around
+   Because they are intermediate objects drawn while the user is
+   dragging. They don't need to be faded out and can be immediately
+   discarded. 
+   Before removing a layer from root layer, ask it if it's depth is
+   maximum. 
+*** TODO Subclass CAShapeLayer 
+    We'll need to do this to know which layers represent small
+    vs. dense objects. Add a depth field so it can be queried before
+    removing from root layer.
+
+* Usability
+** Double-tap to change between themes
+** TODO A main menu
+   Short blurb on how to use. 
+*** Begin
+    Start playing around
+*** Credits
+    Info on the project and us.
+
+** TODO Randomize themes
+   Would need a way to turn on random, maybe after you cycle through
+   all the themes random is a "theme" too. 
+
+
+* Visuals
+** Shapes
+*** 1 - 6 fingers
+   Shapes are drawn depending on the number of fingers down on the pad
+   at once. The points define where the shapes get drawn to spatially.
+*** 5 finger default
+    Draw the simple star using default "good" points closest to the
+    point of touching.
+*** TODO 7 - 10 fingers
+    There is potential for this too. Just use the default "good"
+    points mechanism from 5 fingers to create nice default fractals. 
+** Pick colors from a given set "theme"
+   Just a way to have the colors changing, and the themes would be
+   recursive colors that go nicely.
+** Fade out dead animations while drawing new ones 
+   This one should actually be easy. When redrawing the canvas, simply
+   set the animation of the existing object to fade out, this should
+   take effect immediately. 
+
+   We always have one of each object. But in order to have an object
+   fade out, and be able to create a new one, we need to copy over the
+   layer. The object then creates a new one. Paths are always
+   destroyed on object redraw. 
+
+** TODO Find a way to change the stroke style
+   There might be a library of stroke styles. 
+** TODO Some awesome visual effect library
+   To add a glow bloom effect, or something similar. 
