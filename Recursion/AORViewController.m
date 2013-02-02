@@ -20,7 +20,7 @@
 
 #define MAX_LAYER_COUNT 20
 #define TOUCHES_DELTA 0.5
-#define DOUBLE_TAP_INTERVAL 0.3
+#define DOUBLE_TAP_INTERVAL 0.8
 
 @interface AORViewController ()
 @property (strong, nonatomic) CALayer *rootLayer;

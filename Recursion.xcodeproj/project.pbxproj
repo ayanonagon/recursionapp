@@ -28,11 +28,11 @@
 		E06F92F716722A7000BED8B7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E06F92F616722A7000BED8B7 /* Default.png */; };
 		E06F92F916722A7000BED8B7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E06F92F816722A7000BED8B7 /* Default@2x.png */; };
 		E06F92FB16722A7000BED8B7 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E06F92FA16722A7000BED8B7 /* Default-568h@2x.png */; };
-		E06F92FE16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E06F92FC16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard */; };
-		E06F930116722A7000BED8B7 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E06F92FF16722A7000BED8B7 /* MainStoryboard_iPad.storyboard */; };
 		E06F930416722A7000BED8B7 /* AORViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F930316722A7000BED8B7 /* AORViewController.m */; };
 		E06F930F16722AE700BED8B7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E06F930E16722AE700BED8B7 /* QuartzCore.framework */; };
 		E06F931516722FF000BED8B7 /* AORSierpinski.m in Sources */ = {isa = PBXBuildFile; fileRef = E06F931416722FF000BED8B7 /* AORSierpinski.m */; };
+		E77EAFC416BDB1B200DE49F4 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E77EAFC216BDB1B200DE49F4 /* MainStoryboard_iPad.storyboard */; };
+		E77EAFC516BDB1B200DE49F4 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E77EAFC316BDB1B200DE49F4 /* MainStoryboard_iPhone.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,13 +69,13 @@
 		E06F92F616722A7000BED8B7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		E06F92F816722A7000BED8B7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E06F92FA16722A7000BED8B7 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		E06F92FD16722A7000BED8B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		E06F930016722A7000BED8B7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		E06F930216722A7000BED8B7 /* AORViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AORViewController.h; sourceTree = "<group>"; };
 		E06F930316722A7000BED8B7 /* AORViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AORViewController.m; sourceTree = "<group>"; };
 		E06F930E16722AE700BED8B7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		E06F931316722FF000BED8B7 /* AORSierpinski.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AORSierpinski.h; sourceTree = "<group>"; };
 		E06F931416722FF000BED8B7 /* AORSierpinski.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AORSierpinski.m; sourceTree = "<group>"; };
+		E77EAFC216BDB1B200DE49F4 /* MainStoryboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		E77EAFC316BDB1B200DE49F4 /* MainStoryboard_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,12 +128,12 @@
 		E06F92EA16722A7000BED8B7 /* Recursion */ = {
 			isa = PBXGroup;
 			children = (
+				E77EAFC216BDB1B200DE49F4 /* MainStoryboard_iPad.storyboard */,
+				E77EAFC316BDB1B200DE49F4 /* MainStoryboard_iPhone.storyboard */,
 				3345EA3D167801C30039B606 /* AOROneTouch.h */,
 				3345EA3E167801C30039B606 /* AOROneTouch.m */,
 				E06F92F316722A7000BED8B7 /* AORAppDelegate.h */,
 				E06F92F416722A7000BED8B7 /* AORAppDelegate.m */,
-				E06F92FC16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard */,
-				E06F92FF16722A7000BED8B7 /* MainStoryboard_iPad.storyboard */,
 				E06F930216722A7000BED8B7 /* AORViewController.h */,
 				E06F930316722A7000BED8B7 /* AORViewController.m */,
 				DCF212F316751023000EB240 /* AORObject.h */,
@@ -227,12 +227,12 @@
 				E06F92F716722A7000BED8B7 /* Default.png in Resources */,
 				E06F92F916722A7000BED8B7 /* Default@2x.png in Resources */,
 				E06F92FB16722A7000BED8B7 /* Default-568h@2x.png in Resources */,
-				E06F92FE16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard in Resources */,
-				E06F930116722A7000BED8B7 /* MainStoryboard_iPad.storyboard in Resources */,
 				DC051EE7169C608E0039C136 /* Icon.png in Resources */,
 				DC051EE9169C60A20039C136 /* Icon@2x.png in Resources */,
 				DC051EEB169C60FB0039C136 /* Icon-72.png in Resources */,
 				DC051EED169C61080039C136 /* Icon-72@2x.png in Resources */,
+				E77EAFC416BDB1B200DE49F4 /* MainStoryboard_iPad.storyboard in Resources */,
+				E77EAFC516BDB1B200DE49F4 /* MainStoryboard_iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,22 +267,6 @@
 				E06F92EE16722A7000BED8B7 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		E06F92FC16722A7000BED8B7 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E06F92FD16722A7000BED8B7 /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		E06F92FF16722A7000BED8B7 /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E06F930016722A7000BED8B7 /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -351,12 +335,12 @@
 		E06F930816722A7000BED8B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mishal Awadah (FP668EZZZZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Recursion/Recursion-Prefix.pch";
 				INFOPLIST_FILE = "Recursion/Recursion-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "716BE14A-DF5E-481A-AC8D-08B92783899C";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -364,12 +348,12 @@
 		E06F930916722A7000BED8B7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mishal Awadah (FP668EZZZZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Recursion/Recursion-Prefix.pch";
 				INFOPLIST_FILE = "Recursion/Recursion-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "716BE14A-DF5E-481A-AC8D-08B92783899C";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
