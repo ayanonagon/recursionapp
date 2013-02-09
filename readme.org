@@ -86,6 +86,8 @@ simulator. This was a challenge in memory management.
 *** TODO 7 - 10 fingers
     There is potential for this too. Just use the default "good"
     points mechanism from 5 fingers to create nice default fractals. 
+** TODO Set 2 fingers to alternate between available shapes
+** TODO Set alternate shapes for finger configurations
 ** Pick colors from a given set "theme"
    Just a way to have the colors changing, and the themes would be
    recursive colors that go nicely.
